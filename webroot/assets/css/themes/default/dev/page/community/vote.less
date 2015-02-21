@@ -1,0 +1,40 @@
+.vote-view{
+	.time-span{
+		margin-bottom: 60px;
+	}
+	
+	div.content{
+		margin-bottom: 20px;
+	}
+}
+
+.vote-options{
+	.form-control[contenteditable=true]{
+		min-height:27px;
+		height: auto;
+	}
+
+	.empty{
+		.Alpha(.4);
+		&.focus-on{
+			.Alpha(1);
+		}
+		&:hover{
+			.Alpha(1);
+		}
+		.btn-remove{
+			display: none;
+		}
+	}
+
+	.btn-remove{
+		position: absolute;
+		top: 10px;
+		right: -15px;
+		color: @border-color;
+		&:hover{
+			color: inherit;
+		}
+	}
+}
+
