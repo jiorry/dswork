@@ -1,5 +1,5 @@
 define(
-    "ajax",
+    'ajax',
     
     ['util', 'jquery'],
 

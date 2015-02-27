@@ -3,7 +3,6 @@ define('loader', ['util', 'jquery'], function(util){
 		$header = $('#gos-headerBarR');
 	var loader = function(){
 		this.defaultViewName = 'home.module';
-		this.defaultViewPath = '/page/';
 
 		var $tViews = $('#gos-Views');
 		

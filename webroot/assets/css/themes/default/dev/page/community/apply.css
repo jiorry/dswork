@@ -1,0 +1,30 @@
+div[data-view-name="applyPlugin\.view"] > header.user-bar {
+  margin-bottom: 10px;
+}
+div[data-view-name="applyPlugin\.view"] .list-group-item {
+  margin-bottom: 10px;
+  position: relative;
+}
+div[data-view-name="applyPlugin\.view"] .list-group-item header {
+  margin-bottom: 5px;
+}
+div[data-view-name="applyPlugin\.view"] .list-group-item img.avatar {
+  margin-right: 10px;
+}
+div[data-view-name="applyPlugin\.view"] .list-group-item > .box {
+  margin-left: 40px;
+}
+div[data-view-name="applyPlugin\.view"] .list-group-item i.icon {
+  position: absolute;
+  top: 47px;
+  left: 45px;
+}
+div[data-view-name="applyPlugin\.view"] .list-group-item a[data-action] {
+  margin-right: 10px;
+}
+div[data-view-name="applyPlugin\.view"] .list-group-item div.reply-box {
+  margin-left: 40px;
+}
+div[data-view-name="applyPlugin\.view"] a.agree {
+  margin-right: 10px;
+}

@@ -3,13 +3,17 @@ window._gos = window._gos || {};
 require.config({
 	baseUrl : "/assets/js/",
 	paths: {
+		'ngEditor' : 'dev/directive/editor',
+		'ngDatetimePicker' : 'dev/directive/datetimePicker',
 		'ngBootstrapSwitch' : 'dev/directive/bootstrapSwitch',
 		'ngViewExplorer' : 'dev/directive/viewExplorer',
 
 		'app' : 'dev/mylib/app',
+		'appData' : 'dev/mylib/appData',
 		'loader' : 'dev/mylib/loader',
 		'util' : 'dev/mylib/util',
 		'ajax' : 'dev/mylib/ajax',
+		'gosEditor' : 'dev/mylib/gos.editor',
 		
 		'angular':'dev/angular',
 		'angular-route':'dev/angular-route',
@@ -42,10 +46,10 @@ require.config({
 });
 
 require(
-	['ajax', 'util'], 
-	function (ajax, util){
+	['appData', 'ajax', 'util'], 
+	function (appData, ajax, util){
 		require(['app', 'loader'], function(app, loader){
-			loader.defaultViewPath = '/page/main/'
+			
 		});
 
 		var rsaData,
@@ -54,16 +58,30 @@ require(
 		client.send('Rsakey', null)
 			.done(function(result){
 				ajax.serverTime.set(parseFloat(result.unix))
-				rsaData = result
-				loginSuccess();
-				return;
+				rsaData = result;
 
 				if(result.is_login){
 					loginSuccess();
 				}else{
-					prepareLoginForm();
+					loginByIp();
 				}
 			})
+
+		function loginByIp(){
+			prepareFixIpLogin();
+
+			client.send('LoginByIp', null)
+				.done(function(result){
+					if(result.success){
+						appData.userVO = result.user;
+						appData.subjects = result.subjects;
+
+						loginSuccess(1);
+
+					}else
+						prepareLoginForm();
+				})
+		}
 
 		function bootstrapApp(){
 			require(['app', 'ngViewExplorer'], function(app){
@@ -100,20 +118,38 @@ require(
 			});
 		}
 
-		function loginSuccess(){
-			$('#gos-loginContainer').removeClass('in').one('bsTransitionEnd', function(){
-				$(this).addClass('hidden');
-				$('#gos-container').removeClass('hidden').addClass('in');
-			}).emulateTransitionEnd(150);
-			bootstrapApp();
+		function loginSuccess(delay){
+			var showfunc = function(){
+				$('#gos-loginContainer').removeClass('in').one('bsTransitionEnd', function(){
+					$(this).addClass('hidden');
+					$('#gos-container').removeClass('hidden').addClass('in');
+				}).emulateTransitionEnd(150);
+				bootstrapApp();
+			}
+			if(delay){
+				window.setTimeout(function(){
+					showfunc();
+				}, delay * 1000)
+			}else{
+				showfunc()
+			}
+			
+		}
+
+		function prepareFixIpLogin(){
+			showLoginContainer();
+			$('#gos-fix-ip-login').removeClass('hidden').addClass('in');
 		}
 
 		function prepareLoginForm(){
-			$('#gos-login-form-signin').on('keypress', 'input', function(){
-				$('#gos-login-message').text('');
-			})
+			showLoginContainer();
+			$('#gos-fix-ip-login').addClass('hidden').removeClass('in');
 
-			$('#gos-login-form-signin button.btn-primary').click(function(){
+			$('#gos-text-input-login').on('keypress', 'input', function(){
+				$('#gos-login-message').text('');
+			}).removeClass('hidden').addClass('in');
+
+			$('#gos-text-input-login button.btn-primary').click(function(){
 				var $box = $(this).parent(),
 					obj = {login: $box.find('input[name=login]').val(), password: $box.find('input[name=password]').val()}
 
@@ -149,6 +185,9 @@ require(
 					})
 			})
 
+		}
+
+		function showLoginContainer (){
 			$('#gos-loginContainer').removeClass('hidden').addClass('in')
 				.children('div.gos-form-signin-box').removeClass('hidden').addClass('in');
 		}

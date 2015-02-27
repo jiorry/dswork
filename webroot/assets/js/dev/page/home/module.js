@@ -1,7 +1,5 @@
 define('home.module', ['app'], function(app){
 	app.controller('HomeModuleCtrl', ['$scope', '$element', function($scope, $element){
-	  	$scope.login = 'jiorry#lDdj2niqPnS';
-
 	  	$scope.$on('$viewActived', function(){
 	  		$('#gos-goback').hide();
 	  	})
@@ -14,10 +12,10 @@ define('home.module', ['app'], function(app){
 	}]);
 
 	return {
-		title : '项目列表',
+		title : '消息列表',
 		goBackButton : false,
-		headerHtml : '<a href="/community/project.form">+添加项目</a>',
-		i18n : true
+		headerHtml : '<a href="/project/form">+添加项目</a>',
+		i18n : false
 	};
 })
 

@@ -1,4 +1,4 @@
-define('util', [], function(){
+define('util', ['jquery'], function(){
 	var util = {}
 
 	util.DATE_DAY = 86400000;

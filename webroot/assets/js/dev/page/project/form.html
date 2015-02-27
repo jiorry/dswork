@@ -1,0 +1,31 @@
+<form name="qform" class="col-xs-offset-1 col-xs-10 mgt-10 mgb-50">
+	<div class="comefrom-bar hidden"></div>
+	
+	<div class="step-title">
+		<em>*</em>晒图表单
+	</div>
+
+	<div class="form-group" ng-class="{'has-error':qform.name.$invalid && !qform.name.$pristine}">
+		<label class="require">项目名称</label>
+		<input type="text" name="name" ng-model="name" class="form-control" ng-required="true" placeholder="">
+	</div>
+	<div class="form-group" ng-class="{'has-error':qform.project_name.$invalid && !qform.project_name.$pristine}" stlye="">
+		<label class="require">主项名称</label>
+		<select style="width:200px;" ng-model="project_name" ng-options="m.name for m in project_names" class="form-control" ng-required="true">
+		    <option value="">------------</option>
+		</select>
+	</div>
+	<div class="form-group" ng-class="{'has-error':qform.main_no.$invalid && !qform.main_no.$pristine}">
+		<label class="require">主项号</label>
+		<input type="text" name="main_no" ng-model="main_no" class="form-control" ng-required="true" placeholder="">
+	</div>
+	<div class="form-group" ng-class="{'has-error':qform.map_no.$invalid && !qform.map_no.$pristine}">
+		<label class="require">图号</label>
+		<input type="text" name="map_no" ng-model="map_no" class="form-control" ng-required="true" placeholder="">
+	</div>
+
+	
+	<div class="form-group">
+		<a class="btn-save btn btn-primary btn-block mgb-10" ng-disabled="qform.$invalid">提交表单</a>
+	</div>
+</form>

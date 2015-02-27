@@ -11,6 +11,7 @@ func main() {
 	gos.Init()
 
 	gos.Route("/", &page.Index{})
+	gos.RegRoute("^/project/.+", &page.Index{})
 
 	// open api router
 	gos.WebApiRoute("web", &api.Public{})

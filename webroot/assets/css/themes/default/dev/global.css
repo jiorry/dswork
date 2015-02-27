@@ -198,7 +198,7 @@ table.table-form tr > td:last-child {
   box-shadow: none;
   -webkit-box-shadow: none;
 }
-.gos-editor-container .editor-toolbar {
+.editor-toolbar {
   opacity: 0;
   filter: alpha(opacity=0);
   -webkit-transition: 0.3s;
@@ -207,13 +207,35 @@ table.table-form tr > td:last-child {
   transition: 0.3s;
   -webkit-backface-visibility: hidden;
 }
-.gos-editor-container:hover .editor-toolbar {
+:hover .editor-toolbar {
   opacity: 0.5;
   filter: alpha(opacity=50);
 }
-.gos-editor-container .editor-toolbar:hover {
+.editor-toolbar:hover {
   opacity: 1;
   filter: alpha(opacity=100);
+}
+.editor-toolbar {
+  -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  transition: none;
+  -webkit-backface-visibility: hidden;
+}
+.editor-toolbar a.btn-default {
+  padding: 2px 10px;
+}
+.fullPage {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  background-color: #FCFCFC;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  margin: 0!important;
+  padding: 20px!important;
+  padding-bottom: 50px!important;
 }
 /* ------------------------------- float-labed-flat-form ----------------------------------*/
 .view-item .flat-form.tab-pane {
@@ -254,15 +276,6 @@ table.table-form tr > td:last-child {
 .flat-form .form-group {
   margin-bottom: 10px;
   padding: 2px 10px;
-  /*&.datepicker{
-			&>label{
-				display: block;
-			}
-
-			&.inline>label{
-				display: inline;
-			}
-		}*/
 }
 .flat-form .form-group.border-bottom {
   border-bottom: 1px solid #dedede;
@@ -273,7 +286,8 @@ table.table-form tr > td:last-child {
 .flat-form .form-group input[type=text],
 .flat-form .form-group input[type=password],
 .flat-form .form-group select,
-.flat-form .form-group div[contenteditable] {
+.flat-form .form-group div[contenteditable],
+.flat-form .form-group textarea {
   border-style: none;
   border-radius: 0;
   -webkit-box-shadow: none;
@@ -286,11 +300,21 @@ table.table-form tr > td:last-child {
 .flat-form .form-group.datepicker select {
   padding-right: 3px;
 }
-.flat-form .form-group .gos-editor {
-  min-height: 50px;
+.flat-form .form-group div.gos-editor {
+  min-height: 52px;
   margin-top: 0;
   border: 1px solid #dedede;
   padding: 5px 10px;
+}
+.flat-form .form-group .gos-md-editor {
+  height: auto;
+  margin-top: 0;
+  border: 1px solid #dedede;
+  border-style: solid!important;
+  padding: 5px 10px!important;
+}
+.flat-form .form-group textarea {
+  resize: vertical;
 }
 .flat-form .form-group > label {
   margin-bottom: 0;
@@ -303,10 +327,6 @@ table.table-form tr > td:last-child {
 .flat-form .form-group > div {
   margin-left: 0;
   padding-left: 0;
-}
-.flat-form .form-group > div.fullPage {
-  padding-left: 20px;
-  padding-bottom: 50px;
 }
 .flat-form .items > .item {
   border-style: none;

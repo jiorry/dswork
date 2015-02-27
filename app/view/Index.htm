@@ -1,5 +1,5 @@
 <div id="gos-container" class="container hidden fade">
-	<div id="gos-mainPanel" data-default-class="col-lg-9 col-md-9 col-xs-8">
+	<div id="gos-mainPanel" data-default-class="">
 		<header id="gos-headerBar" class="gos-headerbar">
 			<a id="gos-btnHome" href="/" class="gos-header-btn"><span class="fa fa-home"></span> Kere </a>
 			<a id="gos-current-user" class="gos-header-btn"><i class="fa fa-user"></i> jiorry</a>
@@ -34,18 +34,24 @@
 	</div>
 	<div class="gos-form-signin-box hidden fade">
 		<div id="gos-login-form-signin" class="flat-form text-left">
-			<div id="gos-login-message" class="form-group text-danger mtb-10"></div>
-			<div class="form-group">
-				<input name="login" type="text" value="" class="form-control show-grid" placeholder="电子邮件地址" autofocus="">
+			<div id="gos-fix-ip-login" class=" hidden fade">
+				<img src="/upload/avatar/2.jpg" alt="..." class="img-thumbnail">
 			</div>
-			<div class="form-group">
-				<input name="password" type="password" class="form-control" placeholder="登录密码">
+			<div id="gos-text-input-login" class=" hidden fade">
+				<div id="gos-login-message" class="form-group text-danger mtb-10"></div>
+				<div class="form-group">
+					<input name="login" type="text" value="" class="form-control show-grid" placeholder="电子邮件地址" autofocus="">
+				</div>
+				<div class="form-group">
+					<input name="password" type="password" class="form-control" placeholder="登录密码">
+				</div>
+				<label class="checkbox" style="margin-left:30px;">
+					<input name="remember" type="checkbox" value="1"> 自动登录
+				</label>
+					
+				<button class="btn btn-primary btn-block" type="submit">登 录 &gt;&gt;</button>
 			</div>
-			<label class="checkbox" style="margin-left:30px;">
-				<input name="remember" type="checkbox" value="1"> 自动登录
-			</label>
 				
-			<button class="btn btn-primary btn-block" type="submit">登 录 &gt;&gt;</button>
 		</div>
 	</div>
 </div>

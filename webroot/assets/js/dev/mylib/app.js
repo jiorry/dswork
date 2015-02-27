@@ -52,17 +52,11 @@ define(
 			);
 		}
 
-		window._gos.srcPath = '/assets/js/'+MYENV+'/page/main/';		
+		window._gos.srcPath = '/assets/js/'+MYENV+'/page/';		
 
 		app.gosRouter('/', 'home.module', 'HomeModuleCtrl');
-		app.gosRouter('/main/home.module', 'home.module', 'HomeModuleCtrl');
-
-		app.gosRouter('/main/project.view/:id', 'project.view', 'ProjectViewCtrl');
-		app.gosRouter('/main/project.list', 'project.list', 'ProjectListCtrl');
-		app.gosRouter('/main/project.form', 'project.form', 'ProjectFormCtrl');
-
-		app.gosRouter('/main/error.view', 'error.view', 'ErrorViewCtrl');
-		app.gosRouter('/main/tool/contact', 'tool.contact', 'ToolContactCtrl');
+		app.gosRouter('/home/module', 'home.module', 'HomeModuleCtrl');
+		app.gosRouter('/project/form', 'project.form', 'ProjectFormCtrl');
 
     	return app;
 	}
