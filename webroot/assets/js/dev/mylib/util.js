@@ -4,6 +4,15 @@ define('util', ['jquery'], function(){
 	util.DATE_DAY = 86400000;
 	util.DATE_HOUR = 3600000;
 
+	util.userAvatar = function (s){
+		if(!s){
+			s = '/assets/img/avatar_empty.png';
+		}else{
+			s = '/upload/avatar/' + s
+		}
+		return s;
+	}
+
 	util.setTitle = function (title){
 		if(!title){
 			title = ''

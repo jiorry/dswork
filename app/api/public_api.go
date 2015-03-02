@@ -2,7 +2,6 @@ package api
 
 import (
 	"../lib/auth"
-	"../model/appdata"
 	"fmt"
 	"github.com/kere/gos"
 	"github.com/kere/gos/db"
@@ -51,13 +50,6 @@ func (a *Public) LoginByIp() (util.MapData, error) {
 		return m, nil
 	}
 
-	appdataModel := appdata.NewAppDataModel()
-	r, err := appdataModel.QueryOne("subjects")
-	if err != nil {
-		return nil, err
-	}
-	subjects := r.GetStringSlice("value")
-	m["subjects"] = subjects
 	m["user"] = usrVO
 	m["success"] = true
 

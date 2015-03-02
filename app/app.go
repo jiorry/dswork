@@ -15,6 +15,7 @@ func main() {
 
 	// open api router
 	gos.WebApiRoute("web", &api.Public{})
+	gos.WebApiRoute("private", &api.Private{})
 
 	gos.Start()
 }

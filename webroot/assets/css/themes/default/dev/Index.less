@@ -46,6 +46,17 @@
 }*/
 
 // -------------------------------------------
+.img-thumbnail{
+	&.mini{
+		max-width: 80px;
+		max-height: 80px;
+	}
+	&.normal{
+		max-width: 160px;
+		max-height: 160px;
+	}
+}
+
 .gos-view-overflow{
 	height: 100%;
 	overflow-y:auto;
@@ -104,12 +115,9 @@
 	.BoxShadow(0px 0px 10px #999999);
 }
 
+
 #gos-fix-ip-login{
 	text-align: center;
-	img{
-		max-width: 160px;
-		max-height: 160px;
-	}
 }
 
 #gos-loadingLayer{

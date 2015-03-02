@@ -57,6 +57,7 @@ define(
 		app.gosRouter('/', 'home.module', 'HomeModuleCtrl');
 		app.gosRouter('/home/module', 'home.module', 'HomeModuleCtrl');
 		app.gosRouter('/project/form', 'project.form', 'ProjectFormCtrl');
+		app.gosRouter('/project/form/:id', 'project.form', 'ProjectFormCtrl');
 
     	return app;
 	}

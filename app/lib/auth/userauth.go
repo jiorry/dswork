@@ -94,6 +94,10 @@ func (a *UserAuth) LoginByBindIp() (*UserVO, bool) {
 		return nil, false
 	}
 
+	if usr.GetInt("status") < 0 {
+		return nil, false
+	}
+
 	a.DoSuccess(usr)
 	a.SetCookie(0)
 

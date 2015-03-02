@@ -74,9 +74,11 @@ require(
 				.done(function(result){
 					if(result.success){
 						appData.userVO = result.user;
-						appData.subjects = result.subjects;
 
-						loginSuccess(1);
+						$('#gos-fix-ip-login img').attr('src', util.userAvatar(appData.userVO.avatar));
+						$('#gos-current-user span').html(appData.userVO.nick);
+
+						loginSuccess(0.5);
 
 					}else
 						prepareLoginForm();
@@ -118,6 +120,22 @@ require(
 			});
 		}
 
+		function initAppData(func){
+			ajax.NewClient("/api/private").send('AppData', null)
+				.done(function(result){
+					appData.subjects = result.subjects;
+					appData.projects = result.projects;
+					appData.draw_sign_js = result.draw_sign_js;
+					appData.draw_sign_sw = result.draw_sign_sw;
+					appData.draw_sign_xmgl = result.draw_sign_xmgl;
+					appData.draw_sign_xmjl = result.draw_sign_xmjl;
+					appData.draw_sign_zt = result.draw_sign_zt;
+					if(func){
+						func();
+					}
+				})
+		}
+
 		function loginSuccess(delay){
 			var showfunc = function(){
 				$('#gos-loginContainer').removeClass('in').one('bsTransitionEnd', function(){
@@ -126,14 +144,15 @@ require(
 				}).emulateTransitionEnd(150);
 				bootstrapApp();
 			}
-			if(delay){
-				window.setTimeout(function(){
-					showfunc();
-				}, delay * 1000)
-			}else{
-				showfunc()
-			}
-			
+			initAppData(function(){
+				if(delay){
+					window.setTimeout(function(){
+						showfunc();
+					}, delay * 1000)
+				}else{
+					showfunc()
+				}
+			})
 		}
 
 		function prepareFixIpLogin(){
