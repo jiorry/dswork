@@ -1,0 +1,52 @@
+<div class="col-xs-offset-1 col-xs-10">
+	<div class="step-title">
+		<em>*</em>晒图申请表
+	</div>
+
+	<table class="table table-bordered">
+		<tr>
+			<td class="lb" style="width:100px;">项目名称</td>
+			<td colspan="2">{{formData.name}}</td>
+			<td rowspan="2" class="text-center">
+				<img class="img-thumbnail mini" ng-src="{{formData.user.avatar}}">
+				<div>{{formData.user.nick}}</div>
+			</td>
+		</tr>
+		<tr>
+			<td class="lb">主项名称</td>
+			<td colspan="2">{{formData.project_name}}</td>
+		</tr>
+		<tr>
+			<td class="lb">主项编号</td>
+			<td>{{formData.no}}</td>
+			<td class="lb" style="width:100px;">专业</td>
+			<td>{{formData.subject_name}}</td>
+		</tr>
+		<tr>
+			<td class="lb">图号</td>
+			<td>{{formData.drawing_no}}</td>
+			<td class="lb">自然张</td>
+			<td>{{formData.zrz}}</td>
+		</tr>
+		<tr>
+			<td class="lb">份数</td>
+			<td>{{formData.quantity}}</td>
+			<td class="lb">折合A1</td>
+			<td>{{formData.a1}}</td>
+		</tr>
+		<tr ng-show="isCurrentUser">
+			<td colspan="4" class="text-right">
+				<a href="/drawing/form/{{formData.id}}"><i class="fa fa-edit"></i> 修改</a>
+			</td>
+		</tr>
+	</table>
+	<div class="status-bar clearfix mgb-50">
+		<div><img src="/assets/img/icon.png" ng-src=""> 项目经理</div>
+		<div><img src="/assets/img/icon.png" ng-src=""> 技术部</div>
+		<div><img src="/assets/img/icon.png" ng-src=""> 项目部</div>
+		<div><img src="/assets/img/icon.png" ng-src=""> 商务部</div>
+		<div><img src="/assets/img/icon.png" ng-src=""> 制图</div>
+	</div>
+
+	<a class="btn btn-primary btn-block btn-lg" ng-click="sign()">{{currentUser.nick}} 签字同意</a>
+</div>

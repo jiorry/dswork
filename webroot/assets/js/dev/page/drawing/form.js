@@ -1,13 +1,5 @@
-define('project.form', ['app', 'ajax', 'util', 'appData', 'ngDatetimePicker'], function(app, ajax, util, appData){
-	app.controller('ProjectFormCtrl', ['$scope', '$element', '$location', function($scope, $element, $location){
-	  	$scope.$on('$viewActived', function(){
-	  		$('#gos-goback').hide();
-	  	})
-
-	  	$scope.$on('$viewHidden', function(){
-	  		$('#gos-goback').hide();
-	  	})
-
+define('drawing.form', ['app', 'ajax', 'util', 'appData', 'ngDatetimePicker'], function(app, ajax, util, appData){
+	app.controller('DrawingFormCtrl', ['$scope', '$element', '$location', function($scope, $element, $location){
 	  	$scope.projects = appData.projects;
 	  	$scope.subjects = appData.subjects;
 	  	$scope.draw_sign_xmjl = appData.draw_sign_xmjl;
@@ -17,7 +9,7 @@ define('project.form', ['app', 'ajax', 'util', 'appData', 'ngDatetimePicker'], f
 
 	  	var formData = {id: 0}
 	  	if($location.$$search.id){
-	  		ajax.NewClient("/api/private").send('DrawingData', {id: $location.$$search.id})
+	  		ajax.NewClient("/api/open").send('drawing.app.ItemData', {id: $location.$$search.id})
 				.done(function(result){
 					formData = result;
 					$scope.$apply(function(){
@@ -53,7 +45,7 @@ define('project.form', ['app', 'ajax', 'util', 'appData', 'ngDatetimePicker'], f
 	  		data.quantity = this.quantity;
 	  		data.xmjl_id = this.xmjl_id;
 
-	  		ajax.NewClient("/api/private").send('DrawSave', data)
+	  		ajax.NewClient("/api/open").send('drawing.app.Save', data)
 				.done(function(result){
 					$('#gos-btnHome').trigger('click')
 				})

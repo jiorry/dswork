@@ -78,11 +78,17 @@ option {
 .mgr-20 {
   margin-right: 20px!important;
 }
+.mgt-0 {
+  margin-top: 0!important;
+}
 .mgt-10 {
   margin-top: 10px!important;
 }
 .mgt-20 {
   margin-top: 20px!important;
+}
+.mgb-0 {
+  margin-bottom: 0!important;
 }
 .mgb-10 {
   margin-bottom: 10px!important;
@@ -153,6 +159,10 @@ table tr > td.require:after {
   position: relative;
   top: 0;
   left: 10px;
+}
+.table.table-bordered td.lb {
+  text-align: right;
+  font-weight: bold;
 }
 table.table-form {
   width: 100%;
@@ -573,351 +583,32 @@ table.table-form tr > td:last-child {
   z-index: -1;
 }
 /* -------------------- global end ---------------------- */
-.form-rating {
-  margin-bottom: 10px;
+.gos-list-item.odd {
+  background-color: #FFFFFF;
 }
-.form-rating .fa-star {
-  color: #C3BDBD;
+#gos-drawing .ico {
+  top: 45px;
 }
-.form-rating a {
-  cursor: pointer;
-  margin-right: 6px;
-  text-decoration: none;
-}
-.form-rating .fa-star.selected {
-  color: #FFB900;
-}
-.task-top-bar {
-  margin: 10px 20px 50px 20px;
-}
-.task-top-bar .git-url {
-  width: 260px;
-}
-.task-top-bar .git-url > input {
-  height: 28px;
-}
-.task-top-bar .git-url > a.input-group-addon {
-  padding-top: 5px;
-}
-.timeline-group .answer-question .form-group {
-  padding-left: 0;
-}
-.timeline-group .answer-items img.img-rounded {
-  border-radius: 3px;
-  max-width: 30px;
-  max-height: 30px;
-  border-style: none;
-}
-.timeline-group .answer-items .question-header {
-  min-height: 40px;
-  padding-bottom: 10px;
-}
-.timeline-group .answer-items .list-group-item {
-  margin-left: -40px;
-  margin-right: -30px;
-}
-.timeline-group .answer-items .fa.fa-trophy {
-  font-size: 26px;
-}
-.timeline-group .answer-items .fa.fa-edit {
-  float: none;
-  font-size: 14px;
-  color: #428bca;
-}
-.timeline-group {
-  list-style-type: none;
-  padding-left: 26px;
-}
-.timeline-group > li {
-  position: relative;
-  border-left: 3px solid #dedede;
-  padding-bottom: 20px;
-  clear: both;
-}
-.timeline-group > li:last-child {
-  padding-bottom: 0;
-}
-.timeline-group > li .ico {
-  display: inline-block;
-  margin-right: 10px;
-}
-.timeline-group > li > .timeline-line {
-  position: relative;
-  height: 30px;
-  margin-top: 10px;
-  border-top: 1px dotted #dedede;
-  clear: both;
-}
-.timeline-group > li > .timeline-line strong {
-  position: absolute;
-  background-color: #f8f8f8;
-  font-weight: bold;
-  font-size: 18px;
-  top: -12px;
-  left: 30px;
-  padding-left: 10px;
-  padding-right: 10px;
-  color: #BCBCBC;
-  z-index: 10;
-}
-.timeline-group > li > .timeline-line strong em {
-  color: #BCBCBC;
-  font-weight: bold;
-  font-style: normal;
-  position: relative;
-  top: -3px;
-  margin-right: 10px;
-  font-size: 22px;
-  float: left;
-}
-.timeline-group .arrow-line {
-  position: absolute;
-  top: 30px;
-  left: 0;
-  display: block;
-  border-top: 1px dotted #dedede;
-  width: 40px;
-}
-.timeline-group .file-list {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-.timeline-group .file-list li {
-  border-style: none;
-  margin: 5px 0;
-}
-.timeline-group .file-list li a {
-  cursor: pointer;
-}
-.timeline-group .file-list .fa-minus-square {
-  display: none;
-  margin-left: 10px;
-}
-.timeline-group .file-list:hover .fa-minus-square {
-  display: inherit;
-}
-.timeline-group .timeline-row {
-  position: relative;
-  clear: both;
-  padding-left: 40px;
-}
-.timeline-group .timeline-row.point:before {
+#gos-drawing .ico.is-avatar {
   top: 15px;
 }
-.timeline-group .timeline-action {
-  border: 2px solid #dedede;
-  border-radius: 10px;
-  background-color: #efefef;
-  padding: 10px;
-  padding-top: 3px;
-  margin-bottom: 30px;
-  margin-right: 30px;
+#gos-drawing .ico img {
+  max-width: 50px;
+  max-height: 50px;
+  padding: 2px;
+  border: 1px solid #dedede;
+  border-radius: 50%;
+}
+.status-bar > div {
   float: left;
-}
-.timeline-group .timeline-action.point:before {
-  top: 23px;
-}
-.timeline-group .timeline-action .arrow_line {
-  top: 30px;
-}
-.timeline-group .timeline-action > .item-ico {
-  float: left;
-  font-size: 30px;
-  font-style: normal;
-  line-height: 42px;
-  display: block;
-  font-family: 'Georgia';
-  color: #00a99d;
-  margin-left: 5px;
-  margin-right: 5px;
-}
-.timeline-group .timeline-action > .item-ico > span {
-  font-size: 12px;
-}
-.timeline-group .timeline-action.run .item-ico {
-  color: #FF9200;
-}
-.timeline-group .timeline-action > .box {
-  float: left;
-  margin-left: 10px;
-  margin-top: 5px;
+  width: 19.9%;
   padding-top: 10px;
   padding-bottom: 10px;
-  padding-right: 36px;
 }
-.timeline-group .timeline-action div.ico {
-  float: left;
-  margin-top: 10px;
-  margin-left: 12px;
-}
-.timeline-group .timeline-action > i.fa-info {
-  margin-left: 10px;
-}
-.timeline-group .timeline-message {
-  position: relative;
-  float: left;
-  background-color: #efefef;
-  border: 2px solid #dedede;
-  padding: 10px;
-  padding-top: 3px;
-  margin-bottom: 30px;
-  margin-right: 20px;
-  border-radius: 5px;
-  min-width: 390px;
-  min-height: 100px;
-}
-.timeline-group .timeline-message:before {
-  content: ' ';
-  position: absolute;
-  top: 18px;
-  left: -6px;
-  height: 10px;
-  width: 10px;
-  border-left: 2px solid #dedede;
-  border-bottom: 2px solid #dedede;
-  display: block;
-  -webkit-transform: rotate(45deg);
-  -moz-transform: rotate(45deg);
-  -o-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
-  background-color: #efefef;
-}
-.timeline-group .timeline-message:after {
-  clear: both;
-  content: ' ';
-}
-.timeline-group .timeline-message header {
-  padding-bottom: 10px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid #dedede;
-  line-height: 35px;
-  height: 40px;
-}
-.timeline-group .timeline-message .timeline-block {
-  float: none;
-  min-width: none;
-}
-.timeline-group .point:before {
-  content: " ";
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  border: 3px solid #dedede;
+.status-bar img {
+  border: 1px solid #dedede;
   border-radius: 50%;
-  width: 16px;
-  height: 16px;
-  background-color: #FFFFFF;
-  z-index: 10;
-}
-.timeline-group .large-point:before {
-  top: -13px;
-  left: -15px;
-  width: 26px;
-  height: 26px;
-}
-.timeline-group .point.stat-ok:before {
-  background-color: #00a99d !important;
-}
-.timeline-group .point.stat-ok .ico.fa {
-  color: #00a99d !important;
-}
-.timeline-group .point.stat-error:before {
-  background-color: #FF0700!important;
-}
-.timeline-group .point.stat-error .ico.fa {
-  color: #FF0700!important;
-}
-.timeline-group .point.stat-warn:before {
-  background-color: #FF9900!important;
-}
-.timeline-group .point.stat-warn .ico.fa {
-  color: #FF9900!important;
-}
-.git-info-bar > ul {
-  list-style-type: none;
-  padding: 0;
-}
-.git-info-bar > ul li {
-  text-align: center;
-}
-.git-info-bar > ul li > a {
-  cursor: pointer;
-  color: #888888;
-  float: left;
-  width: 25%;
-  padding: 5px;
-  border: 1px solid #dedede;
-  border-right-style: none;
-}
-.git-info-bar > ul li > a > strong {
-  color: #333333;
-}
-.git-info-bar > ul li:first-child > a {
-  border-radius: 4px 0 0 4px;
-}
-.git-info-bar > ul li:last-child > a {
-  border-radius: 0 4px 4px 0;
-  border-right-style: solid;
-}
-.git-browser {
-  padding: 3px;
-  background: #EEEEEE;
-}
-.git-browser .git-addr-bar {
-  background-color: #f8f8f8;
-}
-.git-browser .git-addr-bar .git-addr input {
-  height: 28px;
-}
-.git-browser .git-addr-bar .git-addr button {
-  height: 28px;
-  padding: 0 7px;
-}
-.git-browser .git-last-info {
-  padding: 3px 10px;
-  background-color: #f8f8f8;
-}
-.git-browser table.files {
-  width: 100%;
-  background-color: #f8f8f8;
-  border: 1px solid #dedede;
-}
-.git-browser a {
-  cursor: pointer;
-}
-.git-browser tr {
-  border-top: 1px solid #dedede;
-}
-.git-browser td {
-  padding: 7px 3px;
-  padding-right: 10px;
-}
-.git-browser td.icon {
-  width: 17px;
-  padding-left: 10px;
-  padding-right: 2px;
-  color: #888888;
-  font-size: 16px;
-}
-.git-browser td.icon .fa-folder {
-  color: #80a6cd;
-}
-.git-browser td.content {
-  min-width: 120px;
-}
-.git-browser td.message {
-  color: #888888;
-}
-.git-browser td.message a {
-  color: #888888;
-}
-.git-browser td.age {
-  min-width: 120px;
-}
-.git-browser td.age time {
-  color: #888888;
+  margin-right: 5px;
 }
 .font-theme {
   color: #00a99d;
@@ -1275,9 +966,6 @@ table.table-form tr > td:last-child {
 .gos-list-group .gos-list-item .mbox em {
   font-style: normal;
   font-weight: bold;
-}
-.gos-list-group .gos-list-item .mbox span {
-  display: block;
 }
 .gos-list-group .gos-list-item .box {
   cursor: auto;

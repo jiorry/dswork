@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"fmt"
 	"github.com/kere/gos"
 	"github.com/kere/gos/db"
 	"github.com/kere/gos/lib/util"
@@ -8,8 +9,20 @@ import (
 	"time"
 )
 
-func QueryUserById(id int64) db.DataRow {
-	return New(nil).QueryById(id)
+func QueryAndBuildById(id int64) db.DataRow {
+	usr := New(nil).QueryById(id)
+	if usr.Empty() {
+		return usr
+	}
+
+	if usr.IsNull("avatar") || usr.GetString("avatar") == "" {
+		usr["isAvatar"] = false
+		usr["avatar"] = "/assets/img/avatar_empty.png"
+	} else {
+		usr["isAvatar"] = true
+		usr["avatar"] = fmt.Sprint("/upload/avatar/", usr.GetString("avatar"))
+	}
+	return usr
 }
 
 func QueryUserByNick(n string) db.DataRow {

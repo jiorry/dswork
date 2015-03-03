@@ -11,11 +11,11 @@ func main() {
 	gos.Init()
 
 	gos.Route("/", &page.Index{})
-	gos.RegRoute("^/project/.+", &page.Index{})
+	gos.RegRoute("^/drawing/.+", &page.Index{})
 
 	// open api router
 	gos.WebApiRoute("web", &api.Public{})
-	gos.WebApiRoute("private", &api.Private{})
+	gos.WebApiRoute("open", &api.OpenApi{})
 
 	gos.Start()
 }

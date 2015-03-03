@@ -5,7 +5,7 @@ define('util', ['jquery'], function(){
 	util.DATE_HOUR = 3600000;
 
 	util.userAvatar = function (s){
-		if(!s){
+		if(!s || s==''){
 			s = '/assets/img/avatar_empty.png';
 		}else{
 			s = '/upload/avatar/' + s
@@ -23,9 +23,9 @@ define('util', ['jquery'], function(){
 
 	util.str2date = function (str){
 		str = str.replace(/[A-Za-z]/g, ' ').substr(0,19)
-	    var d = new Date(Date.parse(str.replace(/-/g, "/")));
-	    d.setTime(d.getTime() - d.getTimezoneOffset()*60000)
-	    return d;
+	    // var d = new Date(Date.parse(str));
+	    // d.setTime(d.getTime() - d.getTimezoneOffset()*60000)
+	    return new Date(Date.parse(str));;
 	}
 	
 	util.date2str = function(time, ctype){

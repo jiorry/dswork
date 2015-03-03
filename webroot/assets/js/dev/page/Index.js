@@ -121,7 +121,7 @@ require(
 		}
 
 		function initAppData(func){
-			ajax.NewClient("/api/private").send('AppData', null)
+			ajax.NewClient("/api/open").send('drawing.app.AppData', null)
 				.done(function(result){
 					appData.subjects = result.subjects;
 					appData.projects = result.projects;
