@@ -1,4 +1,4 @@
-define('home.module', ['app', 'ajax', 'util'], function(app, ajax, util){
+define('home.module', ['app', 'ajax', 'util', 'appData'], function(app, ajax, util, appData){
 	app.controller('HomeModuleCtrl', ['$scope', '$element', function($scope, $element){
 	  	$scope.$on('$viewActived', function(){
 	  		$('#gos-goback').hide();
@@ -11,8 +11,13 @@ define('home.module', ['app', 'ajax', 'util'], function(app, ajax, util){
 	  	function loadPageData(p){
 		  	ajax.NewClient("/api/open").send('drawing.app.DrawItems', {page: p})
 				.done(function(result){
-					for (var i = result.length - 1; i >= 0; i--) {
+					var project,i;
+					for (i = result.length - 1; i >= 0; i--) {
+						project = util.objectFind('id', parseInt(result.project_id), appData.projects);
+						result[i].project_name = project ? project.name: 'not found';
 						result[i].created = util.date2str(result[i].created, 'time');
+
+						result[i].project_name = util.objectFind('id', result[i].project_id, appData.projects).name;
 					};
 
 					$scope.$apply(function(){

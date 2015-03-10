@@ -12,9 +12,10 @@ func main() {
 
 	gos.Route("/", &page.Index{})
 	gos.RegRoute("^/drawing/.+", &page.Index{})
+	gos.Route("/error/:id", &page.Error{})
+	gos.Route("/password", &page.Password{})
 
 	// open api router
-	gos.WebApiRoute("web", &api.Public{})
 	gos.WebApiRoute("open", &api.OpenApi{})
 
 	gos.Start()

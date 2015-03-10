@@ -1,4 +1,4 @@
-<div class="col-xs-offset-1 col-xs-10">
+<div class="col-xs-12">
 	<div class="step-title">
 		<em>*</em>晒图申请表
 	</div>
@@ -6,7 +6,7 @@
 	<table class="table table-bordered">
 		<tr>
 			<td class="lb" style="width:100px;">项目名称</td>
-			<td colspan="2">{{formData.name}}</td>
+			<td colspan="2">{{formData.project_name}}</td>
 			<td rowspan="2" class="text-center">
 				<img class="img-thumbnail mini" ng-src="{{formData.user.avatar}}">
 				<div>{{formData.user.nick}}</div>
@@ -14,7 +14,7 @@
 		</tr>
 		<tr>
 			<td class="lb">主项名称</td>
-			<td colspan="2">{{formData.project_name}}</td>
+			<td colspan="2">{{formData.name}}</td>
 		</tr>
 		<tr>
 			<td class="lb">主项编号</td>
@@ -40,13 +40,39 @@
 			</td>
 		</tr>
 	</table>
+
 	<div class="status-bar clearfix mgb-50">
-		<div><img src="/assets/img/icon.png" ng-src=""> 项目经理</div>
-		<div><img src="/assets/img/icon.png" ng-src=""> 技术部</div>
-		<div><img src="/assets/img/icon.png" ng-src=""> 项目部</div>
-		<div><img src="/assets/img/icon.png" ng-src=""> 商务部</div>
-		<div><img src="/assets/img/icon.png" ng-src=""> 制图</div>
+		<div ng-class="{'success': formData.is_xmjl_sign}">
+			<i class="fa fa-circle"></i>
+			<span>项目经理</span>
+			<span ng-if="formData.is_xmjl_sign">：{{formData.xmjl_user.nick}}</span>
+		</div>
+		<div ng-class="{'success': formData.js_user}">
+			<i class="fa fa-circle"></i>
+			<span>技术部</span>
+			<span ng-if="formData.js_user">：{{formData.js_user.nick}}</span>
+		</div>
+		<div ng-class="{'success': formData.xmgl_user}">
+			<i class="fa fa-circle"></i>
+			<span>项目部</span>
+			<span ng-if="formData.xmgl_user">：{{formData.xmgl_user.nick}}</span>
+		</div>
+		<div ng-class="{'success': formData.sw_user}">
+			<i class="fa fa-circle"></i>
+			<span>商务部</span>
+			<span ng-if="formData.sw_user">：{{formData.sw_user.nick}}</span>
+		</div>
+		<div ng-class="{'success': formData.zt_user}">
+			<i class="fa fa-circle"></i>
+			<span>制图</span>
+			<span ng-if="formData.zt_user">：{{formData.zt_user.nick}}</span>
+		</div>
 	</div>
 
-	<a class="btn btn-primary btn-block btn-lg" ng-click="sign()">{{currentUser.nick}} 签字同意</a>
+	<a class="btn btn-primary btn-block btn-lg" ng-if="action && !action.is_sign" ng-click="sign()">
+		<i class="fa fa-user"></i>
+		{{currentUser.nick}} - {{action.title}} 签字同意
+	</a>
+
+	<a class="btn btn-default" ng-if="action && action.is_sign" ng-click="unsign()">{{currentUser.nick}} - {{action.title}} 撤销签字</a>
 </div>

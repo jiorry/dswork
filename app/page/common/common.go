@@ -26,6 +26,7 @@ var (
 )
 
 func SetupPage(p *gos.Page) {
+	p.Title = "航天工程"
 	theme := gos.GetSite().SiteTheme
 	p.View.Theme = theme
 	p.JsPosition = "end"

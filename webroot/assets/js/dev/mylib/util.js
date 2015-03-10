@@ -56,6 +56,24 @@ define('util', ['jquery'], function(){
 	        }
 	    }
 	};
+	
+	util.cipherString = function(nick, pwd){
+		var rsa = new RSAKey(),
+			ts = Server.getTime().toString(),
+			userkey = CryptoJS.MD5( ts + nick )
+		rsa.setPublic(rsaData.hex, '10001');
+		
+		var cipher = rsa.encrypt(util.lpad(ts, '0', 16)+userkey.toString(CryptoJS.enc.Base64)),
+			text = nick + "|" +pwd;
+		
+		var aesCipher = util.aesEncrypto(text, ts, userkey);
+
+		var s = rsaData.keyid.toString()+"|"+
+				CryptoJS.enc.Hex.parse(cipher.toString()).toString(CryptoJS.enc.Base64)+"|"+
+				aesCipher.toString();
+
+		return s;
+	}
 
 	util.aesEncrypto = function(text, ts, key){
 		ts = ts.toString()

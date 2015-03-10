@@ -46,16 +46,16 @@ require.config({
 });
 
 require(
-	['appData', 'ajax', 'util'], 
+	['appData', 'ajax', 'util', 'crypto'], 
 	function (appData, ajax, util){
 		require(['app', 'loader'], function(app, loader){
 			
 		});
 
 		var rsaData,
-			client = ajax.NewClient("/api/web");
+			client = ajax.NewClient("/api/open");
 
-		client.send('Rsakey', null)
+		client.send('public.site.Rsakey', null)
 			.done(function(result){
 				ajax.serverTime.set(parseFloat(result.unix))
 				rsaData = result;
@@ -63,26 +63,26 @@ require(
 				if(result.is_login){
 					loginSuccess();
 				}else{
-					loginByIp();
+					doLogin();
 				}
 			})
 
-		function loginByIp(){
-			prepareFixIpLogin();
+		function doLogin(){
+			prepareLoginForm();
 
-			client.send('LoginByIp', null)
+			/*client.send('public.sign.AutoLogin', null)
 				.done(function(result){
 					if(result.success){
 						appData.userVO = result.user;
 
-						$('#gos-fix-ip-login img').attr('src', util.userAvatar(appData.userVO.avatar));
+						$('#gos-fix-ip-login img').attr('src', appData.userVO.avatar);
 						$('#gos-current-user span').html(appData.userVO.nick);
 
 						loginSuccess(0.5);
 
 					}else
 						prepareLoginForm();
-				})
+				})*/
 		}
 
 		function bootstrapApp(){
@@ -121,15 +121,15 @@ require(
 		}
 
 		function initAppData(func){
-			ajax.NewClient("/api/open").send('drawing.app.AppData', null)
+			client.send('drawing.app.AppData', null)
 				.done(function(result){
 					appData.subjects = result.subjects;
 					appData.projects = result.projects;
-					appData.draw_sign_js = result.draw_sign_js;
-					appData.draw_sign_sw = result.draw_sign_sw;
-					appData.draw_sign_xmgl = result.draw_sign_xmgl;
-					appData.draw_sign_xmjl = result.draw_sign_xmjl;
-					appData.draw_sign_zt = result.draw_sign_zt;
+					appData.draw_js_users = result.draw_js_users;
+					appData.draw_sw_users = result.draw_sw_users;
+					appData.draw_xmgl_users = result.draw_xmgl_users;
+					appData.draw_xmjl_users = result.draw_xmjl_users;
+					appData.draw_zt_users = result.draw_zt_users;
 					if(func){
 						func();
 					}
@@ -155,40 +155,52 @@ require(
 			})
 		}
 
-		function prepareFixIpLogin(){
-			showLoginContainer();
-			$('#gos-fix-ip-login').removeClass('hidden').addClass('in');
-		}
 
 		function prepareLoginForm(){
 			showLoginContainer();
-			$('#gos-fix-ip-login').addClass('hidden').removeClass('in');
 
-			$('#gos-text-input-login').on('keypress', 'input', function(){
-				$('#gos-login-message').text('');
+			var $loginMessage = $('#gos-login-message');
+				$loginForm = $('#gos-login-form-signin');
+
+			function doError(s){
+				$loginMessage.removeClass('hidden');
+				$loginMessage.text(s);
+			}
+			function clearError(s){
+				$loginMessage.addClass('hidden');
+				$loginMessage.text('');
+			}
+
+			client.send('public.sign.BindIpUser', null)
+				.done(function(result){
+					appData.bindedUser = result;
+					if(result && result.nick!=''){
+						$loginForm.find(':input[name=login]').val(result.nick).attr('disabled', 'disabled');
+						$loginForm.find('img').attr('src', result.avatar).parent().removeClass('hidden');
+						$loginForm.find(':input[name=password]').focus();
+					}
+				});
+
+			$loginForm.removeClass('hidden').addClass('in');
+
+			$loginForm.find(':input').on('keypress', 'input', function(){
+				clearError(s);
 			}).removeClass('hidden').addClass('in');
 
-			$('#gos-text-input-login button.btn-primary').click(function(){
+			$loginForm.keypress(function(e){
+				if(e.keyCode == 13) {
+					$loginForm.find('button.btn-primary').trigger('click');
+				}
+			})
+
+			$loginForm.find('button.btn-primary').click(function(){
 				var $box = $(this).parent(),
-					obj = {login: $box.find('input[name=login]').val(), password: $box.find('input[name=password]').val()}
-
-				var rsa = new RSAKey(),
-					ts = Server.getTime().toString(),
-					userkey = CryptoJS.MD5( ts + obj.login )
-				rsa.setPublic(rsaData.hex, '10001');
-				
-				var cipher = rsa.encrypt(util.lpad(ts, '0', 16)+userkey.toString(CryptoJS.enc.Base64)),
-					text = obj.login + "|" +obj.password;
-				
-				var aesCipher = util.aesEncrypto(text, ts, userkey);
-
-				var s = rsaData.keyid.toString()+"|"+
-						CryptoJS.enc.Hex.parse(cipher.toString()).toString(CryptoJS.enc.Base64)+"|"+
-						aesCipher.toString();
+					nick = $box.find('input[name=login]').val(), 
+					password = $box.find('input[name=password]').val();
 
 				// /api/web UserLogin [cipher_string, is_remember?]
-				var isRemember = $box.find('input[name=remember]').is(':checked');
-				client.send('UserLogin', {cipher: s, remember: isRemember})
+				
+				client.send('public.sign.UserLogin', {cipher: util.cipherString(nick, password)})
 					.done(function(result){
 						console.log(result);
 						if(result.is_ok){

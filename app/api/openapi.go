@@ -3,6 +3,7 @@ package api
 import (
 	"../lib/auth"
 	"./openapi/drawing"
+	"./openapi/public"
 	"fmt"
 	"github.com/kere/gos"
 	"reflect"
@@ -20,6 +21,8 @@ func regist(n string, a interface{}) {
 
 func init() {
 	regist("drawing.app", &drawing.AppApi{})
+	regist("public.site", &public.PublicApi{})
+	regist("public.sign", &public.SignApi{})
 }
 
 type OpenApi struct {
@@ -28,13 +31,7 @@ type OpenApi struct {
 
 func (a *OpenApi) Prepare() bool {
 	a.SetUserAuth(auth.New(a.WebApi.Ctx))
-
-	if a.GetUserAuth().IsOk() {
-		return true
-	} else {
-		gos.NewError(0, "login failed").Write(a.Ctx.ResponseWriter)
-		return false
-	}
+	return true
 }
 
 func (a *OpenApi) Factory(n string) (gos.IApi, error) {

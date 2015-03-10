@@ -1,22 +1,33 @@
 <div id="gos-drawing" class="list-group gos-list-group">
-	<a ng-repeat="item in items" ng-class-odd="'odd'" class="gos-list-item" href="/drawing/view/{{item.id}}" open-mode="blank">
+	<a ng-repeat="item in items" ng-class-odd="'odd'" class="gos-list-item" href="/drawing/view/{{item.id}}">
 		<div class="ico" ng-class="{'is-avatar':item.user.isAvatar}">
 			<i class="task">D<span class="badge circle" ng-show="isNotice"></span><em>raw</em></i>
 			<img ng-src="{{item.user.avatar}}" ng-show="item.user.isAvatar">
 		</div>
 		<div class="mbox">
-			<h4>{{item.name}}</h4>
+			<h4>{{item.project_name}} - {{item.name}}</h4>
 			<div class="clearfix">
-				<div class="pull-left" style="width:40%;">申报人：{{item.user.nick}}</div>
-				<div class="pull-left">申报日期：{{item.created}}</div>
+				<div class="pull-left mgl-20">申报人：{{item.user.nick}}</div>
+				<div class="pull-left mgl-20">申报日期：{{item.created}}</div>
+				<div class="pull-left mgl-20">预计出图：{{item.created}}</div>
 			</div>
 			<div class="dotted"></div>
 			<div class="status-bar clearfix">
-				<div><img src="/assets/img/icon.png" ng-src=""> 项目经理</div>
-				<div><img src="/assets/img/icon.png" ng-src=""> 技术部</div>
-				<div><img src="/assets/img/icon.png" ng-src=""> 项目部</div>
-				<div><img src="/assets/img/icon.png" ng-src=""> 商务部</div>
-				<div><img src="/assets/img/icon.png" ng-src=""> 制图</div>
+				<div ng-class="{'success': item.is_xmjl_sign}">
+					<i class="fa fa-circle"></i> 项目经理
+				</div>
+				<div ng-class="{'success': item.js_sign_by>0}">
+					<i class="fa fa-circle"></i> 技术部
+				</div>
+				<div ng-class="{'success': item.xmgl_sign_by>0}">
+					<i class="fa fa-circle"></i> 项目部
+				</div>
+				<div ng-class="{'success': item.sw_sign_by>0}">
+					<i class="fa fa-circle"></i> 商务部
+				</div>
+				<div ng-class="{'success': item.zt_sign_by>0}">
+					<i class="fa fa-circle"></i> 制图
+				</div>
 			</div>
 		</div>
 		<svg style="width:8px;height:38px;top:16px" class="svg-arrow-left">

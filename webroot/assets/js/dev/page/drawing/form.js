@@ -2,10 +2,8 @@ define('drawing.form', ['app', 'ajax', 'util', 'appData', 'ngDatetimePicker'], f
 	app.controller('DrawingFormCtrl', ['$scope', '$element', '$location', function($scope, $element, $location){
 	  	$scope.projects = appData.projects;
 	  	$scope.subjects = appData.subjects;
-	  	$scope.draw_sign_xmjl = appData.draw_sign_xmjl;
+	  	$scope.draw_xmjl_users = appData.draw_xmjl_users;
 	  	$scope.user = appData.userVO;
-
-	  	$scope.avatar_url = util.userAvatar(appData.userVO.avatar);
 
 	  	var formData = {id: 0}
 	  	if($location.$$search.id){

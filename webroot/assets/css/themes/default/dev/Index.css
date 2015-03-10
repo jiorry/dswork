@@ -42,6 +42,9 @@ option {
 .pd-20 {
   padding: 20px!important;
 }
+.pd-30 {
+  padding: 30px!important;
+}
 .pdt-10 {
   padding-top: 10px!important;
 }
@@ -87,6 +90,12 @@ option {
 .mgt-20 {
   margin-top: 20px!important;
 }
+.mgt-30 {
+  margin-top: 30px!important;
+}
+.mgt-40 {
+  margin-top: 40px!important;
+}
 .mgb-0 {
   margin-bottom: 0!important;
 }
@@ -95,6 +104,12 @@ option {
 }
 .mgb-20 {
   margin-bottom: 20px!important;
+}
+.mgb-30 {
+  margin-bottom: 30px!important;
+}
+.mgb-40 {
+  margin-bottom: 40px!important;
 }
 .mgtb-10 {
   margin-top: 10px!important;
@@ -109,6 +124,14 @@ option {
 }
 .mgb-50 {
   margin-bottom: 50px!important;
+}
+.img-thumbnail.mini {
+  max-width: 80px;
+  max-height: 80px;
+}
+.img-thumbnail.normal {
+  max-width: 160px;
+  max-height: 160px;
 }
 .datepicker .fa-calendar {
   position: relative;
@@ -605,10 +628,11 @@ table.table-form tr > td:last-child {
   padding-top: 10px;
   padding-bottom: 10px;
 }
-.status-bar img {
-  border: 1px solid #dedede;
-  border-radius: 50%;
-  margin-right: 5px;
+.status-bar > div.success .fa-circle {
+  color: #00a99d;
+}
+.status-bar .fa-circle {
+  color: #dedede;
 }
 .font-theme {
   color: #00a99d;
@@ -643,14 +667,6 @@ table.table-form tr > td:last-child {
 .bdColor9{
 	border-color: #DE76FF;
 }*/
-.img-thumbnail.mini {
-  max-width: 80px;
-  max-height: 80px;
-}
-.img-thumbnail.normal {
-  max-width: 160px;
-  max-height: 160px;
-}
 .gos-view-overflow {
   height: 100%;
   overflow-y: auto;

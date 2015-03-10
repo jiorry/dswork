@@ -14,6 +14,15 @@ type AppApi struct {
 	gos.WebApi
 }
 
+func (a *AppApi) Prepare() bool {
+	if a.GetUserAuth().IsOk() {
+		return true
+	} else {
+		gos.NewError(0, "login failed").Write(a.Ctx.ResponseWriter)
+		return false
+	}
+}
+
 func (a *AppApi) AppData() (util.MapData, error) {
 	m := util.MapData{}
 	appdataModel := appdata.NewAppDataModel()
@@ -24,11 +33,11 @@ func (a *AppApi) AppData() (util.MapData, error) {
 	}
 
 	m["subjects"] = subjects
-	m["draw_sign_js"], _ = appdataModel.GetUsers("draw_sign_js")
-	m["draw_sign_sw"], _ = appdataModel.GetUsers("draw_sign_sw")
-	m["draw_sign_xmgl"], _ = appdataModel.GetUsers("draw_sign_xmgl")
-	m["draw_sign_xmjl"], _ = appdataModel.GetUsers("draw_sign_xmjl")
-	m["draw_sign_zt"], _ = appdataModel.GetUsers("draw_sign_zt")
+	m["draw_js_users"], _ = appdataModel.GetUsers("draw_js_users")
+	m["draw_sw_users"], _ = appdataModel.GetUsers("draw_sw_users")
+	m["draw_xmgl_users"], _ = appdataModel.GetUsers("draw_xmgl_users")
+	m["draw_xmjl_users"], _ = appdataModel.GetUsers("draw_xmjl_users")
+	m["draw_zt_users"], _ = appdataModel.GetUsers("draw_zt_users")
 
 	m["projects"] = project.NewProjectModel().Projects()
 
@@ -63,7 +72,7 @@ func (a *AppApi) ItemViewData(args util.MapData) (db.DataRow, error) {
 		return nil, gos.DoError("没有找到这条记录！")
 	}
 
-	r["js_sign_by_user"] = nil
+	r["js_user"] = nil
 	r["xmjl_user"] = nil
 	r["xmgl_user"] = nil
 	r["sw_user"] = nil
@@ -72,7 +81,7 @@ func (a *AppApi) ItemViewData(args util.MapData) (db.DataRow, error) {
 	r["user"] = auth.QueryAndBuildById(r.GetInt64("user_id")).Bytes2String()
 
 	if r.GetInt64("js_sign_by") > 0 {
-		r["js_sign_by_user"] = auth.QueryAndBuildById(r.GetInt64("js_sign_by")).Bytes2String()
+		r["js_user"] = auth.QueryAndBuildById(r.GetInt64("js_sign_by")).Bytes2String()
 	}
 
 	if r.GetInt64("xmjl_id") > 0 {
@@ -140,4 +149,18 @@ func (a *AppApi) DrawItems(args util.MapData) (db.DataSet, error) {
 	}
 
 	return ds.Bytes2String(), nil
+}
+
+func (a *AppApi) DoSign(args util.MapData) (bool, error) {
+	userId := a.GetUserAuth().UserId()
+	typ := args.GetString("typ")
+	sign := args.GetBool("sign")
+	id := args.GetInt64("item_id")
+
+	err := drawing.NewDrawingModel().DoSign(id, userId, typ, sign)
+	if err != nil {
+		return false, err
+	}
+
+	return true, err
 }

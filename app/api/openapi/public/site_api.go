@@ -1,20 +1,18 @@
-package api
+package public
 
 import (
-	"../lib/auth"
 	"fmt"
 	"github.com/kere/gos"
 	"github.com/kere/gos/db"
 	"github.com/kere/gos/lib/util"
-
 	"time"
 )
 
-type Public struct {
+type PublicApi struct {
 	gos.WebApi
 }
 
-func (a *Public) IsExists(args util.MapData) (int, error) {
+func (a *PublicApi) IsExists(args util.MapData) (int, error) {
 	table := "users"
 	field := args.GetString("field")
 	val := args.GetString("value")
@@ -31,27 +29,11 @@ func (a *Public) IsExists(args util.MapData) (int, error) {
 	}
 }
 
-func (a *Public) Rsakey() (map[string]interface{}, error) {
+func (a *PublicApi) Rsakey() (map[string]interface{}, error) {
 	k := gos.GetRSAKey(0)
 	m := make(map[string]interface{}, 0)
 	m["hex"] = fmt.Sprintf("%x", k.Key.PublicKey.N)
 	m["keyid"] = k.CreatedAt.Unix()
 	m["unix"] = time.Now().Unix()
-	return m, nil
-}
-
-func (a *Public) LoginByIp() (util.MapData, error) {
-	au := auth.New(a.Ctx)
-	usrVO, isOk := au.LoginByBindIp()
-	m := util.MapData{}
-	m["success"] = false
-
-	if !isOk {
-		return m, nil
-	}
-
-	m["user"] = usrVO
-	m["success"] = true
-
 	return m, nil
 }

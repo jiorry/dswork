@@ -15,6 +15,10 @@ func QueryAndBuildById(id int64) db.DataRow {
 		return usr
 	}
 
+	return buildAvatar(usr)
+}
+
+func buildAvatar(usr db.DataRow) db.DataRow {
 	if usr.IsNull("avatar") || usr.GetString("avatar") == "" {
 		usr["isAvatar"] = false
 		usr["avatar"] = "/assets/img/avatar_empty.png"
@@ -63,9 +67,21 @@ type UserAuth struct {
 	gos.UserAuth
 }
 
-func UserToken(email string, text []byte) (string, string) {
+func ChangePassword(id int64, nick, cipher string) error {
+	_, text, err := gos.PraseCipher([]byte(cipher))
+	if err != nil {
+		return gos.NewError(0, err)
+	}
+
+	obj := db.DataRow{}
+	obj["salt"], obj["token"] = UserToken(nick, text)
+	_, err = db.NewUpdateBuilder("users").Where("id=?", id).Update(obj)
+	return err
+}
+
+func UserToken(nick string, text []byte) (string, string) {
 	salt := util.Unique()
-	return salt, gos.UserToken([]interface{}{email}, string(text), salt)
+	return salt, gos.UserToken([]interface{}{nick}, string(text), salt)
 }
 
 func New(ctx *gos.Context) *UserAuth {
@@ -85,23 +101,11 @@ func (u *UserAuth) SetCookie(age int64) {
 	u.UserAuth.UserAuthBase.SetCookie(u.Keys(), u.User(), age)
 }
 
-func (u *UserAuth) Avatar() string {
-	return "http://localhost:8080/assets/uploads/avatar/face.png"
-}
-
 func (u *UserAuth) Nick() string {
 	return u.User().GetString("nick")
 }
 
-// func (a *UserAuth) LoginByBindIp() error {
-
-// }
-
-func (a *UserAuth) Login(cipher string) error {
-	return a.UserAuth.UserAuthBase.LoginBy([]string{"email"}, []string{"email"}, []byte(cipher))
-}
-
-func (a *UserAuth) LoginByBindIp() (*UserVO, bool) {
+func (a *UserAuth) BindIpUser() (*UserVO, bool) {
 	usr := a.QueryByBindIp()
 	if usr.Empty() {
 		return nil, false
@@ -111,11 +115,8 @@ func (a *UserAuth) LoginByBindIp() (*UserVO, bool) {
 		return nil, false
 	}
 
-	a.DoSuccess(usr)
-	a.SetCookie(0)
-
 	vo := &UserVO{}
-	usr.CopyToStruct(vo)
+	buildAvatar(usr).CopyToStruct(vo)
 
 	return vo, true
 }
@@ -124,7 +125,7 @@ func (a *UserAuth) QueryByBindIp() db.DataRow {
 	arr := strings.Split(a.GetContext().Request.RemoteAddr, ":")
 	ip := arr[0]
 	if ip == "" {
-		return db.DataRow{}
+		return nil
 	}
 	r, _ := db.NewQueryBuilder(a.GetOptions().Table).Where("bind_ip=?", ip).QueryOne()
 	return r

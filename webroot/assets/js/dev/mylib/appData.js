@@ -4,15 +4,16 @@ define(
 
 	function() {
 		var appData = {
+			bindedUser : null,
 			userVO : null,
 			subjects : [],
 			subjects : [],
 			projects : [],
-			draw_sign_js : [],
-			draw_sign_sw : [],
-			draw_sign_xmgl : [],
-			draw_sign_xmjl : [],
-			draw_sign_zt : []
+			draw_js_users : [],
+			draw_sw_users : [],
+			draw_xmgl_users : [],
+			draw_xmjl_users : [],
+			draw_zt_users : []
 		};
 
 		return appData;
