@@ -41,7 +41,14 @@ require(
 	['app'], 
 	function (app){
 		app.run(['$rootScope', function($rootScope){
-			$rootScope.message = "您没有相应的登录权限，请联系管理员！"
+			switch(window.location.pathname){
+			case '/error/a':
+				$rootScope.message = "您没有相应的登录权限，请联系管理员！"
+				break;
+			case '/error/b':
+				$rootScope.message = "您没的权限不足，请联系管理员！"
+				break;
+			}
     	}])
 
 		angular.bootstrap(document, ['app']);

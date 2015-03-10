@@ -61,29 +61,12 @@ require(
 				rsaData = result;
 
 				if(result.is_login){
+					appData.user = result.user;
 					loginSuccess();
 				}else{
-					doLogin();
+					prepareLoginForm();
 				}
 			})
-
-		function doLogin(){
-			prepareLoginForm();
-
-			/*client.send('public.sign.AutoLogin', null)
-				.done(function(result){
-					if(result.success){
-						appData.userVO = result.user;
-
-						$('#gos-fix-ip-login img').attr('src', appData.userVO.avatar);
-						$('#gos-current-user span').html(appData.userVO.nick);
-
-						loginSuccess(0.5);
-
-					}else
-						prepareLoginForm();
-				})*/
-		}
 
 		function bootstrapApp(){
 			require(['app', 'ngViewExplorer'], function(app){
@@ -137,6 +120,8 @@ require(
 		}
 
 		function loginSuccess(delay){
+			$('#gos-current-user span').text(appData.user.nick);
+
 			var showfunc = function(){
 				$('#gos-loginContainer').removeClass('in').one('bsTransitionEnd', function(){
 					$(this).addClass('hidden');
@@ -174,6 +159,7 @@ require(
 			client.send('public.sign.BindIpUser', null)
 				.done(function(result){
 					appData.bindedUser = result;
+
 					if(result && result.nick!=''){
 						$loginForm.find(':input[name=login]').val(result.nick).attr('disabled', 'disabled');
 						$loginForm.find('img').attr('src', result.avatar).parent().removeClass('hidden');
@@ -200,19 +186,15 @@ require(
 
 				// /api/web UserLogin [cipher_string, is_remember?]
 				
-				client.send('public.sign.UserLogin', {cipher: util.cipherString(nick, password)})
+				client.send('public.sign.UserLogin', {cipher: util.cipherString(rsaData, nick, password)})
 					.done(function(result){
-						console.log(result);
-						if(result.is_ok){
-							loginSuccess();
-						}else{
-							if(result.message.indexOf('not found')>0){
-								$('#gos-login-message').text('没有找到您的信息哦，是不是输错了？')
-							}else{
-								$('#gos-login-message').text('用户名密码不匹配，仔细检查一下啊')
-							}
-						}
+						appData.user = result;
+						loginSuccess();
 							
+					}).fail(function(jqXHR){
+						var err = JSON.parse(jqXHR.responseText)
+						doError(err.message);
+						
 					})
 			})
 

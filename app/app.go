@@ -12,6 +12,7 @@ func main() {
 
 	gos.Route("/", &page.Index{})
 	gos.RegRoute("^/drawing/.+", &page.Index{})
+	gos.RegRoute("^/me/.+", &page.Index{})
 	gos.Route("/error/:id", &page.Error{})
 	gos.Route("/password", &page.Password{})
 

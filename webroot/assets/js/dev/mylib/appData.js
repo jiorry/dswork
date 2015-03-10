@@ -5,7 +5,7 @@ define(
 	function() {
 		var appData = {
 			bindedUser : null,
-			userVO : null,
+			user : null,
 			subjects : [],
 			subjects : [],
 			projects : [],

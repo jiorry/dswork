@@ -11,20 +11,32 @@ type SignApi struct {
 	gos.WebApi
 }
 
-func (a *SignApi) AutoLogin() (util.MapData, error) {
+func (a *SignApi) IsSecurity() bool {
+	return false
+}
+
+func (a *SignApi) UserLogin(args util.MapData) (*auth.UserVO, error) {
 	au := a.GetUserAuth().(*auth.UserAuth)
 	usrVO, isBindIp := au.BindIpUser()
-	m := util.MapData{}
-	m["success"] = false
-
 	if !isBindIp {
-		return m, nil
+		return nil, fmt.Errorf("只允许绑定IP用户登录系统，如需帮助请与管理员联系")
 	}
 
-	m["user"] = usrVO
-	m["success"] = true
+	err := au.Login(args.GetString("cipher"))
+	if err != nil {
+		return nil, fmt.Errorf("登录失败，请检查登录名和密码是否正确")
+	}
 
-	return m, nil
+	user := au.User()
+
+	if user.GetString("nick") != usrVO.Nick {
+		au.LoginOut()
+		return nil, fmt.Errorf("本机已经绑定IP，用户 %s 不允许登录", user.GetString("nick"))
+	}
+
+	au.SetCookie(0)
+
+	return usrVO, err
 }
 
 func (a *SignApi) BindIpUser() (*auth.UserVO, error) {
@@ -34,8 +46,7 @@ func (a *SignApi) BindIpUser() (*auth.UserVO, error) {
 	return usrVO, nil
 }
 
-func (a *SignApi) ChangePassword(args util.MapData) (bool, error) {
-	nick := args.GetString("nick")
+func (a *SignApi) InitPassword(args util.MapData) (bool, error) {
 	cipher := args.GetString("cipher")
 	// code := args.GetString("code")
 
@@ -44,11 +55,16 @@ func (a *SignApi) ChangePassword(args util.MapData) (bool, error) {
 		return false, err
 	}
 
-	if userVO.Nick != nick {
-		return false, fmt.Errorf("%s已经绑定IP登录，不能修改其他用户的密码", userVO.Nick)
+	if userVO.Status > 0 {
+		return false, fmt.Errorf("不能使用初始密码功能修改用户密码")
 	}
 
-	err = auth.ChangePassword(userVO.Id, userVO.Nick, cipher)
+	err = auth.ChangePassword(userVO.Id, cipher)
+	if err != nil {
+		return false, err
+	}
+
+	err = a.GetUserAuth().ChangeStatus(userVO.Id, 1)
 	if err != nil {
 		return false, err
 	}

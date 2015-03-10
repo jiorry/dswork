@@ -3,7 +3,7 @@ define('drawing.form', ['app', 'ajax', 'util', 'appData', 'ngDatetimePicker'], f
 	  	$scope.projects = appData.projects;
 	  	$scope.subjects = appData.subjects;
 	  	$scope.draw_xmjl_users = appData.draw_xmjl_users;
-	  	$scope.user = appData.userVO;
+	  	$scope.user = appData.user;
 
 	  	var formData = {id: 0}
 	  	if($location.$$search.id){

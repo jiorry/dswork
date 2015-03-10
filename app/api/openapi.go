@@ -3,6 +3,7 @@ package api
 import (
 	"../lib/auth"
 	"./openapi/drawing"
+	"./openapi/private"
 	"./openapi/public"
 	"fmt"
 	"github.com/kere/gos"
@@ -22,6 +23,7 @@ func regist(n string, a interface{}) {
 func init() {
 	regist("drawing.app", &drawing.AppApi{})
 	regist("public.site", &public.PublicApi{})
+	regist("private.sign", &private.SignApi{})
 	regist("public.sign", &public.SignApi{})
 }
 
@@ -37,6 +39,11 @@ func (a *OpenApi) Prepare() bool {
 func (a *OpenApi) Factory(n string) (gos.IApi, error) {
 	if v, ok := apiMap[n]; ok {
 		api := reflect.New(v).Interface().(gos.IApi)
+
+		if api.IsSecurity() && a.GetUserAuth().NotOk() {
+			return nil, fmt.Errorf("用户没有登录或登录已过期，不能使用此API")
+		}
+
 		api.SetUserAuth(a.GetUserAuth())
 		return api, nil
 	}

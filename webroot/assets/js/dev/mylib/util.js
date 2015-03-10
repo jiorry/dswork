@@ -57,7 +57,7 @@ define('util', ['jquery'], function(){
 	    }
 	};
 	
-	util.cipherString = function(nick, pwd){
+	util.cipherString = function(rsaData, nick, pwd){
 		var rsa = new RSAKey(),
 			ts = Server.getTime().toString(),
 			userkey = CryptoJS.MD5( ts + nick )

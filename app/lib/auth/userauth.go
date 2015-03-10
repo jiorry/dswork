@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"bytes"
 	"fmt"
 	"github.com/kere/gos"
 	"github.com/kere/gos/db"
@@ -9,16 +10,18 @@ import (
 	"time"
 )
 
+var separator []byte = []byte("|")
+
 func QueryAndBuildById(id int64) db.DataRow {
 	usr := New(nil).QueryById(id)
 	if usr.Empty() {
 		return usr
 	}
 
-	return buildAvatar(usr)
+	return BuildAvatar(usr)
 }
 
-func buildAvatar(usr db.DataRow) db.DataRow {
+func BuildAvatar(usr db.DataRow) db.DataRow {
 	if usr.IsNull("avatar") || usr.GetString("avatar") == "" {
 		usr["isAvatar"] = false
 		usr["avatar"] = "/assets/img/avatar_empty.png"
@@ -45,7 +48,7 @@ type UserVO struct {
 	Email  string `json:"email"`
 	BindIp string `json:"bind_ip"`
 
-	Status  int8      `json:"status"`
+	Status  int       `json:"status"`
 	Created time.Time `json:"created_at"`
 	LastSee time.Time `json:"last_see_at"`
 }
@@ -67,21 +70,23 @@ type UserAuth struct {
 	gos.UserAuth
 }
 
-func ChangePassword(id int64, nick, cipher string) error {
-	_, text, err := gos.PraseCipher([]byte(cipher))
+func ChangePassword(id int64, cipher string) error {
+	_, b, err := gos.PraseCipher([]byte(cipher))
 	if err != nil {
 		return gos.NewError(0, err)
 	}
 
+	arr := bytes.Split(b, separator)
+
 	obj := db.DataRow{}
-	obj["salt"], obj["token"] = UserToken(nick, text)
+	obj["salt"], obj["token"] = UserToken(string(arr[0]), arr[1])
 	_, err = db.NewUpdateBuilder("users").Where("id=?", id).Update(obj)
 	return err
 }
 
-func UserToken(nick string, text []byte) (string, string) {
+func UserToken(nick string, pwd []byte) (string, string) {
 	salt := util.Unique()
-	return salt, gos.UserToken([]interface{}{nick}, string(text), salt)
+	return salt, gos.UserToken([]interface{}{nick}, pwd, []byte(salt))
 }
 
 func New(ctx *gos.Context) *UserAuth {
@@ -116,7 +121,7 @@ func (a *UserAuth) BindIpUser() (*UserVO, bool) {
 	}
 
 	vo := &UserVO{}
-	buildAvatar(usr).CopyToStruct(vo)
+	BuildAvatar(usr).CopyToStruct(vo)
 
 	return vo, true
 }

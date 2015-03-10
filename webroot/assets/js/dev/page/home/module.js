@@ -1,13 +1,5 @@
 define('home.module', ['app', 'ajax', 'util', 'appData'], function(app, ajax, util, appData){
 	app.controller('HomeModuleCtrl', ['$scope', '$element', function($scope, $element){
-	  	$scope.$on('$viewActived', function(){
-	  		$('#gos-goback').hide();
-	  	})
-
-	  	$scope.$on('$viewHidden', function(){
-	  		$('#gos-goback').hide();
-	  	})
-
 	  	function loadPageData(p){
 		  	ajax.NewClient("/api/open").send('drawing.app.DrawItems', {page: p})
 				.done(function(result){

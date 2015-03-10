@@ -14,15 +14,6 @@ type AppApi struct {
 	gos.WebApi
 }
 
-func (a *AppApi) Prepare() bool {
-	if a.GetUserAuth().IsOk() {
-		return true
-	} else {
-		gos.NewError(0, "login failed").Write(a.Ctx.ResponseWriter)
-		return false
-	}
-}
-
 func (a *AppApi) AppData() (util.MapData, error) {
 	m := util.MapData{}
 	appdataModel := appdata.NewAppDataModel()

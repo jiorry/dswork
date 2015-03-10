@@ -18,8 +18,8 @@ define('drawing.view', ['app', 'ajax', 'util', 'appData'], function(app, ajax, u
 
 				$scope.$apply(function(){
 					$scope.formData = result;
-					$scope.currentUser = appData.userVO;
-					$scope.isCurrentUser = (appData.userVO.id == result.user_id);
+					$scope.currentUser = appData.user;
+					$scope.isCurrentUser = (appData.user.id == result.user_id);
 					$scope.action = currentUserAction();
 				})
 
@@ -60,9 +60,9 @@ define('drawing.view', ['app', 'ajax', 'util', 'appData'], function(app, ajax, u
 						if($scope.action.typ=='xmjl'){
 							$scope.formData.is_xmjl_sign = sign;
 						}else{
-							$scope.formData[$scope.action.typ + '_sign_by'] = appData.userVO.id;
+							$scope.formData[$scope.action.typ + '_sign_by'] = appData.user.id;
 							if(sign){
-								$scope.formData[$scope.action.typ + '_user'] = appData.userVO;
+								$scope.formData[$scope.action.typ + '_user'] = appData.user;
 							}else{
 								$scope.formData[$scope.action.typ + '_user'] = null;
 							}
@@ -73,7 +73,7 @@ define('drawing.view', ['app', 'ajax', 'util', 'appData'], function(app, ajax, u
 		}
 
 		function currentUserAction(){
-			var userId = appData.userVO.id,
+			var userId = appData.user.id,
 				index = -1;
 
 			index = util.objectFindIndex('id', userId, appData.draw_js_users);
