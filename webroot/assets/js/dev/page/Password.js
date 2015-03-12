@@ -83,7 +83,6 @@ require(
 
 			$rootScope.save = function(){
 				var nick = $rootScope.nick,
-					oldPassword = $rootScope.registion.old_password.$viewValue,
 					password = $rootScope.password,
 					confirm = $rootScope.confirm_pwd;
 
@@ -91,29 +90,24 @@ require(
 					doError('两次输入的密码不匹配');
 					return
 				}
-				if($rootScope.userBinded && $rootScope.userBinded.status==0){
-					client.send('public.sign.InitPassword', {cipher : util.cipherString(rsaData, nick, password)})
-						.done(function(result){
-							window.location.href = "/"
-
-						}).fail(function(jqXHR){
-							var err = JSON.parse(jqXHR.responseText)
-							doError(err.message);
-						})
-
-				}else{
-					var cipher = util.cipherString(rsaData, nick, password),
-						oldCipher = util.cipherString(rsaData, nick, oldPassword);
-					client.send('private.sign.ChangePassword', {cipher : cipher, old : oldCipher})
-						.done(function(result){
-							window.location.href = "/"
-
-						}).fail(function(jqXHR){
-							var err = JSON.parse(jqXHR.responseText)
-							doError(err.message);
-						})
-
+				if(!$rootScope.userBinded){
+					doError('您的电脑没有权限使用这个功能，请联系管理员');
+					return
+				} 
+				if($rootScope.userBinded.status>0){
+					doError('功能被限制，请与管理员联系，再次初始化您的登录密码');
+					return
 				}
+				client.send('public.sign.InitPassword', {cipher : util.cipherString(rsaData, nick, password)})
+					.done(function(result){
+						window.location.href = "/"
+
+					}).fail(function(jqXHR){
+						var err = JSON.parse(jqXHR.responseText)
+						doError(err.message);
+					})
+
+
 					
 			}
     	}])

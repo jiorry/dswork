@@ -3,6 +3,7 @@ package appdata
 import (
 	"fmt"
 	"github.com/kere/gos/db"
+	"strings"
 )
 
 type AppDataModel struct {
@@ -16,7 +17,7 @@ func NewAppDataModel() *AppDataModel {
 }
 
 func (a *AppDataModel) QueryOne(k string) (db.DataRow, error) {
-	return a.QueryBuilder().Where("name=?", k).QueryOne()
+	return a.QueryBuilder().Where("name=?", k).Cache().QueryOne()
 }
 
 func (a *AppDataModel) GetSubjects() ([]interface{}, error) {
@@ -30,14 +31,14 @@ func (a *AppDataModel) GetSubjects() ([]interface{}, error) {
 	return subjects, err
 }
 
-func (a *AppDataModel) GetUsers(key string) (db.DataSet, error) {
+func (a *AppDataModel) GetUsers(key string) ([]string, db.DataSet, error) {
 	r, err := a.QueryOne(key)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-
-	data, err := db.NewQueryBuilder("users").Select("id,nick,email,phone,avatar,bind_ip,status").Where(fmt.Sprint("id in (", r.GetString("value"), ") and status>0")).Query()
-
+	val := r.GetString("value")
+	data, err := db.NewQueryBuilder("users").CacheExpire(300).Select("id,nick,email,phone,avatar,bind_ip,status").Where(fmt.Sprint("id in (", val, ") and status>0")).Query()
 	data.Bytes2String()
-	return data, err
+
+	return strings.Split(val, ","), data, err
 }

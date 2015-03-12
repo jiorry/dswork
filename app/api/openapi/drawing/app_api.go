@@ -15,7 +15,7 @@ type AppApi struct {
 }
 
 func (a *AppApi) AppData() (util.MapData, error) {
-	m := util.MapData{}
+
 	appdataModel := appdata.NewAppDataModel()
 	// subjects
 	subjects, err := appdataModel.GetSubjects()
@@ -23,14 +23,15 @@ func (a *AppApi) AppData() (util.MapData, error) {
 		return nil, err
 	}
 
+	m := util.MapData{}
 	m["subjects"] = subjects
-	m["draw_js_users"], _ = appdataModel.GetUsers("draw_js_users")
-	m["draw_sw_users"], _ = appdataModel.GetUsers("draw_sw_users")
-	m["draw_xmgl_users"], _ = appdataModel.GetUsers("draw_xmgl_users")
-	m["draw_xmjl_users"], _ = appdataModel.GetUsers("draw_xmjl_users")
-	m["draw_zt_users"], _ = appdataModel.GetUsers("draw_zt_users")
-
 	m["projects"] = project.NewProjectModel().Projects()
+
+	m["draw_js_user_ids"], m["draw_js_users"], _ = appdataModel.GetUsers("draw_js_users")
+	m["draw_sw_user_ids"], m["draw_sw_users"], _ = appdataModel.GetUsers("draw_sw_users")
+	m["draw_xmgl_user_ids"], m["draw_xmgl_users"], _ = appdataModel.GetUsers("draw_xmgl_users")
+	m["draw_xmjl_user_ids"], m["draw_xmjl_users"], _ = appdataModel.GetUsers("draw_xmjl_users")
+	m["draw_zt_user_ids"], m["draw_zt_users"], _ = appdataModel.GetUsers("draw_zt_users")
 
 	return m, nil
 }
@@ -103,9 +104,9 @@ func (a *AppApi) Save(args util.MapData) (int, error) {
 	projectId := args.GetInt64("project_id")
 	no := args.GetString("no")
 	drawingNo := args.GetString("drawing_no")
-	zrz := args.GetInt64("zrz")
-	a1 := args.GetInt64("a1")
-	quantity := args.GetInt64("quantity")
+	zrz := args.GetFloat("zrz")
+	a1 := args.GetFloat("a1")
+	quantity := args.GetFloat("quantity")
 	xmjlId := args.GetInt64("xmjl_id")
 
 	vo := drawing.NewDrawingVO(name, userId, subjectId, projectId, no, drawingNo, zrz, a1, quantity, xmjlId)

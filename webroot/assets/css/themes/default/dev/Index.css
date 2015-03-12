@@ -634,10 +634,13 @@ table.table-form tr > td:last-child {
 .status-bar .fa-circle {
   color: #dedede;
 }
+.status-bar .active > .fa-circle {
+  color: #f0ad4e;
+}
 .drawing-form input,
 .drawing-form select {
   width: 50%;
-  min-width: 200px;
+  min-width: 360px;
 }
 .font-theme {
   color: #00a99d;

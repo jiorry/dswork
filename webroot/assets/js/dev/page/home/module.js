@@ -10,6 +10,8 @@ define('home.module', ['app', 'ajax', 'util', 'appData'], function(app, ajax, ut
 						result[i].created = util.date2str(result[i].created, 'time');
 
 						result[i].project_name = util.objectFind('id', result[i].project_id, appData.projects).name;
+
+						result[i].activeData = util.drawingActiveStatus(result[i], appData);
 					};
 
 					$scope.$apply(function(){
@@ -19,6 +21,8 @@ define('home.module', ['app', 'ajax', 'util', 'appData'], function(app, ajax, ut
 	  	}
 
 	  	loadPageData(1);
+
+	  	
 	}]);
 
 	return {

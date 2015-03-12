@@ -34,7 +34,7 @@ func (a *SignApi) UserLogin(args util.MapData) (*auth.UserVO, error) {
 		return nil, fmt.Errorf("本机已经绑定IP，用户 %s 不允许登录", user.GetString("nick"))
 	}
 
-	au.SetCookie(0)
+	au.SetCookie(30 * 24 * 3600)
 
 	return usrVO, err
 }

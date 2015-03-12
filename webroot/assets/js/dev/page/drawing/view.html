@@ -42,37 +42,42 @@
 	</table>
 
 	<div class="status-bar clearfix mgb-50">
-		<div ng-class="{'success': formData.is_xmjl_sign}">
+		<div ng-class="{'success': activeData.finish_xmjl, 'active': activeData.is_xmjl}">
 			<i class="fa fa-circle"></i>
 			<span>项目经理</span>
 			<span ng-if="formData.is_xmjl_sign">：{{formData.xmjl_user.nick}}</span>
 		</div>
-		<div ng-class="{'success': formData.js_user}">
+		<div ng-class="{'success': activeData.finish_js, 'active': activeData.is_js}">
 			<i class="fa fa-circle"></i>
 			<span>技术部</span>
 			<span ng-if="formData.js_user">：{{formData.js_user.nick}}</span>
 		</div>
-		<div ng-class="{'success': formData.xmgl_user}">
+		<div ng-class="{'success': activeData.finish_xmgl, 'active': activeData.is_xmgl}">
 			<i class="fa fa-circle"></i>
-			<span>项目部</span>
+			<span>项目管理</span>
 			<span ng-if="formData.xmgl_user">：{{formData.xmgl_user.nick}}</span>
 		</div>
-		<div ng-class="{'success': formData.sw_user}">
+		<div ng-class="{'success': activeData.finish_sw, 'active': activeData.is_sw}">
 			<i class="fa fa-circle"></i>
 			<span>商务部</span>
 			<span ng-if="formData.sw_user">：{{formData.sw_user.nick}}</span>
 		</div>
-		<div ng-class="{'success': formData.zt_user}">
+		<div ng-class="{'success': activeData.finish_zt, 'active': activeData.is_zt}">
 			<i class="fa fa-circle"></i>
 			<span>制图</span>
 			<span ng-if="formData.zt_user">：{{formData.zt_user.nick}}</span>
 		</div>
 	</div>
 
-	<a class="btn btn-primary btn-block btn-lg" ng-if="action && !action.is_sign" ng-click="sign()">
-		<i class="fa fa-user"></i>
-		{{currentUser.nick}} - {{action.title}} 签字同意
-	</a>
-
-	<a class="btn btn-default" ng-if="action && action.is_sign" ng-click="unsign()">{{currentUser.nick}} - {{action.title}} 撤销签字</a>
+	<div ng-repeat="item in signList" class="form-group">
+		<a class="btn btn-primary btn-block btn-lg" ng-if="!item.is_sign" ng-click="sign(item.typ)">
+			<i class="fa fa-user"></i>
+			{{currentUser.nick}} - {{item.title}} 签字同意
+		</a>
+		<a class="btn btn-default" ng-if="item.is_sign" ng-click="unsign(item.typ)">
+			<i class="fa fa-user"></i>
+			{{currentUser.nick}} - {{item.title}} 撤销签字
+		</a>
+	</div>
+	
 </div>

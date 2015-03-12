@@ -19,5 +19,7 @@ func main() {
 	// open api router
 	gos.WebApiRoute("open", &api.OpenApi{})
 
+	// ssdb.Init(gos.Configuration.GetConf("ssdb"))
+
 	gos.Start()
 }

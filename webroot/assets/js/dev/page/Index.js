@@ -113,6 +113,13 @@ require(
 					appData.draw_xmgl_users = result.draw_xmgl_users;
 					appData.draw_xmjl_users = result.draw_xmjl_users;
 					appData.draw_zt_users = result.draw_zt_users;
+
+					appData.draw_js_user_ids = result.draw_js_user_ids;
+					appData.draw_sw_user_ids = result.draw_sw_user_ids;
+					appData.draw_xmgl_user_ids = result.draw_xmgl_user_ids;
+					appData.draw_xmjl_user_ids = result.draw_xmjl_user_ids;
+					appData.draw_zt_user_ids = result.draw_zt_user_ids;
+
 					if(func){
 						func();
 					}
@@ -159,6 +166,10 @@ require(
 			client.send('public.sign.BindIpUser', null)
 				.done(function(result){
 					appData.bindedUser = result;
+					if(appData.bindedUser.status==0){
+						window.location.href='/password'
+						return;
+					}
 
 					if(result && result.nick!=''){
 						$loginForm.find(':input[name=login]').val(result.nick).attr('disabled', 'disabled');
@@ -169,8 +180,8 @@ require(
 
 			$loginForm.removeClass('hidden').addClass('in');
 
-			$loginForm.find(':input').on('keypress', 'input', function(){
-				clearError(s);
+			$loginForm.on('keypress', 'input', function(){
+				clearError();
 			}).removeClass('hidden').addClass('in');
 
 			$loginForm.keypress(function(e){

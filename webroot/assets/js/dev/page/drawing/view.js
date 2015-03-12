@@ -15,12 +15,12 @@ define('drawing.view', ['app', 'ajax', 'util', 'appData'], function(app, ajax, u
 				result.subject_name = subject ? subject.name: 'not found';
 				result.created = util.date2str(result.created, 'time');
 
-
 				$scope.$apply(function(){
 					$scope.formData = result;
 					$scope.currentUser = appData.user;
 					$scope.isCurrentUser = (appData.user.id == result.user_id);
-					$scope.action = currentUserAction();
+					$scope.activeData = util.drawingActiveStatus(result, appData);
+					$scope.signList = signList($scope.activeData);
 				})
 
 				app.setTitle('晒图 ' + result.name);
@@ -31,72 +31,67 @@ define('drawing.view', ['app', 'ajax', 'util', 'appData'], function(app, ajax, u
 				$('#gos-btnHome').trigger('click');
 			})
 
-		$scope.sign = function(){
-			if(!$scope.action || $scope.action.is_sign){
-				console.error('$scope.action: ', $scope.action)
+		$scope.sign = function(typ){
+			if($scope.activeData['finish_'+typ]){
+				console.error(typ + ' already signed')
 				return;
 			}
 
-			doSign(true);
+			doSign(true, typ);
 		}
 
-		$scope.unsign = function(){
-			if(!$scope.action || !$scope.action.is_sign){
-				console.error('$scope.action: ', $scope.action)
+		$scope.unsign = function(typ){
+			if(!$scope.activeData['finish_'+typ]){
+				console.error(typ + ' is unsign')
 				return;
 			}
-			doSign(false);
+			doSign(false, typ);
 		}
 
-		function doSign(sign){
-			ajax.NewClient("/api/open").send('drawing.app.DoSign', {item_id: $scope.formData.id, sign: sign, typ: $scope.action.typ})
+		function doSign(sign, typ){
+			ajax.NewClient("/api/open").send('drawing.app.DoSign', {item_id: $scope.formData.id, sign: sign, typ: typ})
 				.done(function(result){
 					if(!result)
 						return;
 
 					$scope.$apply(function(){
-						$scope.action.is_sign = sign;
-
-						if($scope.action.typ=='xmjl'){
-							$scope.formData.is_xmjl_sign = sign;
-						}else{
-							$scope.formData[$scope.action.typ + '_sign_by'] = appData.user.id;
-							if(sign){
-								$scope.formData[$scope.action.typ + '_user'] = appData.user;
-							}else{
-								$scope.formData[$scope.action.typ + '_user'] = null;
-							}
-								
-						}
+						$scope.activeData['finish_' + typ] = sign;
+						$scope.signList = signList($scope.activeData);
 					})
 				})
 		}
 
-		function currentUserAction(){
-			var userId = appData.user.id,
-				index = -1;
+		function signList(activeData){
+			var arr = ['js', 'sw', 'xmgl', 'xmjl', 'zt'], 
+				funcName = function(typ){
+					switch(typ){
+					case 'js':
+						return '技术部';
+					case 'sw':
+						return '商务部';
+					case 'xmjl':
+						return '项目经理';
+					case 'xmgl':
+						return '项目管理';
+					case 'zt':
+						return '制图部';
+					}
+				},
+				funcData = function(typ){
+					if(!activeData['is_'+typ]){
+						return null;
+					}
+					return {title : funcName(typ), is_sign: activeData['finish_'+typ], typ : typ}
+				};
 
-			index = util.objectFindIndex('id', userId, appData.draw_js_users);
-			if(index>-1)
-				return {typ:'js', title:'技术部', is_sign: parseInt($scope.formData.js_sign_by)>0};
+			var listData = [], item;
+			for (var i = arr.length - 1; i >= 0; i--) {
+				if (item = funcData(arr[i])){
+					listData.push(item)
+				}
+			};
 
-			index = util.objectFindIndex('id', userId, appData.draw_sw_users);
-			if(index>-1)
-				return {typ:'sw', title:'商务部', is_sign: parseInt($scope.formData.sw_sign_by)>0};
-
-			index = util.objectFindIndex('id', userId, appData.draw_xmgl_users);
-			if(index>-1)
-				return {typ:'xmgl', title:'项目部', is_sign: parseInt($scope.formData.xmgl_sign_by)>0};
-
-			index = util.objectFindIndex('id', userId, appData.draw_xmjl_users);
-			if(index>-1)
-				return {typ:'xmjl', title:'项目经理', is_sign: $scope.formData.is_xmjl_sign};
-
-			index = util.objectFindIndex('id', userId, appData.draw_zt_users);
-			if(index>-1)
-				return {typ:'zt', title:'制图部', is_sign: parseInt($scope.formData.zt_sign_by)>0};
-
-			return false;
+			return listData;
 		}
 	}]);
 

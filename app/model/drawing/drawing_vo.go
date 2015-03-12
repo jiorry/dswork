@@ -7,17 +7,17 @@ import (
 
 type DrawingVO struct {
 	db.BaseVO
-	Id        int64  `json:"id" skip:"all"`
-	Name      string `json:"name"`
-	UserId    int64  `json:"user_id" skip:"update"`
-	SubjectId int64  `json:"subject_id"`
-	ProjectId int64  `json:"project_id"`
-	No        string `json:"no"`
-	DrawingNo string `json:"drawing_no"`
-	Zrz       int64  `json:"zrz"`
-	A1        int64  `json:"a1"`
-	Quantity  int64  `json:"quantity"`
-	Status    int    `json:"status"`
+	Id        int64   `json:"id" skip:"all"`
+	Name      string  `json:"name"`
+	UserId    int64   `json:"user_id" skip:"update"`
+	SubjectId int64   `json:"subject_id"`
+	ProjectId int64   `json:"project_id"`
+	No        string  `json:"no"`
+	DrawingNo string  `json:"drawing_no"`
+	Zrz       float64 `json:"zrz"`
+	A1        float64 `json:"a1"`
+	Quantity  float64 `json:"quantity"`
+	Status    int     `json:"status"`
 
 	XmjlId     int64 `json:"xmjl_id"`
 	IsXmjlSign bool  `json:"is_xmjl_sign"`
@@ -32,7 +32,7 @@ type DrawingVO struct {
 	Created time.Time `json:"created" autotime:"true"`
 }
 
-func NewDrawingVO(name string, userId, subjectId, projectId int64, no, drawingNo string, zrz, a1, quantity, xmjlId int64) *DrawingVO {
+func NewDrawingVO(name string, userId, subjectId, projectId int64, no, drawingNo string, zrz, a1, quantity float64, xmjlId int64) *DrawingVO {
 	vo := &DrawingVO{
 		Name:       name,
 		UserId:     userId,
