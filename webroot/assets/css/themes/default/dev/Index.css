@@ -700,15 +700,11 @@ table.table-form tr > td:last-child {
   box-shadow: 1px 1px 10px #AAAAAA;
   padding: 0;
 }
-.gos-background-box {
-  position: fixed;
-  left: 0;
-  top: 0;
-}
 #gos-loginContainer {
   height: 100%;
   width: 100%;
   display: table;
+  background: -webkit-linear-gradient(top, #4cc4b6, #30698c);
 }
 .gos-form-signin-box {
   height: 100%;
@@ -716,6 +712,9 @@ table.table-form tr > td:last-child {
   display: table-cell;
   vertical-align: middle;
   text-align: center;
+}
+#gos-already-signin {
+  color: #FCFCFC;
 }
 #gos-login-form-signin {
   width: 380px;

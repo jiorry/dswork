@@ -62,7 +62,7 @@ require(
 
 				if(result.is_login){
 					appData.user = result.user;
-					loginSuccess();
+					loginSuccess(1);
 				}else{
 					prepareLoginForm();
 				}
@@ -138,6 +138,7 @@ require(
 			}
 			initAppData(function(){
 				if(delay){
+					showAlreadySignin();
 					window.setTimeout(function(){
 						showfunc();
 					}, delay * 1000)
@@ -148,11 +149,20 @@ require(
 		}
 
 
+		function showAlreadySignin(){
+			showLoginContainer();
+			var $t = $('#gos-already-signin').removeClass('hidden').addClass('in');
+			$t.find('img').attr('src', appData.user.avatar).removeClass('hidden');
+			$t.find('span').text(appData.user.nick);
+		}
+
 		function prepareLoginForm(){
 			showLoginContainer();
 
 			var $loginMessage = $('#gos-login-message');
 				$loginForm = $('#gos-login-form-signin');
+
+			$loginForm.removeClass('hidden').addClass('in');
 
 			function doError(s){
 				$loginMessage.removeClass('hidden');
