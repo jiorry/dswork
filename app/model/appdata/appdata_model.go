@@ -37,6 +37,10 @@ func (a *AppDataModel) GetUsers(key string) ([]string, db.DataSet, error) {
 		return nil, nil, err
 	}
 	val := r.GetString("value")
+	if val == "" {
+		return []string{}, nil, nil
+	}
+
 	data, err := db.NewQueryBuilder("users").CacheExpire(300).Select("id,nick,email,phone,avatar,bind_ip,status").Where(fmt.Sprint("id in (", val, ") and status>0")).Query()
 	data.Bytes2String()
 

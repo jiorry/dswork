@@ -1,6 +1,7 @@
 .gos-list-item.odd{
 	background-color: #FFFFFF;
 }
+
 #gos-drawing{
 	.ico{
 		top:45px;
@@ -15,27 +16,55 @@
 		}
 	}
 }
-.status-bar.view-status-bar{
-	&>div{
-		width: 33%;
-	}
-}
-.status-bar{
+
+#drawing-view-button-div{
 	&>div{
 		float: left;
-		width: 19.9%;
-		padding-top: 10px;
-		padding-bottom: 10px;
-
-		&.success .fa-circle{
-			color: @theme-color;
+		text-align: center;
+		margin-left: 20px;
+		min-width: 200px;
+		padding-top: 20px;
+		padding-bottom: 20px;
+		p{
+			padding-top: 5px;
 		}
+	}
+}
+
+div.status-bar>div{
+	width: 19.9%;
+	float: left;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.do-unsign,.do-sign{
+	display: none;
+}
+.status-bar{
+	.success .fa-circle{
+		color: @theme-color!important;
 	}
 	.fa-circle{
 		color: @border-color;
 	}
-	.active>.fa-circle{
+	.active .fa-circle{
 		color: @warning-color;
+	}
+
+	.success{
+		.do-unsign{
+			display: inline;
+		}
+	}
+
+	.active{
+		.do-sign{
+			display: inline;
+		}
+		&.success .do-sign{
+			display: none;
+		}
 	}
 }
 
@@ -45,3 +74,12 @@
 		min-width: 360px;
 	}
 }
+
+#draw-sign-dialog{
+	background-color: #CCCCCC;
+
+	div.modal-dialog{
+		top: 200px;
+	}
+}
+

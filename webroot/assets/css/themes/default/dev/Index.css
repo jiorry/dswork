@@ -622,28 +622,55 @@ table.table-form tr > td:last-child {
   border: 1px solid #dedede;
   border-radius: 50%;
 }
-.status-bar.view-status-bar > div {
-  width: 33%;
-}
-.status-bar > div {
+#drawing-view-button-div > div {
   float: left;
+  text-align: center;
+  margin-left: 20px;
+  min-width: 200px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+#drawing-view-button-div > div p {
+  padding-top: 5px;
+}
+div.status-bar > div {
   width: 19.9%;
+  float: left;
   padding-top: 10px;
   padding-bottom: 10px;
 }
-.status-bar > div.success .fa-circle {
-  color: #00a99d;
+.do-unsign,
+.do-sign {
+  display: none;
+}
+.status-bar .success .fa-circle {
+  color: #00a99d !important;
 }
 .status-bar .fa-circle {
   color: #dedede;
 }
-.status-bar .active > .fa-circle {
+.status-bar .active .fa-circle {
   color: #f0ad4e;
+}
+.status-bar .success .do-unsign {
+  display: inline;
+}
+.status-bar .active .do-sign {
+  display: inline;
+}
+.status-bar .active.success .do-sign {
+  display: none;
 }
 .drawing-form input,
 .drawing-form select {
   width: 50%;
   min-width: 360px;
+}
+#draw-sign-dialog {
+  background-color: #CCCCCC;
+}
+#draw-sign-dialog div.modal-dialog {
+  top: 200px;
 }
 .font-theme {
   color: #00a99d;

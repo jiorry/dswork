@@ -27,6 +27,12 @@ type DrawingVO struct {
 	XmglSignBy int64 `json:"xmgl_sign_by"`
 	ZtSignBy   int64 `json:"zt_sign_by"`
 
+	JsSignAt   time.Time `json:"js_sign_at"`
+	SwSignAt   time.Time `json:"sw_sign_at"`
+	XmglSignAt time.Time `json:"xmgl_sign_at"`
+	XmjlSignAt time.Time `json:"xmjl_sign_at"`
+	ZtSignAt   time.Time `json:"zt_sign_at"`
+
 	DrawPlan int `json:"draw_plan"`
 
 	Created time.Time `json:"created" autotime:"true"`

@@ -15,12 +15,18 @@ define('drawing.view', ['app', 'ajax', 'util', 'appData'], function(app, ajax, u
 				result.subject_name = subject ? subject.name: 'not found';
 				result.created = util.date2str(result.created, 'time');
 
+				result.xmjl_sign_at_string = util.date2str(result.xmjl_sign_at, 'time');
+				result.xmgl_sign_at_string = util.date2str(result.xmgl_sign_at, 'time');
+				result.js_sign_at_string = util.date2str(result.js_sign_at, 'time');
+				result.sw_sign_at_string = util.date2str(result.sw_sign_at, 'time');
+				result.zt_sign_at_string = util.date2str(result.zt_sign_at, 'time');
+
+
 				$scope.$apply(function(){
 					$scope.formData = result;
 					$scope.currentUser = appData.user;
 					$scope.isCurrentUser = (appData.user.id == result.user_id);
 					$scope.activeData = util.drawingActiveStatus(result, appData);
-					$scope.signList = signList($scope.activeData);
 				})
 
 				app.setTitle('晒图 ' + result.name);
@@ -29,69 +35,83 @@ define('drawing.view', ['app', 'ajax', 'util', 'appData'], function(app, ajax, u
 				var err = JSON.parse(jqXHR.responseText)
 				alert(err.message);
 				$('#gos-btnHome').trigger('click');
-			})
+			});
 
-		$scope.sign = function(typ){
-			if($scope.activeData['finish_'+typ]){
-				console.error(typ + ' already signed')
-				return;
-			}
+		var $dialog = $element.find('#draw-sign-dialog'),
+			$btnSign = $dialog.find('button.btn-primary');
 
-			doSign(true, typ);
+		$scope.showDialog = function(typ){
+			$scope.currentSignTitle = typTitle(typ);
+			$scope.currentType = typ;
+			$dialog.find('button.btn-primary').data('typ', typ);
+			
+			showDialog();
 		}
 
-		$scope.unsign = function(typ){
-			if(!$scope.activeData['finish_'+typ]){
-				console.error(typ + ' is unsign')
-				return;
+		$btnSign.click(function(){
+			var typ = $btnSign.data('typ'),
+				day = 0;
+			if(typ == 'zt'){
+				day = $dialog.find('select').val()
 			}
-			doSign(false, typ);
+			$scope.sign($btnSign.data('typ'), true, day).done(function(){
+				hideDialog();
+			});
+		})
+
+		$btnSign.prev().click(function(){
+			hideDialog();
+		})
+
+		function showDialog(){
+			$dialog.css('display', 'block');
+			$dialog.addClass('in');
 		}
 
-		function doSign(sign, typ){
-			ajax.NewClient("/api/open").button('#drawing-view-button-div a.btn').send('drawing.app.DoSign', {item_id: $scope.formData.id, sign: sign, typ: typ})
+		function hideDialog(){
+			$dialog.removeClass('in').one('bsTransitionEnd', function(){
+				$dialog.css('display', 'none');
+			}).emulateTransitionEnd(150);
+		}
+
+		$scope.sign = function(typ, sign, day){
+			return ajax.NewClient("/api/open").button($btnSign).send('drawing.app.DoSign', {item_id: $scope.formData.id, sign: sign, typ: typ, day: day})
 				.done(function(result){
 					if(!result)
 						return;
 
 					$scope.$apply(function(){
 						$scope.activeData['finish_' + typ] = sign;
-						$scope.signList = signList($scope.activeData);
+
+						if(sign){
+							$scope.formData[typ + '_user'] = appData.user;
+							$scope.formData[typ + '_sign_at_string'] = util.date2str(new Date(), 'time');
+
+						}else{
+							if(typ!='xmjl')
+							$scope.formData[typ + '_user'] = null;
+							$scope.formData[typ + '_sign_at_string'] = null;
+						}
+
+						if(typ=='xmjl')
+							$scope.formData.is_xmjl_sign =sign;
 					})
 				})
 		}
 
-		function signList(activeData){
-			var arr = ['js', 'sw', 'xmgl', 'xmjl', 'zt'], 
-				funcName = function(typ){
-					switch(typ){
-					case 'js':
-						return '技术部';
-					case 'sw':
-						return '商务部';
-					case 'xmjl':
-						return '项目经理';
-					case 'xmgl':
-						return '项目管理';
-					case 'zt':
-						return '制图部';
-					}
-				},
-				funcData = function(typ){
-					if(!activeData['is_'+typ]){
-						return null;
-					}
-					return {title : funcName(typ), is_sign: activeData['finish_'+typ], typ : typ}
-				};
-
-			var listData = [], item;
-			for (var i = arr.length - 1; i >= 0; i--) {
-				if (item = funcData(arr[i])){
-					listData.push(item)
-				}
-			};
-
-			return listData;
+		function typTitle(typ){
+			switch(typ){
+			case 'js':
+				return '技术部';
+			case 'sw':
+				return '商务部';
+			case 'xmjl':
+				return '项目经理';
+			case 'xmgl':
+				return '项目管理';
+			case 'zt':
+				return '制图部';
+			}
 		}
 	}]);
 

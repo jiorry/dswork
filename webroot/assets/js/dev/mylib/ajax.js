@@ -104,12 +104,12 @@ define(
                 });
 
             deferred.always(function(){
-                if(this._block) {
-                    this.doBusy(this._block, false);
+                if(clas._block) {
+                    clas.doBusy(clas._block, false);
                 }
 
-                if(this._button){
-                    this.doDisable(this._button, false);
+                if(clas._button){
+                    clas.doDisable(clas._button, false);
                 }
 
             }).fail(function (jqXHR, textStatus, errorThrown){

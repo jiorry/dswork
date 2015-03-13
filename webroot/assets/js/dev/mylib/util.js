@@ -3,6 +3,38 @@ define('util', ['jquery'], function(){
 
 	util.DATE_DAY = 86400000;
 	util.DATE_HOUR = 3600000;
+	util.humanTime = function (b, e){
+	    if (typeof(b)=='string')
+	        b = util.Str2date(b);
+	    if (typeof(e)=='string')
+	        e = util.Str2date(e);
+	    
+	    var n,s,str,diff = Math.abs(e.getTime() - b.getTime())/1000;
+	    if (diff >= 31536000) {
+	        n = diff / 31536000;
+	        s = Math.round((n - Math.floor(n)) * 12);
+	        str = parseInt(n) + '年' + (s==0?'':s +'个月') ;
+	    }else if (diff >= 2592000) {
+	        n = diff / 2592000;
+	        s = Math.round((n - Math.floor(n)) * 30);
+	        str = parseInt(n) + '个月' + (s==0?'':s +'天') ;
+	    }else if (diff >= 86400) {
+	        n = diff / 86400;
+	        s = Math.round((n - Math.floor(n)) * 24);
+	        str = parseInt(n) + '天' + (s==0?'':s +'小时') ;
+	    } else if (diff >= 3600) {
+	        n = diff / 3600;
+	        s = Math.round((n - Math.floor(n)) * 60);
+	        str = parseInt(n) + '小时'+(s==0?'':s+'分钟');
+	    } else if (diff >= 60) {
+	        n = diff / 60;
+	        str = parseInt(n) + '分钟';
+	    } else if (diff < 60) {
+	        str = parseInt(diff).toString() + '秒';
+	    }
+	    return str;
+	}
+
 	util.drawingActiveStatus = function(item, appData){
 		var userId = appData.user.id;
   		var obj = {
@@ -62,6 +94,9 @@ define('util', ['jquery'], function(){
 	}
 	
 	util.date2str = function(time, ctype){
+		if(!time){
+			return '';
+		}
 		switch(typeof(time)){
 			case 'number':
 				time = new Date(time);

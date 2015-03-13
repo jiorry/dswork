@@ -2,6 +2,7 @@ package drawing
 
 import (
 	"github.com/kere/gos/db"
+	"time"
 )
 
 const (
@@ -19,18 +20,33 @@ func NewDrawingModel() *DrawingModel {
 	return m
 }
 
-func (d *DrawingModel) DoSign(id, signUserId int64, typ string, sign bool) error {
+func (d *DrawingModel) DoSign(id, signUserId int64, typ string, sign bool, day int) error {
 	data := db.DataRow{}
+	field := typ + "_sign_by"
+
 	if typ == "xmjl" {
 		data["is_xmjl_sign"] = sign
-
 	} else {
-		field := typ + "_sign_by"
 		if sign {
 			data[field] = signUserId
 		} else {
 			data[field] = 0
 		}
+	}
+
+	if typ == "zt" {
+		if sign {
+			data["draw_plan"] = day
+		} else {
+			data["draw_plan"] = 0
+		}
+	}
+
+	field = typ + "_sign_at"
+	if sign {
+		data[field] = time.Now()
+	} else {
+		data[field] = nil
 	}
 
 	_, err := db.NewUpdateBuilder(d.Table()).Where("id=?", id).Update(data)

@@ -156,8 +156,13 @@ func (a *AppApi) DoSign(args util.MapData) (bool, error) {
 	typ := args.GetString("typ")
 	sign := args.GetBool("sign")
 	id := args.GetInt64("item_id")
+	day := 0
 
-	err := drawing.NewDrawingModel().DoSign(id, userId, typ, sign)
+	if !args.IsNull("day") {
+		day = args.GetInt("day")
+	}
+
+	err := drawing.NewDrawingModel().DoSign(id, userId, typ, sign, day)
 	if err != nil {
 		return false, err
 	}

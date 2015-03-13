@@ -141,7 +141,7 @@ require(
 					showAlreadySignin();
 					window.setTimeout(function(){
 						showfunc();
-					}, delay * 1000)
+					}, delay * 1200)
 				}else{
 					showfunc()
 				}

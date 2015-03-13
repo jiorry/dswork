@@ -52,7 +52,10 @@ define('drawing.form', ['app', 'ajax', 'util', 'appData', 'ngDatetimePicker'], f
 
 	  		ajax.NewClient("/api/open").button($button).send('drawing.app.Save', data)
 				.done(function(result){
-					$('#drawing-go-view-item').trigger('click')
+					if(parseInt(data.id) >0)
+						$('#drawing-go-view-item').trigger('click')
+					else
+						$('#gos-btnHome').trigger('click')
 				})
 	  	}
 

@@ -3,15 +3,22 @@ define('home.module', ['app', 'ajax', 'util', 'appData'], function(app, ajax, ut
 	  	function loadPageData(p){
 		  	ajax.NewClient("/api/open").send('drawing.app.DrawItems', {page: p})
 				.done(function(result){
-					var project,i;
+					var project,i, item;
 					for (i = result.length - 1; i >= 0; i--) {
+						item = result[i];
 						project = util.objectFind('id', parseInt(result.project_id), appData.projects);
 						result[i].project_name = project ? project.name: 'not found';
-						result[i].created = util.date2str(result[i].created, 'time');
+						result[i].project_name = util.objectFind('id', item.project_id, appData.projects).name;
+						result[i].created = util.str2date(item.created);
+						result[i].activeData = util.drawingActiveStatus(item, appData);
 
-						result[i].project_name = util.objectFind('id', result[i].project_id, appData.projects).name;
+						if(item.activeData.finish_zt){
+							var end = new Date(item.created.getTime() + item.draw_plan*util.DATE_DAY);
+							result[i].draw_play_human_time = util.humanTime(item.created, end);
+							result[i].draw_play_date = util.date2str(end, 'time');
+						}
 
-						result[i].activeData = util.drawingActiveStatus(result[i], appData);
+						result[i].created = util.date2str(item.created, 'time');
 					};
 
 					$scope.$apply(function(){
