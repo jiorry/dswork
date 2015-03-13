@@ -136,11 +136,10 @@ define(
         }
 
         Client.prototype.doDisable = function(el, sw){
-            var $ele;
             if(typeof el == "string")
-                $ele  = $(el);
+                el  = $(el);
 
-            $ele.attr('disabled', sw ? 'disabled' : null);
+            el.attr('disabled', sw ? 'disabled' : null);
         }
 
         Client.prototype.doBusy = function(el, sw){
