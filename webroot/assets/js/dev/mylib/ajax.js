@@ -5,8 +5,8 @@ define(
 
     function(util) {
         var ajax  = {
-            NewClient : function(path, blockTo, timeout){
-                return new Client(path, blockTo, timeout);
+            NewClient : function(path, timeout){
+                return new Client(path, timeout);
             },
 
             serverTime : {
@@ -52,13 +52,23 @@ define(
         };
 
         // ajax.setCookie('lang', navigator.language || navigator.userLanguage);
-        var Client = function(path, blockTo, timeout){
+        var Client = function(path, timeout){
             this.path = path || "/api/web";
-            this.timeout = timeout || 10000;
-            this.blockTo = blockTo;
+            this._timeout = timeout || 10000;
+            this._button = null;
+            this._block = null;
         }
         
         Client.prototype.errorHandler = function(r){console.log(r);};
+
+        Client.prototype.button = function($t){
+            this._button = $t;
+            return this;
+        }
+        Client.prototype.block = function($t){
+            this._block = $t;
+            return this;
+        }
 
         Client.prototype.sendAlone = function(method, args){
             if(this.deferred && this.deferred.state()=='pending'){
@@ -72,10 +82,15 @@ define(
 
         Client.prototype.send = function(method, args){
             var pm = {method:method, args:args?args:null};
-            var options = {type:'POST', dataType:'json',cache:false, timeout: this.timeout},k = null
+            var options = {type:'POST', dataType:'json',cache:false, timeout: this._timeout},k = null
 
-            if (this.blockTo)
-                this.doBusy(this.blockTo, true);
+            if (this._block){
+                this.doBusy(this._block, true);
+            }
+                
+            if(this._button){
+                this.doDisable(this._button, true);
+            }
 
             var clas = this;
                 deferred = $.ajax({
@@ -89,8 +104,13 @@ define(
                 });
 
             deferred.always(function(){
-                if(this.blockTo) 
-                    this.doBusy(this.blockTo, false);
+                if(this._block) {
+                    this.doBusy(this._block, false);
+                }
+
+                if(this._button){
+                    this.doDisable(this._button, false);
+                }
 
             }).fail(function (jqXHR, textStatus, errorThrown){
                 switch(jqXHR.status){
@@ -113,6 +133,14 @@ define(
             });
 
             return deferred;
+        }
+
+        Client.prototype.doDisable = function(el, sw){
+            var $ele;
+            if(typeof el == "string")
+                $ele  = $(el);
+
+            $ele.attr('disabled', sw ? 'disabled' : null);
         }
 
         Client.prototype.doBusy = function(el, sw){

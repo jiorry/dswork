@@ -49,7 +49,7 @@ define('drawing.view', ['app', 'ajax', 'util', 'appData'], function(app, ajax, u
 		}
 
 		function doSign(sign, typ){
-			ajax.NewClient("/api/open").send('drawing.app.DoSign', {item_id: $scope.formData.id, sign: sign, typ: typ})
+			ajax.NewClient("/api/open").button('#drawing-view-button-div a.btn').send('drawing.app.DoSign', {item_id: $scope.formData.id, sign: sign, typ: typ})
 				.done(function(result){
 					if(!result)
 						return;

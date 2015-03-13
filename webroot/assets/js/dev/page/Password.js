@@ -98,7 +98,7 @@ require(
 					doError('功能被限制，请与管理员联系，再次初始化您的登录密码');
 					return
 				}
-				client.send('public.sign.InitPassword', {cipher : util.cipherString(rsaData, nick, password)})
+				ajax.NewClient("/api/open").button('#password-btn-save').send('public.sign.InitPassword', {cipher : util.cipherString(rsaData, nick, password)})
 					.done(function(result){
 						window.location.href = "/"
 

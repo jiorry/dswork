@@ -4,9 +4,11 @@ define('drawing.form', ['app', 'ajax', 'util', 'appData', 'ngDatetimePicker'], f
 	  	$scope.subjects = appData.subjects;
 	  	$scope.draw_xmjl_users = appData.draw_xmjl_users;
 	  	$scope.user = appData.user;
+	  	
 
 	  	var formData = {id: 0}
 	  	if($location.$$search.id){
+	  		$scope.is_editable = false;
 	  		ajax.NewClient("/api/open").send('drawing.app.ItemData', {id: $location.$$search.id})
 				.done(function(result){
 					formData = result;
@@ -21,6 +23,7 @@ define('drawing.form', ['app', 'ajax', 'util', 'appData', 'ngDatetimePicker'], f
 						$scope.subject_id = parseInt(formData.subject_id);
 						$scope.project_id = parseInt(formData.project_id);
 						$scope.xmjl_id = parseInt(formData.xmjl_id);
+						$scope.is_editable = isEditable(formData);
 
 					})
 				}).fail(function(jqXHR){
@@ -29,6 +32,9 @@ define('drawing.form', ['app', 'ajax', 'util', 'appData', 'ngDatetimePicker'], f
 					$('#gos-btnHome').trigger('click');
 				})
 	  	}
+
+	  	$scope.is_editable = true;
+	  	var $button = $element.find('a.btn-save');
 
 	  	$scope.save = function(){
 	  		var data = {};
@@ -43,15 +49,19 @@ define('drawing.form', ['app', 'ajax', 'util', 'appData', 'ngDatetimePicker'], f
 	  		data.quantity = this.quantity;
 	  		data.xmjl_id = this.xmjl_id;
 
-	  		ajax.NewClient("/api/open").send('drawing.app.Save', data)
+	  		ajax.NewClient("/api/open").button($button).send('drawing.app.Save', data)
 				.done(function(result){
 					$('#gos-btnHome').trigger('click')
 				})
 	  	}
+
+	  	function isEditable(data){
+	  		return !(data.is_xmjl_sign || data.js_sign_by > 0 || data.sw_sign_by > 0 || data.xmgl_sign_by > 0 || data.zt_sign_by > 0 );
+	  	}
 	}]);
 
 	return {
-		title : '晒图AVC',
+		title : '晒图表单',
 		goBackButton : true,
 		headerHtml : '',
 		i18n : false

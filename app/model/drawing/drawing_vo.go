@@ -43,7 +43,7 @@ func NewDrawingVO(name string, userId, subjectId, projectId int64, no, drawingNo
 		Zrz:        zrz,
 		A1:         a1,
 		Quantity:   quantity,
-		Status:     1,
+		Status:     STATUS_RUN,
 		XmjlId:     xmjlId,
 		IsXmjlSign: false,
 	}

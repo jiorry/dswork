@@ -106,7 +106,7 @@ define('util', ['jquery'], function(){
 				aesCipher.toString();
 
 		return s;
-	}
+	};
 
 	util.aesEncrypto = function(text, ts, key){
 		ts = ts.toString()

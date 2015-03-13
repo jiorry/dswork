@@ -5,6 +5,7 @@ import (
 	"../../../model/appdata"
 	"../../../model/drawing"
 	"../../../model/project"
+	"fmt"
 	"github.com/kere/gos"
 	"github.com/kere/gos/db"
 	"github.com/kere/gos/lib/util"
@@ -114,6 +115,13 @@ func (a *AppApi) Save(args util.MapData) (int, error) {
 	var err error
 	if id > 0 {
 		vo.Id = id
+		r, err := drawing.NewDrawingModel().QueryById(id)
+		if err != nil {
+			return 0, err
+		}
+		if r.GetBool("is_xmjl_sign") || r.GetInt64("js_sign_by") > 0 || r.GetInt64("sw_sign_by") > 0 || r.GetInt64("xmgl_sign_by") > 0 || r.GetInt64("zt_sign_by") > 0 {
+			return 0, fmt.Errorf("请先撤销所有的签字后，才能进行修改")
+		}
 		err = vo.Update()
 	} else {
 		err = vo.Create()

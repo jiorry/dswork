@@ -622,6 +622,9 @@ table.table-form tr > td:last-child {
   border: 1px solid #dedede;
   border-radius: 50%;
 }
+.status-bar.view-status-bar > div {
+  width: 33%;
+}
 .status-bar > div {
   float: left;
   width: 19.9%;
