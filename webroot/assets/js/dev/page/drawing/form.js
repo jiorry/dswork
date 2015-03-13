@@ -13,6 +13,7 @@ define('drawing.form', ['app', 'ajax', 'util', 'appData', 'ngDatetimePicker'], f
 				.done(function(result){
 					formData = result;
 					$scope.$apply(function(){
+						$scope.item_id = formData.id;
 						$scope.name = formData.name;
 						$scope.no = formData.no;
 						$scope.drawing_no = formData.drawing_no;
@@ -51,7 +52,7 @@ define('drawing.form', ['app', 'ajax', 'util', 'appData', 'ngDatetimePicker'], f
 
 	  		ajax.NewClient("/api/open").button($button).send('drawing.app.Save', data)
 				.done(function(result){
-					$('#gos-btnHome').trigger('click')
+					$('#drawing-go-view-item').trigger('click')
 				})
 	  	}
 
