@@ -1,14 +1,13 @@
 define('home.module', ['app', 'ajax', 'util', 'appData'], function(app, ajax, util, appData){
 	app.controller('HomeModuleCtrl', ['$scope', '$element', function($scope, $element){
 	  	function loadPageData(p){
-		  	ajax.NewClient("/api/open").send('drawing.app.DrawItems', {page: p})
+		  	ajax.NewClient("/api/open").send('drawing.app.DrawItems', {status: 1})
 				.done(function(result){
 					var project,i, item;
 					for (i = result.length - 1; i >= 0; i--) {
 						item = result[i];
-						project = util.objectFind('id', parseInt(result.project_id), appData.projects);
+						project = util.objectFind('id', parseInt(item.project_id), appData.projects);
 						result[i].project_name = project ? project.name: 'not found';
-						result[i].project_name = util.objectFind('id', item.project_id, appData.projects).name;
 						result[i].created = util.str2date(item.created);
 						result[i].activeData = util.drawingActiveStatus(item, appData);
 
@@ -35,7 +34,7 @@ define('home.module', ['app', 'ajax', 'util', 'appData'], function(app, ajax, ut
 	return {
 		title : '消息列表',
 		goBackButton : false,
-		headerHtml : '<a href="/drawing/form">+添加项目</a>',
+		headerHtml : '<a href="/drawing/form">+添加项目</a> <a href="/drawing/list"><i class="fa fa-list"></i></a>',
 		i18n : false
 	};
 })

@@ -1,6 +1,7 @@
 package drawing
 
 import (
+	"../../lib/auth"
 	"github.com/kere/gos/db"
 	"time"
 )
@@ -18,6 +19,34 @@ func NewDrawingModel() *DrawingModel {
 	m := &DrawingModel{}
 	m.Init(&DrawingVO{})
 	return m
+}
+
+func (d *DrawingModel) Items(status int) (db.DataSet, error) {
+	ds, err := d.QueryBuilder().Order("created desc").Where("status=?", status).Query()
+	count := len(ds)
+	for i := 0; i < count; i++ {
+		ds[i]["user"] = auth.QueryAndBuildById(ds[i].GetInt64("user_id")).Bytes2String()
+	}
+	if err != nil {
+		return nil, err
+	}
+
+	ds.Bytes2String()
+	return ds, nil
+}
+
+func (d *DrawingModel) QueryByDateRange(b, e time.Time, status int) (db.DataSet, error) {
+	ds, err := d.QueryBuilder().Order("created desc").Where("created between ? and ? and status=?", b, e, status).Query()
+	count := len(ds)
+	for i := 0; i < count; i++ {
+		ds[i]["user"] = auth.QueryAndBuildById(ds[i].GetInt64("user_id")).Bytes2String()
+	}
+	if err != nil {
+		return nil, err
+	}
+
+	ds.Bytes2String()
+	return ds, nil
 }
 
 func (d *DrawingModel) DoSign(id, signUserId int64, typ string, sign bool, day int) error {

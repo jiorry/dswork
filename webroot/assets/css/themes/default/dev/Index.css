@@ -1,3 +1,4 @@
+@import "../../../datepicker.css";
 html,
 body {
   height: 100%;
@@ -904,10 +905,11 @@ div.status-bar > div {
   z-index: 1000;
 }
 #gos-headerBarR {
-  margin-right: 20px;
+  margin-right: 10px;
 }
 #gos-headerBarR a {
   cursor: pointer;
+  margin-right: 20px;
 }
 #gos-headerBarR a:hover {
   text-decoration: none;

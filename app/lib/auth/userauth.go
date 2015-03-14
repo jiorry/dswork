@@ -137,7 +137,7 @@ func (a *UserAuth) QueryByBindIp() db.DataRow {
 }
 
 func (a *UserAuth) QueryById(id int64) db.DataRow {
-	r, _ := db.NewQueryBuilder(a.GetOptions().Table).Where("id=?", id).CacheExpire(a.GetExpire()).QueryOne()
+	r, _ := db.NewQueryBuilder(a.GetOptions().Table).Where("id=?", id).Cache().QueryOne()
 	return r
 }
 

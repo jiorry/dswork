@@ -57,6 +57,7 @@ define(
 		app.gosRouter('/', 'home.module', 'HomeModuleCtrl');
 		app.gosRouter('/home/module', 'home.module', 'HomeModuleCtrl');
 		app.gosRouter('/drawing/form', 'drawing.form', 'DrawingFormCtrl');
+		app.gosRouter('/drawing/list', 'drawing.list', 'DrawingListCtrl');
 		app.gosRouter('/drawing/form/:id', 'drawing.form', 'DrawingFormCtrl');
 		app.gosRouter('/drawing/view/:id', 'drawing.view', 'DrawingViewCtrl');
 		app.gosRouter('/me/password', 'me.password', 'MePasswordCtrl');

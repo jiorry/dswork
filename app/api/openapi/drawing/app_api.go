@@ -135,20 +135,16 @@ func (a *AppApi) Save(args util.MapData) (int, error) {
 }
 
 func (a *AppApi) DrawItems(args util.MapData) (db.DataSet, error) {
-	page := args.GetInt("page")
-	pageSize := 30
+	// page := args.GetInt("page")
+	// pageSize := 30
 
 	md := drawing.NewDrawingModel()
-	ds, err := md.QueryBuilder().Order("created desc").Page(page, pageSize).Where("status>0").Query()
-	count := len(ds)
-	for i := 0; i < count; i++ {
-		ds[i]["user"] = auth.QueryAndBuildById(ds[i].GetInt64("user_id")).Bytes2String()
-	}
-	if err != nil {
-		return nil, err
+
+	if args.IsSet("begin") {
+		return md.QueryByDateRange(args.GetTime("begin"), args.GetTime("end"), args.GetInt("status"))
 	}
 
-	return ds.Bytes2String(), nil
+	return md.Items(args.GetInt("status"))
 }
 
 func (a *AppApi) DoSign(args util.MapData) (bool, error) {
