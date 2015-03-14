@@ -1,17 +1,17 @@
 require.config({
 	baseUrl : "/assets/js/",
 	paths: {
-		'app' : 'dev/mylib/app',
-		'appData' : 'dev/mylib/appData',
-		'loader' : 'dev/mylib/loader',
-		'util' : 'dev/mylib/util',
-		'ajax' : 'dev/mylib/ajax',
-		'gosEditor' : 'dev/mylib/gos.editor',
+		'app' : MYENV+'/mylib/app',
+		'appData' : MYENV+'/mylib/appData',
+		'loader' : MYENV+'/mylib/loader',
+		'util' : MYENV+'/mylib/util',
+		'ajax' : MYENV+'/mylib/ajax',
+		'gosEditor' : MYENV+'/mylib/gos.editor',
 		
-		'angular':'dev/angular',
-		'angular-route':'dev/angular-route',
-		'angular-animate':'dev/angular-animate',
-		'angular-resource':'dev/angular-resource'
+		'angular':MYENV+'/angular',
+		'angular-route':MYENV+'/angular-route',
+		'angular-animate':MYENV+'/angular-animate',
+		'angular-resource':MYENV+'/angular-resource'
 	},
 	shim: {
 	    'app':{
@@ -21,19 +21,13 @@ require.config({
             exports:'angular'
         },
         'angular-route':{
-            exports:'angular-route',
             deps: ['angular']
         },
         'angular-animate':{
-            exports:'angular-animate',
             deps: ['angular']
         },
         'angular-resource':{
-            exports:'angular-resource',
             deps: ['angular']
-        },
-        'jquery' : {
-        	exports:'$'
         }
 	}
 });

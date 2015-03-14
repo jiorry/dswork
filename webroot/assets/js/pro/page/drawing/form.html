@@ -1,0 +1,79 @@
+<form name="qform" class="drawing-form col-xs-offset-2 col-xs-8 mgt-10 mgb-50">
+	<div class="text-center pull-right">
+		<img ng-src="{{user.avatar}}" alt="{{user.nick}}" class="img-thumbnail mini"><br/>
+	</div>
+
+	<div class="step-title">
+		<em>*</em>晒图表单
+	</div>
+
+	<div class="alert alert-danger" ng-if="!is_editable">
+		必须先撤销所有的签字才能进行修改
+	</div>
+	
+	<div class="form-group" ng-class="{'has-error':qform.project_id.$invalid && !qform.project_id.$pristine}" stlye="">
+		<label class="require">项目名称</label>
+		<select ng-model="project_id" ng-options="m.id as m.name for m in projects" class="form-control" ng-required="true">
+		    <option value="">------------</option>
+		</select>
+	</div>
+
+	<div class="form-group" ng-class="{'has-error':qform.name.$invalid && !qform.name.$pristine}">
+		<label class="require">主项名称</label>
+		<input type="text" name="name" ng-model="name" class="form-control" ng-required="true" placeholder="">
+	</div>
+
+	<div class="form-group" ng-class="{'has-error':qform.no.$invalid && !qform.no.$pristine}">
+		<label class="require">主项编号</label>
+		<input type="text" name="no" ng-model="no" class="form-control" ng-required="true" placeholder="">
+	</div>
+
+	<div class="dotted mgtb-20"></div>
+
+	<div class="form-group" ng-class="{'has-error':qform.drawing_no.$invalid && !qform.drawing_no.$pristine}">
+		<label class="require">图号</label>
+		<input type="text" name="drawing_no" ng-model="drawing_no" class="form-control" ng-required="true" placeholder="">
+	</div>
+
+	<div class="form-group" ng-class="{'has-error':qform.subject_id.$invalid && !qform.subject_id.$pristine}" stlye="">
+		<label class="require">专业</label>
+		<select ng-model="subject_id" ng-options="m.id as m.name for m in subjects" class="form-control" ng-required="true">
+		    <option value="">------------</option>
+		</select>
+	</div>
+
+	<div class="form-group" ng-class="{'has-error':qform.zrz.$invalid && !qform.zrz.$pristine}">
+		<label class="require">自然张</label>
+		<input type="number" name="zrz" ng-model="zrz" class="form-control" ng-required="true" placeholder="">
+	</div>
+	<div class="form-group" ng-class="{'has-error':qform.a1.$invalid && !qform.a1.$pristine}">
+		<label class="require">折合A1</label>
+		<input type="number" name="a1" ng-model="a1" class="form-control" ng-required="true" placeholder="">
+	</div>
+	<div class="form-group" ng-class="{'has-error':qform.quantity.$invalid && !qform.quantity.$pristine}">
+		<label class="require">份数</label>
+		<input type="number" name="quantity" ng-model="quantity" class="form-control" ng-required="true" placeholder="">
+	</div>
+
+	<div class="dotted mgtb-20"></div>
+
+	<div class="form-group">
+		<label class="require">填报人</label>
+		<p>{{user.nick}}</p>
+	</div>
+
+	<div class="dotted mgtb-20"></div>
+
+	<div class="form-group" ng-class="{'has-error':qform.xmjl_id.$invalid && !qform.xmjl_id.$pristine}" stlye="">
+		<label class="require">项目经理</label>
+		<select ng-model="xmjl_id" ng-options="m.id as m.nick for m in draw_xmjl_users" class="form-control" ng-required="true">
+		    <option value="">------------</option>
+		</select>
+	</div>
+
+	<div class="form-group mgt-50" ng-show="is_editable">
+		<a class="btn-save btn btn-primary btn-block mgb-10" ng-disabled="qform.$invalid" ng-click="save()">提交表单</a>
+	</div>
+
+	<a id="drawing-go-view-item" href="/drawing/view/{{item_id}}" class="fade hidden"></a>
+</form>

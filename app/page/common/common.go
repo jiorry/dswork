@@ -22,7 +22,7 @@ var (
 	rq_a1 = []byte("<script type=\"text/javascript\">var require={urlArgs:\"")
 	rq_a2 = []byte("\"};</script>\n")
 	rq_b1 = []byte("<script src=\"/assets/js/require.js\" data-main=\"")
-	rq_b2 = []byte("\" defer=\"\" async=\"true\"></script>\n")
+	rq_b2 = []byte("\" sync=\"true\"></script>\n")
 )
 
 func SetupPage(p *gos.Page) {
@@ -32,15 +32,15 @@ func SetupPage(p *gos.Page) {
 	p.JsPosition = "end"
 
 	// p.AddHead("<link href=\"//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css\" rel=\"stylesheet\">")
-	p.AddCss("bootstrap.min.css")
-	p.AddCss("font-awesome.min.css")
+	p.AddCss(&gos.ThemeItem{Value: "bootstrap.min.css"})
+	p.AddCss(&gos.ThemeItem{Value: "font-awesome.min.css"})
 
-	if gos.RunMode == "dev" {
-		p.AddThemeCss(theme, "dev", fmt.Sprint(p.View.Value, ".css"))
-	} else {
-		p.AddThemeJs("", "dist/page", fmt.Sprint(p.View.Value, ".js"))
-		p.AddThemeCss(theme, "dist", fmt.Sprint(p.View.Value, ".css"))
-	}
+	// if gos.RunMode == "pro" {
+	// 	p.AddJs(&gos.ThemeItem{Value: fmt.Sprint(p.View.Value, ".js"), Folder: "pro/page"})
+	// }
+
+	// p.AddJs(&gos.ThemeItem{Value: "require.js", Data: map[string]string{"sync": "true"}})
+	p.AddCss(&gos.ThemeItem{Value: fmt.Sprint(p.View.Value, ".css"), Folder: gos.RunMode, Theme: theme})
 
 	// p.Layout.AddTopRender(gos.NewTemplateRender("", "", "_header", nil))
 	// p.Layout.BottomRenderList(gos.NewTemplateRender("", "", "_footer", nil))
@@ -61,11 +61,8 @@ func ToError(page *gos.Page, msg string) {
 
 func RequireJs(p *gos.Page) {
 	url := ""
-	if gos.RunMode == "dev" {
-		url = util.UrlJoin(gos.GetSite().StaticUrl, "/assets/js/dev/page/", p.View.Folder, p.View.Value)
-	} else {
-		url = util.UrlJoin(gos.GetSite().StaticUrl, "/assets/js/dist/page/", p.View.Folder, p.View.Value)
-	}
+	// url = util.UrlJoin(gos.GetSite().StaticUrl, "/assets/js/dev/page/", p.View.Folder, p.View.Value)
+	url = util.UrlJoin(gos.GetSite().StaticUrl, fmt.Sprint("/assets/js/", gos.RunMode, "/page/"), p.View.Folder, p.View.Value)
 
 	ver := gos.GetSite().JsVersion
 	s := bytes.Buffer{}

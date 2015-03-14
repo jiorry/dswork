@@ -3,22 +3,22 @@ window._gos = window._gos || {};
 require.config({
 	baseUrl : "/assets/js/",
 	paths: {
-		'ngEditor' : 'dev/directive/editor',
-		'ngDatetimePicker' : 'dev/directive/datetimePicker',
-		'ngBootstrapSwitch' : 'dev/directive/bootstrapSwitch',
-		'ngViewExplorer' : 'dev/directive/viewExplorer',
+		'ngEditor' : MYENV+'/directive/editor',
+		'ngDatetimePicker' : MYENV+'/directive/datetimePicker',
+		'ngBootstrapSwitch' : MYENV+'/directive/bootstrapSwitch',
+		'ngViewExplorer' : MYENV+'/directive/viewExplorer',
 
-		'app' : 'dev/mylib/app',
-		'appData' : 'dev/mylib/appData',
-		'loader' : 'dev/mylib/loader',
-		'util' : 'dev/mylib/util',
-		'ajax' : 'dev/mylib/ajax',
-		'gosEditor' : 'dev/mylib/gos.editor',
-		
-		'angular':'dev/angular',
-		'angular-route':'dev/angular-route',
-		'angular-animate':'dev/angular-animate',
-		'angular-resource':'dev/angular-resource'
+		'app' : MYENV+'/mylib/app',
+		'appData' : MYENV+'/mylib/appData',
+		'loader' : MYENV+'/mylib/loader',
+		'util' : MYENV+'/mylib/util',
+		'ajax' : MYENV+'/mylib/ajax',
+		'gosEditor' : MYENV+'/mylib/gos.editor',
+
+		'angular': MYENV=='dev'?MYENV+'/angular':MYENV+'/angular',
+		'angular-route':MYENV=='dev'?MYENV+'/angular-route':MYENV+'/angular',
+		'angular-animate':MYENV=='dev'?MYENV+'/angular-animate':MYENV+'/angular',
+		'angular-resource':MYENV=='dev'?MYENV+'/angular-resource':MYENV+'/angular'
 	},
 	shim: {
 	    'app':{
@@ -28,29 +28,23 @@ require.config({
             exports:'angular'
         },
         'angular-route':{
-            exports:'angular-route',
             deps: ['angular']
         },
         'angular-animate':{
-            exports:'angular-animate',
             deps: ['angular']
         },
         'angular-resource':{
-            exports:'angular-resource',
             deps: ['angular']
-        },
-        'jquery' : {
-        	exports:'$'
         }
 	}
 });
 
 require(
-	['appData', 'ajax', 'util', 'crypto'], 
-	function (appData, ajax, util){
-		require(['app', 'loader'], function(app, loader){
+	['appData', 'ajax', 'util', 'crypto', 'app', 'loader', 'ngViewExplorer'], 
+	function (appData, ajax, util, app, loader){
+		// require(['app', 'loader'], function(app, loader){
 			
-		});
+		// });
 
 		var rsaData,
 			client = ajax.NewClient("/api/open");

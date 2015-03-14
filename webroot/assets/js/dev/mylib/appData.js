@@ -1,7 +1,4 @@
-define(
-	'appData',
-	[],
-
+define('appData',[],
 	function() {
 		var appData = {
 			bindedUser : null,
