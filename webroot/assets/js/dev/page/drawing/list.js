@@ -17,11 +17,11 @@ define('drawing.list', ['app', 'ajax', 'util', 'appData', 'ngDatetimePicker'], f
 						
 						result[i].created = util.date2str(item.created, 'time');
 
-						result[i].xmjl_user = util.objectFind('id', item.xmjl_id, appData.draw_xmjl_users)
-						result[i].js_user = util.objectFind('id', item.js_sign_by, appData.draw_js_users)
-						result[i].zt_user = util.objectFind('id', item.zt_sign_by, appData.draw_zt_users)
-						result[i].xmgl_user = util.objectFind('id', item.xmgl_sign_by, appData.draw_xmgl_users)
-						result[i].sw_user = util.objectFind('id', item.sw_sign_by, appData.draw_sw_users)
+						result[i].xmjl_user = util.objectFind('id', item.xmjl_id, appData.all_users)
+						result[i].js_user = util.objectFind('id', item.js_sign_by, appData.all_users)
+						result[i].zt_user = util.objectFind('id', item.zt_sign_by, appData.all_users)
+						result[i].xmgl_user = util.objectFind('id', item.xmgl_sign_by, appData.all_users)
+						result[i].sw_user = util.objectFind('id', item.sw_sign_by, appData.all_users)
 					};
 
 					$scope.$apply(function(){

@@ -102,17 +102,15 @@ require(
 				.done(function(result){
 					appData.subjects = result.subjects;
 					appData.projects = result.projects;
-					appData.draw_js_users = result.draw_js_users;
-					appData.draw_sw_users = result.draw_sw_users;
-					appData.draw_xmgl_users = result.draw_xmgl_users;
-					appData.draw_xmjl_users = result.draw_xmjl_users;
-					appData.draw_zt_users = result.draw_zt_users;
 
 					appData.draw_js_user_ids = result.draw_js_user_ids;
 					appData.draw_sw_user_ids = result.draw_sw_user_ids;
 					appData.draw_xmgl_user_ids = result.draw_xmgl_user_ids;
 					appData.draw_xmjl_user_ids = result.draw_xmjl_user_ids;
 					appData.draw_zt_user_ids = result.draw_zt_user_ids;
+					appData.all_users = result.all_users;
+
+					appData.buildData();
 
 					if(func){
 						func();

@@ -20,6 +20,18 @@ func (a *AppDataModel) QueryOne(k string) (db.DataRow, error) {
 	return a.QueryBuilder().Where("name=?", k).Cache().QueryOne()
 }
 
+func (a *AppDataModel) Val(k string) (string, error) {
+	r, err := a.QueryBuilder().Where("name=?", k).Cache().QueryOne()
+	if err != nil {
+		return "", err
+	}
+	if r.Empty() {
+		return "", nil
+	}
+	r.Bytes2String()
+	return r.GetString("value"), nil
+}
+
 func (a *AppDataModel) GetSubjects() ([]interface{}, error) {
 	r, err := a.QueryOne("subjects")
 	if err != nil {
@@ -32,11 +44,10 @@ func (a *AppDataModel) GetSubjects() ([]interface{}, error) {
 }
 
 func (a *AppDataModel) GetUsers(key string) ([]string, db.DataSet, error) {
-	r, err := a.QueryOne(key)
+	val, err := a.Val("key")
 	if err != nil {
 		return nil, nil, err
 	}
-	val := r.GetString("value")
 	if val == "" {
 		return []string{}, nil, nil
 	}

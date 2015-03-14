@@ -11,11 +11,11 @@ define(
     	}
 
     	app.run(['$rootScope', '$location', function($rootScope, $location){
-    		var lang = util.getCookie('lang');
+    		var lang = 'zh_CN';
     		if(!lang){
     			lang = navigator.language || navigator.userLanguage;
     		}
-    		lang = lang.replace('-', '_').toLowerCase();
+    		lang = lang.replace('_', '-').toLowerCase();
     		util.setCookie('lang', lang);
 
     		$rootScope.language = lang;
