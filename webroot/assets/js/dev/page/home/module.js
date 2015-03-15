@@ -13,7 +13,12 @@ define('home.module', ['app', 'ajax', 'util', 'appData'], function(app, ajax, ut
 
 						if(item.activeData.finish_zt){
 							var end = new Date(item.created.getTime() + item.draw_plan*util.DATE_DAY);
-							result[i].draw_play_human_time = util.humanTime(item.created, end);
+
+							if(end.getTime()<ajax.serverTime.time()){
+								result[i].draw_play_human_time = '';
+							}else{
+								result[i].draw_play_human_time = util.humanTime(item.created, end);
+							}
 							result[i].draw_play_date = util.date2str(end, 'time');
 						}
 

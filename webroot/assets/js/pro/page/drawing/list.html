@@ -1,0 +1,56 @@
+<div class="pd-20">
+	<div class="gos-form-inline form-inline mgb-20">
+		<div class="form-group datepicker">
+			<label>开始时间</label>
+			<input name="begin" ng-model="begin" type="text" ng-datetime-picker="day" class="form-control"/>
+		</div>
+
+		<div class="form-group datepicker">
+			<label>结束时间</label>
+			<input name="end" ng-model="end" type="text" ng-datetime-picker="day" class="form-control"/>
+		</div>
+
+		<div class="form-group">
+			<a class="btn btn-default"><i class="fa fa-search"></i></a>
+		</div>
+
+	</div>
+	<div class="text-right" ng-show="items.length>0">
+		{{items.length}} 条数据
+	</div>
+	<table class="table table-bordered" ng-show="items.length>0">
+		<tr>
+			<th>日期</th>
+			<th>项目名称</th>
+			<th>主项名称</th>
+			<th>主项号</th>
+			<th>图号</th>
+			<th class="hidden-xs">自然张</th>
+			<th class="hidden-xs">折合A1</th>
+			<th class="hidden-xs">份数</th>
+			<th>填报人</th>
+			<th>项目经理</th>
+			<th>技术质保部</th>
+			<th>制图部</th>
+			<th>项目管理部</th>
+			<th>商务部</th>
+		</tr>
+		<tr ng-repeat="item in items">
+			<td>{{item.created}}</td>
+			<td>{{item.project_name}}</td>
+			<td>{{item.name}}</td>
+			<td>{{item.no}}</td>
+			<td>{{item.drawing_no}}</td>
+			<td class="hidden-xs">{{item.zrz}}</td>
+			<td class="hidden-xs">{{item.a1}}</td>
+			<td class="hidden-xs">{{item.quantity}}</td>
+			<td>{{item.user.nick}}</td>
+			<td>{{item.xmjl_user.nick}}</td>
+			<td>{{item.js_user.nick}}</td>
+			<td>{{item.zt_user.nick}}</td>
+			<td>{{item.xmgl_user.nick}}</td>
+			<td>{{item.sw_user.nick}}</td>
+		</tr>
+
+	</table>
+</div>

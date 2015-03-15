@@ -8,8 +8,8 @@ angular-resource.js
 
 page/Index.js
 ----------------
-mylib/appData.js
 mylib/util.js
+mylib/appData.js
 mylib/ajax.js
 mylib/loader.js
 mylib/app.js
