@@ -7,9 +7,9 @@
 		<div class="mbox">
 			<h4>{{item.project_name}} - {{item.name}}</h4>
 			<div class="clearfix">
-				<div class="pull-left">申报人：{{item.user.nick}}</div>
-				<div class="pull-left mgl-20">申报日期：{{item.created}}</div>
-				<div class="pull-left mgl-20" ng-if="item.activeData.finish_zt">预计出图：{{item.draw_play_human_time}}以后 <span class="mgl-10">{{item.draw_play_date}}</span></div>
+				<div class="pull-left mgr-20">申报人：{{item.user.nick}}</div>
+				<div class="pull-left mgr-20">申报日期：{{item.created}}</div>
+				<div class="pull-left" ng-if="item.activeData.finish_zt">预计出图：{{item.draw_play_human_time}}以后 <span class="mgl-10">{{item.draw_play_date}}</span></div>
 			</div>
 			<div class="dotted"></div>
 			<div class="status-bar clearfix">
