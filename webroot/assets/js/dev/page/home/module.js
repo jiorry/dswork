@@ -12,12 +12,13 @@ define('home.module', ['app', 'ajax', 'util', 'appData'], function(app, ajax, ut
 						result[i].activeData = util.drawingActiveStatus(item, appData);
 
 						if(item.activeData.finish_zt){
+							item.zt_sign_at = util.str2date(item.zt_sign_at);
 							var end = new Date(item.created.getTime() + item.draw_plan*util.DATE_DAY);
 
 							if(end.getTime()<ajax.serverTime.time()){
 								result[i].draw_play_human_time = '';
 							}else{
-								result[i].draw_play_human_time = util.humanTime(item.created, end);
+								result[i].draw_play_human_time = util.humanTime(item.zt_sign_at, end);
 							}
 							result[i].draw_play_date = util.date2str(end, 'time');
 						}
