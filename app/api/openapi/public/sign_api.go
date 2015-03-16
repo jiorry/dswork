@@ -55,7 +55,7 @@ func (a *SignApi) InitPassword(args util.MapData) (bool, error) {
 		return false, err
 	}
 
-	if userVO.Status > 0 {
+	if userVO.Status != 0 {
 		return false, fmt.Errorf("不能使用初始密码功能修改用户密码")
 	}
 
