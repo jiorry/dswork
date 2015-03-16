@@ -20,7 +20,7 @@ type DrawingVO struct {
 	Status    int     `json:"status"`
 
 	XmjlId     int64 `json:"xmjl_id"`
-	IsXmjlSign bool  `json:"is_xmjl_sign"`
+	XmjlSignBy int64 `json:"xmjl_sign_by"`
 
 	JsSignBy   int64 `json:"js_sign_by"`
 	SwSignBy   int64 `json:"sw_sign_by"`
@@ -40,18 +40,17 @@ type DrawingVO struct {
 
 func NewDrawingVO(name string, userId, subjectId, projectId int64, no, drawingNo string, zrz, a1, quantity float64, xmjlId int64) *DrawingVO {
 	vo := &DrawingVO{
-		Name:       name,
-		UserId:     userId,
-		SubjectId:  subjectId,
-		ProjectId:  projectId,
-		No:         no,
-		DrawingNo:  drawingNo,
-		Zrz:        zrz,
-		A1:         a1,
-		Quantity:   quantity,
-		Status:     STATUS_RUN,
-		XmjlId:     xmjlId,
-		IsXmjlSign: false,
+		Name:      name,
+		UserId:    userId,
+		SubjectId: subjectId,
+		ProjectId: projectId,
+		No:        no,
+		DrawingNo: drawingNo,
+		Zrz:       zrz,
+		A1:        a1,
+		Quantity:  quantity,
+		Status:    STATUS_RUN,
+		XmjlId:    xmjlId,
 	}
 
 	vo.Init(vo)

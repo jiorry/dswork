@@ -39,7 +39,7 @@
 			<td class="lb"><span>项目经理</span></td>
 			<td ng-class="{'success': activeData.finish_xmjl, 'active': activeData.is_xmjl}">
 				<i class="fa fa-circle"></i>
-				<span ng-if="activeData.is_xmjl">{{formData.xmjl_user.nick}}</span>
+				<span ng-if="activeData.finish_xmjl">{{formData.xmjl_user.nick}}</span>
 				<span ng-if="activeData.finish_xmjl"><br/>{{formData.xmjl_sign_at_string}}</span>
 				<a class="do-sign" ng-click="showDialog('xmjl')">签字</a>
 				<a class="do-unsign mgl-10" ng-click="sign('xmjl', false)">撤销</a>
@@ -48,7 +48,7 @@
 			<td class="lb"><span>技术部</span></td>
 			<td ng-class="{'success': activeData.finish_js, 'active': activeData.is_js}">
 				<i class="fa fa-circle"></i>
-				<span ng-if="activeData.is_js">{{formData.js_user.nick}}</span>
+				<span ng-if="activeData.finish_js">{{formData.js_user.nick}}</span>
 				<span ng-if="activeData.finish_js"><br/>{{formData.js_sign_at_string}}</span>
 				<a class="do-sign" ng-click="showDialog('js')">签字</a>
 				<a class="do-unsign mgl-10" ng-click="sign('js', false)">撤销</a>
@@ -59,7 +59,7 @@
 			<td class="lb"><span>制图部</span></td>
 			<td ng-class="{'success': activeData.finish_zt, 'active': activeData.is_zt}">
 				<i class="fa fa-circle"></i>
-				<span ng-if="activeData.is_zt">{{formData.zt_user.nick}}</span>
+				<span ng-if="activeData.finish_zt">{{formData.zt_user.nick}}</span>
 				<span ng-if="activeData.finish_zt"><br/>{{formData.zt_sign_at_string}}</span>
 				<a class="do-sign" ng-click="showDialog('zt')">签字</a>
 				<a class="do-unsign mgl-10" ng-click="sign('zt', false)">撤销</a>
@@ -68,7 +68,7 @@
 			<td class="lb"><span>项目管理</span></td>
 			<td ng-class="{'success': activeData.finish_xmgl, 'active': activeData.is_xmgl}">
 				<i class="fa fa-circle"></i>
-				<span ng-if="activeData.is_xmgl">{{formData.xmgl_user.nick}}</span>
+				<span ng-if="activeData.finish_xmgl">{{formData.xmgl_user.nick}}</span>
 				<span ng-if="activeData.finish_xmgl"><br/>{{formData.xmgl_sign_at_string}}</span>
 				<a class="do-sign" ng-click="showDialog('xmgl')">签字</a>
 				<a class="do-unsign mgl-10" ng-click="sign('xmgl', false)">撤销</a>
@@ -79,7 +79,7 @@
 			<td class="lb"><span>商务部</span></td>
 			<td ng-class="{'success': activeData.finish_sw, 'active': activeData.is_sw}">
 				<i class="fa fa-circle"></i>
-				<span ng-if="activeData.is_sw">{{formData.sw_user.nick}}</span>
+				<span ng-if="activeData.finish_sw">{{formData.sw_user.nick}}</span>
 				<span ng-if="activeData.finish_sw"><br/>{{formData.sw_sign_at_string}}</span>
 				<a class="do-sign" ng-click="showDialog('sw')">签字</a>
 				<a class="do-unsign mgl-10" ng-click="sign('sw', false)">撤销</a>

@@ -62,7 +62,7 @@ div.status-bar>div{
 
 	.success{
 		.do-unsign{
-			display: inline;
+			display: none;
 		}
 	}
 
@@ -70,9 +70,12 @@ div.status-bar>div{
 		.do-sign{
 			display: inline;
 		}
-		&.success .do-sign{
-			display: none;
-		}
+	}
+	.active.success .do-sign{
+		display: none;
+	}
+	.active.success .do-unsign{
+		display: inline;
 	}
 }
 

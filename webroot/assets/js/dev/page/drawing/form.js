@@ -60,7 +60,7 @@ define('drawing.form', ['app', 'ajax', 'util', 'appData', 'ngDatetimePicker'], f
 	  	}
 
 	  	function isEditable(data){
-	  		return !(data.is_xmjl_sign || data.js_sign_by > 0 || data.sw_sign_by > 0 || data.xmgl_sign_by > 0 || data.zt_sign_by > 0 );
+	  		return !(data.xmjl_sign_by>0 || data.js_sign_by > 0 || data.sw_sign_by > 0 || data.xmgl_sign_by > 0 || data.zt_sign_by > 0 );
 	  	}
 	}]);
 

@@ -41,28 +41,29 @@ define('util', ['jquery'], function(){
   			is_js:false, is_xmjl:false, is_xmgl:false, is_zt:false, 
   			finish_js:false, finish_xmjl:false, finish_xmgl:false, finish_zt:false};
 
+  		obj.finish_xmjl = item.xmjl_sign_by>0;
+
   		if(item.xmjl_id ==userId){
-  			obj.finish_xmjl = item.is_xmjl_sign;
   			obj.is_xmjl = true;
   		}
 
+  		obj.finish_js = item.js_sign_by>0;
   		if(appData.draw_js_user_ids.indexOf(userId.toString()) > -1){
-  			obj.finish_js = item.js_sign_by>0;
   			obj.is_js = true;
   		}
 
+  		obj.finish_sw = item.sw_sign_by>0;
   		if(appData.draw_sw_user_ids.indexOf(userId.toString()) > -1){
-  			obj.finish_sw = item.sw_sign_by>0;
   			obj.is_sw = true;
   		}
 
+  		obj.finish_xmgl = item.xmgl_sign_by>0;
   		if(appData.draw_xmgl_user_ids.indexOf(userId.toString()) > -1){
-  			obj.finish_xmgl = item.xmgl_sign_by>0;
   			obj.is_xmgl = true;
   		}
 
+  		obj.finish_zt = item.zt_sign_by>0;
   		if(appData.draw_zt_user_ids.indexOf(userId.toString()) > -1){
-  			obj.finish_zt = item.zt_sign_by>0;
   			obj.is_zt = true;
   		}
 

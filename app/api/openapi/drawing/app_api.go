@@ -1,7 +1,7 @@
 package drawing
 
 import (
-	"../../../lib/auth"
+	// "../../../lib/auth"
 	"../../../model/appdata"
 	"../../../model/drawing"
 	"../../../model/project"
@@ -68,34 +68,6 @@ func (a *AppApi) ItemViewData(args util.MapData) (db.DataRow, error) {
 		return nil, gos.DoError("没有找到这条记录！")
 	}
 
-	r["js_user"] = nil
-	r["xmjl_user"] = nil
-	r["xmgl_user"] = nil
-	r["sw_user"] = nil
-	r["zt_user"] = nil
-
-	r["user"] = auth.QueryAndBuildById(r.GetInt64("user_id")).Bytes2String()
-
-	if r.GetInt64("js_sign_by") > 0 {
-		r["js_user"] = auth.QueryAndBuildById(r.GetInt64("js_sign_by")).Bytes2String()
-	}
-
-	if r.GetInt64("xmjl_id") > 0 {
-		r["xmjl_user"] = auth.QueryAndBuildById(r.GetInt64("xmjl_id")).Bytes2String()
-	}
-
-	if r.GetInt64("xmgl_sign_by") > 0 {
-		r["xmgl_user"] = auth.QueryAndBuildById(r.GetInt64("xmgl_sign_by")).Bytes2String()
-	}
-
-	if r.GetInt64("sw_sign_by") > 0 {
-		r["sw_user"] = auth.QueryAndBuildById(r.GetInt64("sw_sign_by")).Bytes2String()
-	}
-
-	if r.GetInt64("zt_sign_by") > 0 {
-		r["zt_user"] = auth.QueryAndBuildById(r.GetInt64("zt_sign_by")).Bytes2String()
-	}
-
 	r.Bytes2String()
 	return r, nil
 }
@@ -122,7 +94,7 @@ func (a *AppApi) Save(args util.MapData) (int, error) {
 		if err != nil {
 			return 0, err
 		}
-		if r.GetBool("is_xmjl_sign") || r.GetInt64("js_sign_by") > 0 || r.GetInt64("sw_sign_by") > 0 || r.GetInt64("xmgl_sign_by") > 0 || r.GetInt64("zt_sign_by") > 0 {
+		if r.GetInt64("xmjl_sign_by") > 0 || r.GetInt64("js_sign_by") > 0 || r.GetInt64("sw_sign_by") > 0 || r.GetInt64("xmgl_sign_by") > 0 || r.GetInt64("zt_sign_by") > 0 {
 			return 0, fmt.Errorf("请先撤销所有的签字后，才能进行修改")
 		}
 		err = vo.Update()

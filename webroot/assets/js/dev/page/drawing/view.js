@@ -21,6 +21,12 @@ define('drawing.view', ['app', 'ajax', 'util', 'appData'], function(app, ajax, u
 				result.sw_sign_at_string = util.date2str(result.sw_sign_at, 'time');
 				result.zt_sign_at_string = util.date2str(result.zt_sign_at, 'time');
 
+				result.xmjl_user = util.objectFind('id', result.xmjl_id, appData.all_users)
+				result.js_user = util.objectFind('id', result.js_sign_by, appData.all_users)
+				result.zt_user = util.objectFind('id', result.zt_sign_by, appData.all_users)
+				result.xmgl_user = util.objectFind('id', result.xmgl_sign_by, appData.all_users)
+				result.sw_user = util.objectFind('id', result.sw_sign_by, appData.all_users)
+
 
 				$scope.$apply(function(){
 					$scope.formData = result;
@@ -85,16 +91,15 @@ define('drawing.view', ['app', 'ajax', 'util', 'appData'], function(app, ajax, u
 
 						if(sign){
 							$scope.formData[typ + '_user'] = appData.user;
+							$scope.formData[typ + '_sign_by'] = appData.user.id;
 							$scope.formData[typ + '_sign_at_string'] = util.date2str(new Date(), 'time');
 
 						}else{
-							if(typ!='xmjl')
 							$scope.formData[typ + '_user'] = null;
+							$scope.formData[typ + '_sign_by'] = 0;
 							$scope.formData[typ + '_sign_at_string'] = null;
 						}
 
-						if(typ=='xmjl')
-							$scope.formData.is_xmjl_sign =sign;
 					})
 				})
 		}

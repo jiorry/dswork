@@ -659,13 +659,16 @@ div.status-bar > div {
   color: #f0ad4e;
 }
 .status-bar .success .do-unsign {
-  display: inline;
+  display: none;
 }
 .status-bar .active .do-sign {
   display: inline;
 }
 .status-bar .active.success .do-sign {
   display: none;
+}
+.status-bar .active.success .do-unsign {
+  display: inline;
 }
 .drawing-form input,
 .drawing-form select {
