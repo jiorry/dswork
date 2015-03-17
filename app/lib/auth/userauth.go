@@ -128,7 +128,7 @@ func (a *UserAuth) BindIpUser() (*UserVO, bool) {
 
 func (a *UserAuth) QueryByBindIp() db.DataRow {
 	arr := strings.Split(a.GetContext().Request.RemoteAddr, ":")
-	fmt.Println("QueryByBindIp:", arr)
+	fmt.Println("-------BindIp:", arr)
 	ip := arr[0]
 	if ip == "" {
 		return nil
