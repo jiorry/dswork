@@ -29,11 +29,10 @@ define('appData',['util'],
 		function buildUsers(typ){
 			appData['draw_'+typ+'_users'] = [];
 			var item,
-				ids = appData['draw_'+typ+'_user_ids'],
-				arr = ids.split(',');
+				ids = appData['draw_'+typ+'_user_ids'];
 
-			for (var i = arr.length - 1; i >= 0; i--) {
-				item = util.objectFind('id', arr[i], appData.all_users);
+			for (var i = ids.length - 1; i >= 0; i--) {
+				item = util.objectFind('id', ids[i], appData.all_users);
 				if(item)
 					appData['draw_'+typ+'_users'].push(item)
 			};
