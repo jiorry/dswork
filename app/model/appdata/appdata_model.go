@@ -2,6 +2,7 @@ package appdata
 
 import (
 	"fmt"
+	"github.com/kere/gos"
 	"github.com/kere/gos/db"
 	"strings"
 )
@@ -20,16 +21,17 @@ func (a *AppDataModel) QueryOne(k string) (db.DataRow, error) {
 	return a.QueryBuilder().Where("name=?", k).Cache().QueryOne()
 }
 
-func (a *AppDataModel) Val(k string) (string, error) {
+func (a *AppDataModel) Val(k string) string {
 	r, err := a.QueryBuilder().Where("name=?", k).Cache().QueryOne()
 	if err != nil {
-		return "", err
+		gos.DoError(err)
+		return ""
 	}
 	if r.Empty() {
-		return "", nil
+		return ""
 	}
 	r.Bytes2String()
-	return r.GetString("value"), nil
+	return r.GetString("value")
 }
 
 func (a *AppDataModel) GetSubjects() ([]interface{}, error) {
@@ -44,10 +46,8 @@ func (a *AppDataModel) GetSubjects() ([]interface{}, error) {
 }
 
 func (a *AppDataModel) GetUsers(key string) ([]string, db.DataSet, error) {
-	val, err := a.Val("key")
-	if err != nil {
-		return nil, nil, err
-	}
+	val := a.Val("key")
+
 	if val == "" {
 		return []string{}, nil, nil
 	}
