@@ -1,7 +1,7 @@
 package drawing
 
 import (
-	// "../../../lib/auth"
+	"../../../lib/auth"
 	"../../../model/appdata"
 	"../../../model/drawing"
 	"../../../model/project"
@@ -35,8 +35,14 @@ func (a *AppApi) AppData() (util.MapData, error) {
 	m["draw_xmjl_user_ids"] = strings.Split(appdataModel.Val("draw_xmjl_users"), ",")
 	m["draw_zt_user_ids"] = strings.Split(appdataModel.Val("draw_zt_users"), ",")
 
-	allUser, _ := db.NewQueryBuilder("users").Cache().Query()
-	m["all_users"] = allUser.Bytes2String()
+	allUsers, _ := db.NewQueryBuilder("users").Cache().Query()
+	allUsers.Bytes2String()
+	count := len(allUsers)
+	for i := 0; i < count; i++ {
+		allUsers[i] = auth.BuildAvatar(allUsers[i])
+	}
+
+	m["all_users"] = allUsers
 
 	return m, nil
 }

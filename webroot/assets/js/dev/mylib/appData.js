@@ -32,7 +32,7 @@ define('appData',['util'],
 				ids = appData['draw_'+typ+'_user_ids'];
 
 			for (var i = ids.length - 1; i >= 0; i--) {
-				item = util.objectFind('id', ids[i], appData.all_users);
+				item = util.objectFind('id', parseInt(ids[i]), appData.all_users);
 				if(item)
 					appData['draw_'+typ+'_users'].push(item)
 			};

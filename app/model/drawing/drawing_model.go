@@ -12,6 +12,11 @@ const (
 	STATUS_RUN    = 1
 )
 
+type UnSignData struct {
+	UID  int64     `json:"uid"`
+	Time time.Time `json:"time"`
+}
+
 type DrawingModel struct {
 	db.BaseModel
 }
@@ -23,7 +28,7 @@ func NewDrawingModel() *DrawingModel {
 }
 
 func (d *DrawingModel) Items(status int) (db.DataSet, error) {
-	ds, err := d.QueryBuilder().Order("created desc").Where("status=?", status).Query()
+	ds, err := d.QueryBuilder().UnSelect("js_unsign_json", "sw_unsign_json", "zt_unsign_json", "xmgl_unsign_json", "xmjl_unsign_json").Order("created desc").Where("status=?", status).Query()
 	count := len(ds)
 	for i := 0; i < count; i++ {
 		ds[i]["user"] = auth.QueryAndBuildById(ds[i].GetInt64("user_id")).Bytes2String()
@@ -37,7 +42,7 @@ func (d *DrawingModel) Items(status int) (db.DataSet, error) {
 }
 
 func (d *DrawingModel) QueryByDateRange(b, e time.Time, status int) (db.DataSet, error) {
-	ds, err := d.QueryBuilder().Order("created desc").Where("created between ? and ? and status=?", b, e, status).Query()
+	ds, err := d.QueryBuilder().UnSelect("js_unsign_json", "sw_unsign_json", "zt_unsign_json", "xmgl_unsign_json", "xmjl_unsign_json").Order("created desc").Where("created between ? and ? and status=?", b, e, status).Query()
 	count := len(ds)
 	for i := 0; i < count; i++ {
 		ds[i]["user"] = auth.QueryAndBuildById(ds[i].GetInt64("user_id")).Bytes2String()
@@ -65,6 +70,15 @@ func (d *DrawingModel) DoSign(id, signUserId int64, typ string, sign bool, day i
 
 		data[typ+"_sign_by"] = 0
 		data[typ+"_sign_at"] = nil
+
+		unsignData := &UnSignData{r.GetInt64(typ + "_sign_by"), time.Now()}
+
+		v := make([]*UnSignData, 0)
+		r.JsonParse(typ+"_unsign_json", &v)
+		v = append(v, unsignData)
+
+		data[typ+"_unsign_json"] = v
+
 	}
 
 	if typ == "zt" {

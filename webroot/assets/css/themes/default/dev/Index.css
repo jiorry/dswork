@@ -649,6 +649,9 @@ div.status-bar > div {
 .do-sign {
   display: none;
 }
+.status-bar .disable-unsign {
+  display: none!important;
+}
 .status-bar .success .fa-circle {
   color: #00a99d !important;
 }

@@ -33,6 +33,12 @@ type DrawingVO struct {
 	XmjlSignAt time.Time `json:"xmjl_sign_at"`
 	ZtSignAt   time.Time `json:"zt_sign_at"`
 
+	JsUnSignJson   interface{} `json:"js_unsign_json" data_type="json"`
+	SwUnSignJson   interface{} `json:"sw_unsign_json" data_type="json"`
+	XmjlUnSignJson interface{} `json:"xmjl_unsign_json" data_type="json"`
+	XmglUnSignJson interface{} `json:"xmgl_unsign_json" data_type="json"`
+	ZtUnSignJson   interface{} `json:"zt_unsign_json" data_type="json"`
+
 	DrawPlan int `json:"draw_plan"`
 
 	Created time.Time `json:"created" autotime:"true"`

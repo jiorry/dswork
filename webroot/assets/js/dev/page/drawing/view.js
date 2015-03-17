@@ -21,6 +21,12 @@ define('drawing.view', ['app', 'ajax', 'util', 'appData'], function(app, ajax, u
 				result.sw_sign_at_string = util.date2str(result.sw_sign_at, 'time');
 				result.zt_sign_at_string = util.date2str(result.zt_sign_at, 'time');
 
+				result.xmjl_unsign = unsignString(result.xmjl_unsign_json)
+				result.xmgl_unsign = unsignString(result.xmgl_unsign_json)
+				result.sw_unsign = unsignString(result.sw_unsign_json)
+				result.js_unsign = unsignString(result.js_unsign_json)
+				result.zt_unsign = unsignString(result.zt_unsign_json)
+
 				result.xmjl_user = util.objectFind('id', result.xmjl_id, appData.all_users)
 				result.js_user = util.objectFind('id', result.js_sign_by, appData.all_users)
 				result.zt_user = util.objectFind('id', result.zt_sign_by, appData.all_users)
@@ -98,6 +104,8 @@ define('drawing.view', ['app', 'ajax', 'util', 'appData'], function(app, ajax, u
 							$scope.formData[typ + '_user'] = null;
 							$scope.formData[typ + '_sign_by'] = 0;
 							$scope.formData[typ + '_sign_at_string'] = null;
+
+							$scope.formData[typ + '_unsign'] = util.date2str(new Date(), 'time') + " " + appData.user.nick + " 撤销签字"
 						}
 
 					})
@@ -117,6 +125,16 @@ define('drawing.view', ['app', 'ajax', 'util', 'appData'], function(app, ajax, u
 			case 'zt':
 				return '制图部';
 			}
+		}
+
+		function unsignString(s){
+			var obj = JSON.parse(s)
+			if(!obj || obj.length == 0) return '';
+
+			obj = obj[obj.length-1]
+
+			var u = util.objectFind('id', obj.uid, appData.all_users);
+			return util.date2str(obj.time, 'time') + " " + u.nick + " 撤销签字"
 		}
 	}]);
 
