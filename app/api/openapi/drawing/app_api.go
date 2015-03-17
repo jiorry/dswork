@@ -35,7 +35,7 @@ func (a *AppApi) AppData() (util.MapData, error) {
 	m["draw_xmjl_user_ids"] = strings.Split(appdataModel.Val("draw_xmjl_users"), ",")
 	m["draw_zt_user_ids"] = strings.Split(appdataModel.Val("draw_zt_users"), ",")
 
-	allUsers, _ := db.NewQueryBuilder("users").Cache().Query()
+	allUsers, _ := db.NewQueryBuilder("users").Select("id,nick,avatar,status").Cache().Query()
 	allUsers.Bytes2String()
 	count := len(allUsers)
 	for i := 0; i < count; i++ {

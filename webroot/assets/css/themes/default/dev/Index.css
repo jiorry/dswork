@@ -649,9 +649,6 @@ div.status-bar > div {
 .do-sign {
   display: none;
 }
-.status-bar .disable-unsign {
-  display: none!important;
-}
 .status-bar .success .fa-circle {
   color: #00a99d !important;
 }
@@ -670,7 +667,7 @@ div.status-bar > div {
 .status-bar .active.success .do-sign {
   display: none;
 }
-.status-bar .active.success .do-unsign {
+.status-bar .is-current-user.active.success .do-unsign {
   display: inline;
 }
 .drawing-form input,

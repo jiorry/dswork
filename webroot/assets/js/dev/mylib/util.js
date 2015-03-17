@@ -42,31 +42,31 @@ define('util', ['jquery'], function(){
   			finish_js:false, finish_xmjl:false, finish_xmgl:false, finish_zt:false};
 
   		obj.finish_xmjl = item.xmjl_sign_by>0;
-  		obj.xmjl_can_unsign = item.xmjl_sign_by>0;
+  		obj.xmjl_is_current = item.xmjl_sign_by==userId;
   		if(item.xmjl_id ==userId){
   			obj.is_xmjl = true;
   		}
 
   		obj.finish_js = item.js_sign_by>0;
-  		obj.js_can_unsign = item.js_sign_by == userId;
+  		obj.js_is_current = item.js_sign_by == userId;
   		if(appData.draw_js_user_ids.indexOf(userId.toString()) > -1){
   			obj.is_js = true;
   		}
 
   		obj.finish_sw = item.sw_sign_by>0;
-  		obj.sw_can_unsign = item.sw_sign_by == userId;
+  		obj.sw_is_current = item.sw_sign_by == userId;
   		if(appData.draw_sw_user_ids.indexOf(userId.toString()) > -1){
   			obj.is_sw = true;
   		}
 
   		obj.finish_xmgl = item.xmgl_sign_by>0;
-  		obj.xmgl_can_unsign = item.xmgl_sign_by == userId;
+  		obj.xmgl_is_current = item.xmgl_sign_by == userId;
   		if(appData.draw_xmgl_user_ids.indexOf(userId.toString()) > -1){
   			obj.is_xmgl = true;
   		}
 
   		obj.finish_zt = item.zt_sign_by>0;
-  		obj.zt_can_unsign = item.zt_sign_by == userId;
+  		obj.zt_is_current = item.zt_sign_by == userId;
   		if(appData.draw_zt_user_ids.indexOf(userId.toString()) > -1){
   			obj.is_zt = true;
   		}

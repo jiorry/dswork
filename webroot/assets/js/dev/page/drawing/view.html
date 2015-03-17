@@ -37,7 +37,7 @@
 
 		<tr>
 			<td class="lb"><span>项目经理</span></td>
-			<td ng-class="{'success': activeData.finish_xmjl, 'active': activeData.is_xmjl, 'disable-unsign':!activeData.xmjl_can_sign}">
+			<td ng-class="{'success': activeData.finish_xmjl, 'active': activeData.is_xmjl, 'is-current-user':activeData.xmjl_is_current}">
 				<i class="fa fa-circle"></i>
 				<span ng-if="activeData.finish_xmjl">{{formData.xmjl_user.nick}}</span>
 				<span ng-if="activeData.finish_xmjl"><br/>{{formData.xmjl_sign_at_string}}</span>
@@ -47,7 +47,7 @@
 			</td>
 
 			<td class="lb"><span>技术部</span></td>
-			<td ng-class="{'success': activeData.finish_js, 'active': activeData.is_js, 'disable-unsign':!activeData.js_can_sign}">
+			<td ng-class="{'success': activeData.finish_js, 'active': activeData.is_js, 'is-current-user':activeData.js_is_current}">
 				<i class="fa fa-circle"></i>
 				<span ng-if="activeData.finish_js">{{formData.js_user.nick}}</span>
 				<span ng-if="activeData.finish_js"><br/>{{formData.js_sign_at_string}}</span>
@@ -59,7 +59,7 @@
 		
 		<tr>
 			<td class="lb"><span>制图部</span></td>
-			<td ng-class="{'success': activeData.finish_zt, 'active': activeData.is_zt, 'disable-unsign':!activeData.zt_can_sign}">
+			<td ng-class="{'success': activeData.finish_zt, 'active': activeData.is_zt, 'is-current-user':activeData.zt_is_current}">
 				<i class="fa fa-circle"></i>
 				<span ng-if="activeData.finish_zt">{{formData.zt_user.nick}}</span>
 				<span ng-if="activeData.finish_zt"><br/>{{formData.zt_sign_at_string}}</span>
@@ -69,7 +69,7 @@
 			</td>
 
 			<td class="lb"><span>项目管理</span></td>
-			<td ng-class="{'success': activeData.finish_xmgl, 'active': activeData.is_xmgl, 'disable-unsign':!activeData.xmgl_can_sign}">
+			<td ng-class="{'success': activeData.finish_xmgl, 'active': activeData.is_xmgl, 'is-current-user':activeData.xmgl_is_current}">
 				<i class="fa fa-circle"></i>
 				<span ng-if="activeData.finish_xmgl">{{formData.xmgl_user.nick}}</span>
 				<span ng-if="activeData.finish_xmgl"><br/>{{formData.xmgl_sign_at_string}}</span>
@@ -81,7 +81,7 @@
 
 		<tr>
 			<td class="lb"><span>商务部</span></td>
-			<td ng-class="{'success': activeData.finish_sw, 'active': activeData.is_sw, 'disable-unsign':!activeData.sw_can_sign}">
+			<td ng-class="{'success': activeData.finish_sw, 'active': activeData.is_sw, 'is-current-user':activeData.sw_is_current}">
 				<i class="fa fa-circle"></i>
 				<span ng-if="activeData.finish_sw">{{formData.sw_user.nick}}</span>
 				<span ng-if="activeData.finish_sw"><br/>{{formData.sw_sign_at_string}}</span>

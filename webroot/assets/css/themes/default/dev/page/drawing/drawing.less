@@ -50,10 +50,6 @@ div.status-bar>div{
 	display: none;
 }
 .status-bar{
-	.disable-unsign{
-		display: none!important;
-	}
-	
 	.success .fa-circle{
 		color: @theme-color!important;
 	}
@@ -78,7 +74,7 @@ div.status-bar>div{
 	.active.success .do-sign{
 		display: none;
 	}
-	.active.success .do-unsign{
+	.is-current-user.active.success .do-unsign{
 		display: inline;
 	}
 }
