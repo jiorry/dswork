@@ -9,6 +9,7 @@ import (
 	"github.com/kere/gos"
 	"github.com/kere/gos/db"
 	"github.com/kere/gos/lib/util"
+	"strings"
 )
 
 type AppApi struct {
@@ -28,11 +29,11 @@ func (a *AppApi) AppData() (util.MapData, error) {
 	m["subjects"] = subjects
 	m["projects"] = project.NewProjectModel().Projects()
 
-	m["draw_js_user_ids"], _ = appdataModel.Val("draw_js_users")
-	m["draw_sw_user_ids"], _ = appdataModel.Val("draw_sw_users")
-	m["draw_xmgl_user_ids"], _ = appdataModel.Val("draw_xmgl_users")
-	m["draw_xmjl_user_ids"], _ = appdataModel.Val("draw_xmjl_users")
-	m["draw_zt_user_ids"], _ = appdataModel.Val("draw_zt_users")
+	m["draw_js_user_ids"], _ = strings.Split(appdataModel.Val("draw_js_users"), ",")
+	m["draw_sw_user_ids"], _ = strings.Split(appdataModel.Val("draw_sw_users"), ",")
+	m["draw_xmgl_user_ids"], _ = strings.Split(appdataModel.Val("draw_xmgl_users"), ",")
+	m["draw_xmjl_user_ids"], _ = strings.Split(appdataModel.Val("draw_xmjl_users"), ",")
+	m["draw_zt_user_ids"], _ = strings.Split(appdataModel.Val("draw_zt_users"), ",")
 
 	allUser, _ := db.NewQueryBuilder("users").Cache().Query()
 	m["all_users"] = allUser.Bytes2String()
