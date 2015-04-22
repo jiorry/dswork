@@ -18,6 +18,7 @@ type DrawingVO struct {
 	A1        float64 `json:"a1"`
 	Quantity  float64 `json:"quantity"`
 	Status    int     `json:"status"`
+	Memo      string  `json:"memo"`
 
 	XmjlId     int64 `json:"xmjl_id"`
 	XmjlSignBy int64 `json:"xmjl_sign_by"`
@@ -44,7 +45,7 @@ type DrawingVO struct {
 	Created time.Time `json:"created" autotime:"true"`
 }
 
-func NewDrawingVO(name string, userId, subjectId, projectId int64, no, drawingNo string, zrz, a1, quantity float64, xmjlId int64) *DrawingVO {
+func NewDrawingVO(name string, userId, subjectId, projectId int64, no, drawingNo string, zrz, a1, quantity float64, xmjlId int64, memo string) *DrawingVO {
 	vo := &DrawingVO{
 		Name:      name,
 		UserId:    userId,
@@ -57,6 +58,7 @@ func NewDrawingVO(name string, userId, subjectId, projectId int64, no, drawingNo
 		Quantity:  quantity,
 		Status:    STATUS_RUN,
 		XmjlId:    xmjlId,
+		Memo:      memo,
 	}
 
 	vo.Init(vo)

@@ -2,11 +2,12 @@ define('drawing.view', ['app', 'ajax', 'util', 'appData'], function(app, ajax, u
 
 	app.controller('DrawingViewCtrl', ['$scope', '$element', '$location', function($scope, $element, $location){
 	  	var formData = {id: 0}
-	  	if(!$location.$$search.id){
+
+	  	if(!$location.router.search.id){
 	  		$('#gos-btnHome').trigger('click');
 	  		return;
 	  	}
-	  	ajax.NewClient("/api/open").send('drawing.app.ItemViewData', {id: $location.$$search.id})
+	  	ajax.NewClient("/api/open").send('drawing.app.ItemViewData', {id: $location.router.search.id})
 			.done(function(result){
 				var project = util.objectFind('id', parseInt(result.project_id), appData.projects);
 				result.project_name = project ? project.name: 'not found';
@@ -64,7 +65,7 @@ define('drawing.view', ['app', 'ajax', 'util', 'appData'], function(app, ajax, u
 			var typ = $btnSign.data('typ'),
 				day = 0;
 			if(typ == 'zt'){
-				day = $dialog.find('select').val()
+				day = parseInt($dialog.find('select').val());
 			}
 			$scope.sign($btnSign.data('typ'), true, day).done(function(){
 				hideDialog();

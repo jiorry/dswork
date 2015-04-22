@@ -46,7 +46,8 @@ require(
 			
 		// });
 
-		var rsaData,
+		var siriWave,
+			rsaData,
 			client = ajax.NewClient("/api/open");
 
 		client.send('public.site.Rsakey', null)
@@ -146,6 +147,7 @@ require(
 			var $t = $('#gos-already-signin').removeClass('hidden').addClass('in');
 			$t.find('img').attr('src', appData.user.avatar).removeClass('hidden');
 			$t.find('span').text(appData.user.nick);
+			
 		}
 
 		function prepareLoginForm(){

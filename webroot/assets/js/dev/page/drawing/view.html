@@ -34,7 +34,10 @@
 			<td class="lb">折合A1</td>
 			<td>{{formData.a1}}</td>
 		</tr>
-
+		<tr>
+			<td class="lb">备注</td>
+			<td colspan="3">{{formData.memo}}</td>
+		</tr>
 		<tr>
 			<td class="lb"><span>项目经理</span></td>
 			<td ng-class="{'success': activeData.finish_xmjl, 'active': activeData.is_xmjl, 'is-current-user':activeData.xmjl_is_current}">
@@ -115,16 +118,19 @@
 							<h3>{{currentSignTitle}} {{currentUser.nick}}</h3>
 							<label ng-show="currentType=='zt'">预计出图时间：
 								<select>
-									<option value="1">1天</option>
-									<option value="2">2天</option>
-									<option value="3" selected="selected">3天</option>
-									<option value="4">4天</option>
-									<option value="5">5天</option>
-									<option value="6">6天</option>
-									<option value="7">7天</option>
-									<option value="8">8天</option>
-									<option value="9">9天</option>
-									<option value="10">10天</option>
+									<option value="2">2小时</option>
+									<option value="4">4小时</option>
+									<option value="6">6小时</option>
+									<option value="24">1天</option>
+									<option value="48" selected="selected">2天</option>
+									<option value="72">3天</option>
+									<option value="96">4天</option>
+									<option value="120">5天</option>
+									<option value="144">6天</option>
+									<option value="168">7天</option>
+									<option value="192">8天</option>
+									<option value="216">9天</option>
+									<option value="240">10天</option>
 								</select>
 							</label>
 								

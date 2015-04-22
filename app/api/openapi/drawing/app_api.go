@@ -91,8 +91,9 @@ func (a *AppApi) Save(args util.MapData) (int, error) {
 	a1 := args.GetFloat("a1")
 	quantity := args.GetFloat("quantity")
 	xmjlId := args.GetInt64("xmjl_id")
+	memo := args.GetString("memo")
 
-	vo := drawing.NewDrawingVO(name, userId, subjectId, projectId, no, drawingNo, zrz, a1, quantity, xmjlId)
+	vo := drawing.NewDrawingVO(name, userId, subjectId, projectId, no, drawingNo, zrz, a1, quantity, xmjlId, memo)
 
 	var err error
 	if id > 0 {

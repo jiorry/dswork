@@ -49,6 +49,7 @@ define('drawing.form', ['app', 'ajax', 'util', 'appData', 'ngDatetimePicker'], f
 	  		data.a1 = this.a1;
 	  		data.quantity = this.quantity;
 	  		data.xmjl_id = this.xmjl_id;
+	  		data.memo = this.memo;
 
 	  		ajax.NewClient("/api/open").button($button).send('drawing.app.Save', data)
 				.done(function(result){

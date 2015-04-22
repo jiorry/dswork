@@ -87,7 +87,9 @@ define('ngViewExplorer', ['app', 'loader'], function(app, loader){
 								return false;
 							}
 							viewname = match.name;
-							$.extend($location.$$search, match.search);
+							
+							$location.router = match;
+							
 							loader.loadview(viewname, match.templateUrl, $q, $rootScope)
 								.then(function(){
 									if(checkFunc(evt, newUrl, oldUrl)){
