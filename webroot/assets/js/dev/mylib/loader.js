@@ -56,14 +56,14 @@ define('loader', ['util', 'jquery'], function(util){
 					}else{
 						// path = /page/home.module
 						// toPath = /page/home/locales/lang/module.json
-						$.getJSON(path.substr(0, path.indexOf(arr.join('/'))) + '/' + arr[0] + '/locales/'+lang+'/'+arr[1]+'.json')
+						$.getJSON(path.substr(0, path.indexOf(arr.join('/'))) + '/' + arr[0] + '/locales/'+lang+'/'+arr[1]+'.json?v='+JsVersion)
 							.success(function(result){
 								window._gos.transData[name] = result;
 								defer.resolve();
 
 							}).fail(function(){
 								lang = 'en_US';
-								$.getJSON(window._gos.srcPath + path + '/locales/'+lang+'/'+typ+'.json')
+								$.getJSON(window._gos.srcPath + path + '/locales/'+lang+'/'+typ+'.json?v='+JsVersion)
 									.success(function(result){
 										window._gos.transData[name] = result;
 										defer.resolve();

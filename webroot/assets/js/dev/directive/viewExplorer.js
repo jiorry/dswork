@@ -201,7 +201,7 @@ define('ngViewExplorer', ['app', 'loader'], function(app, loader){
 								if (angular.isDefined(templateUrl)) {
 									template = $templateRequest(templateUrl);
 								}
-								$http.get(templateUrl).success(function(data) {
+								$http.get(templateUrl+'?v='+JsVersion).success(function(data) {
 									template = data
 									defer.resolve();
 								});
