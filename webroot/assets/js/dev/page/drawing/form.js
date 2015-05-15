@@ -7,9 +7,9 @@ define('drawing.form', ['app', 'ajax', 'util', 'appData', 'ngDatetimePicker'], f
 	  	
 
 	  	var formData = {id: 0}
-	  	if($location.$$search.id){
+	  	if($location.router && $location.router.search.id){
 	  		$scope.is_editable = false;
-	  		ajax.NewClient("/api/open").send('drawing.app.ItemData', {id: $location.$$search.id})
+	  		ajax.NewClient("/api/open").send('drawing.app.ItemData', {id: $location.router.search.id})
 				.done(function(result){
 					formData = result;
 					$scope.$apply(function(){
@@ -25,6 +25,7 @@ define('drawing.form', ['app', 'ajax', 'util', 'appData', 'ngDatetimePicker'], f
 						$scope.project_id = parseInt(formData.project_id);
 						$scope.xmjl_id = parseInt(formData.xmjl_id);
 						$scope.is_editable = isEditable(formData);
+						$scope.memo = formData.memo;
 
 					})
 				}).fail(function(jqXHR){

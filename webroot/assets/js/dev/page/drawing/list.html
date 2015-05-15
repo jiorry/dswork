@@ -13,8 +13,22 @@
 		<div class="form-group">
 			<a class="btn btn-default"><i class="fa fa-search"></i></a>
 		</div>
-
 	</div>
+	<div class="gos-form-inline form-inline mgb-20">
+		<div class="form-group">
+			<label>项目名称</label>
+			<select ng-model="project_id" ng-options="m.id as m.name for m in projects" class="form-control" ng-required="true">
+			    <option value="">---- 不做约束 ----</option>
+			</select>
+		</div>
+		<div class="form-group mgl-10">
+			<label>专业</label>
+			<select ng-model="subject_id" ng-options="m.id as m.name for m in subjects" class="form-control" ng-required="true">
+			    <option value="">---- 不做约束 ----</option>
+			</select>
+		</div>
+	</div>
+
 	<div class="text-right" ng-show="items.length>0">
 		{{items.length}} 条数据
 	</div>
@@ -35,7 +49,7 @@
 			<th>项目管理部</th>
 			<th>商务部</th>
 		</tr>
-		<tr ng-repeat="item in items">
+		<tr ng-repeat="item in items" class="status-{{item.status}}">
 			<td>{{item.created}}</td>
 			<td>{{item.project_name}}</td>
 			<td>{{item.name}}</td>

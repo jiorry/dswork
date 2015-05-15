@@ -1,13 +1,17 @@
 define('drawing.list', ['app', 'ajax', 'util', 'appData', 'ngDatetimePicker'], function(app, ajax, util, appData){
 
 	app.controller('DrawingListCtrl', ['$scope', '$element', '$location', function($scope, $element, $location){
+		$scope.projects = appData.projects;
+	  	$scope.subjects = appData.subjects;
+
 		var $button = $element.find('a.btn-default');
 		$button.click(function(){
 			query();
 		})
 
 		function query(){
-			ajax.NewClient("/api/open").button($button).send('drawing.app.DrawItems', {status: 9, end: $scope.end, begin: $scope.begin})
+			var obj = {end: $scope.end, begin: $scope.begin, project_id: $scope.project_id? $scope.project_id : 0, subject_id: $scope.subject_id ? $scope.subject_id : 0};
+			ajax.NewClient("/api/open").button($button).send('drawing.app.DrawItems', obj)
 				.done(function(result){
 					var project,i, item;
 					for (i = result.length - 1; i >= 0; i--) {

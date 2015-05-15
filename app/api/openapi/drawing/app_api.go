@@ -120,11 +120,13 @@ func (a *AppApi) Save(args util.MapData) (int, error) {
 func (a *AppApi) DrawItems(args util.MapData) (db.DataSet, error) {
 	// page := args.GetInt("page")
 	// pageSize := 30
+	pid := args.GetInt64("project_id")
+	sid := args.GetInt64("subject_id")
 
 	md := drawing.NewDrawingModel()
 
 	if args.IsSet("begin") {
-		return md.QueryByDateRange(args.GetTime("begin"), args.GetTime("end"), args.GetInt("status"))
+		return md.QueryByDateRange(args.GetTime("begin"), args.GetTime("end"), pid, sid)
 	}
 
 	return md.Items(args.GetInt("status"))
@@ -147,4 +149,10 @@ func (a *AppApi) DoSign(args util.MapData) (bool, error) {
 	}
 
 	return true, err
+}
+
+func (a *AppApi) DoRemove(args util.MapData) (bool, error) {
+	id := args.GetInt64("item_id")
+	err := drawing.NewDrawingModel().Remove(id)
+	return err == nil, err
 }

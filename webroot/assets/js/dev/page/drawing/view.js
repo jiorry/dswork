@@ -61,6 +61,19 @@ define('drawing.view', ['app', 'ajax', 'util', 'appData'], function(app, ajax, u
 			showDialog();
 		}
 
+		$scope.remmoveItem = function(){
+			if(!window.confirm("是否要删除这条记录")){
+				return
+			}
+			ajax.NewClient("/api/open").button($btnSign).send('drawing.app.DoRemove', {item_id: $scope.formData.id})
+				.done(function(result){
+					$('#gos-btnHome').trigger('click');
+				}).fail(function(){
+					alert('必须所以人员都撤销签字，才可以删除这个表单');
+					return;
+				})
+		}
+
 		$btnSign.click(function(){
 			var typ = $btnSign.data('typ'),
 				day = 0;

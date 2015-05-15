@@ -27,6 +27,18 @@ func NewDrawingModel() *DrawingModel {
 	return m
 }
 
+func (d *DrawingModel) Remove(id int64) error {
+	r, err := d.QueryById(id)
+	if r.GetInt64("xmjl_sign_by") > 0 || r.GetInt64("js_sign_by") > 0 || r.GetInt64("xmgl_sign_by") > 0 || r.GetInt64("sw_sign_by") > 0 || r.GetInt64("zt_sign_by") > 0 {
+		return fmt.Errorf("必须所以人员都撤销签字，才可以删除这个表单")
+	}
+
+	data := db.DataRow{}
+	data["status"] = -1
+	_, err = db.NewUpdateBuilder("drawing").Where("id=?", id).Update(data)
+	return err
+}
+
 func (d *DrawingModel) Items(status int) (db.DataSet, error) {
 	ds, err := d.QueryBuilder().UnSelect("js_unsign_json", "sw_unsign_json", "zt_unsign_json", "xmgl_unsign_json", "xmjl_unsign_json").Order("created desc").Where("status=?", status).Query()
 	count := len(ds)
@@ -41,8 +53,21 @@ func (d *DrawingModel) Items(status int) (db.DataSet, error) {
 	return ds, nil
 }
 
-func (d *DrawingModel) QueryByDateRange(b, e time.Time, status int) (db.DataSet, error) {
-	ds, err := d.QueryBuilder().UnSelect("js_unsign_json", "sw_unsign_json", "zt_unsign_json", "xmgl_unsign_json", "xmjl_unsign_json").Order("created desc").Where("created between ? and ? and status=?", b, e, status).Query()
+func (d *DrawingModel) QueryByDateRange(b, e time.Time, projectId, subjectId int64) (db.DataSet, error) {
+	var ds db.DataSet
+	var err error
+
+	if projectId == 0 && subjectId == 0 {
+		ds, err = d.QueryBuilder().UnSelect("js_unsign_json", "sw_unsign_json", "zt_unsign_json", "xmgl_unsign_json", "xmjl_unsign_json").Order("created desc").
+			Where("created between ? and ? and status>0", b, e).Query()
+	} else if projectId != 0 {
+		ds, err = d.QueryBuilder().UnSelect("js_unsign_json", "sw_unsign_json", "zt_unsign_json", "xmgl_unsign_json", "xmjl_unsign_json").Order("created desc").
+			Where("created between ? and ? and status>0 and project_id=?", b, e, projectId).Query()
+	} else {
+		ds, err = d.QueryBuilder().UnSelect("js_unsign_json", "sw_unsign_json", "zt_unsign_json", "xmgl_unsign_json", "xmjl_unsign_json").Order("created desc").
+			Where("created between ? and ? and status>0 and subject_id=?", b, e, subjectId).Query()
+	}
+
 	count := len(ds)
 	for i := 0; i < count; i++ {
 		ds[i]["user"] = auth.QueryAndBuildById(ds[i].GetInt64("user_id")).Bytes2String()
