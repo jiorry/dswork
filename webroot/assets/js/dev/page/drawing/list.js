@@ -17,7 +17,10 @@ define('drawing.list', ['app', 'ajax', 'util', 'appData', 'ngDatetimePicker'], f
 					for (i = result.length - 1; i >= 0; i--) {
 						item = result[i];
 						project = util.objectFind('id', parseInt(item.project_id), appData.projects);
-						result[i].project_name = project ? project.name: 'not found';
+						result[i].project_name = project ? project.name: 'null';
+
+						subject = util.objectFind('id', parseInt(item.subject_id), appData.subjects);
+						result[i].subject_name = subject ? subject.name: 'null';
 						
 						result[i].created = util.date2str(item.created, 'time');
 
