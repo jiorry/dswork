@@ -80,12 +80,15 @@ func (d *DrawingModel) QueryByDateRange(b, e time.Time, projectId, subjectId int
 	if projectId == 0 && subjectId == 0 {
 		ds, err = d.QueryBuilder().UnSelect("js_unsign_json", "sw_unsign_json", "zt_unsign_json", "xmgl_unsign_json", "xmjl_unsign_json").Order("created desc").
 			Where("created between ? and ? and status>0", b, e).Query()
-	} else if projectId != 0 {
+	} else if projectId != 0 && subjectId == 0 {
 		ds, err = d.QueryBuilder().UnSelect("js_unsign_json", "sw_unsign_json", "zt_unsign_json", "xmgl_unsign_json", "xmjl_unsign_json").Order("created desc").
 			Where("created between ? and ? and status>0 and project_id=?", b, e, projectId).Query()
-	} else {
+	} else if projectId == 0 && subjectId != 0 {
 		ds, err = d.QueryBuilder().UnSelect("js_unsign_json", "sw_unsign_json", "zt_unsign_json", "xmgl_unsign_json", "xmjl_unsign_json").Order("created desc").
 			Where("created between ? and ? and status>0 and subject_id=?", b, e, subjectId).Query()
+	} else {
+		ds, err = d.QueryBuilder().UnSelect("js_unsign_json", "sw_unsign_json", "zt_unsign_json", "xmgl_unsign_json", "xmjl_unsign_json").Order("created desc").
+			Where("created between ? and ? and status>0 and project_id=? and subject_id=?", b, e, projectId, subjectId).Query()
 	}
 
 	count := len(ds)
