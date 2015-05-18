@@ -8,8 +8,9 @@ import (
 )
 
 const (
-	STATUS_FINISH = 9
-	STATUS_RUN    = 1
+	STATUS_FINISH  = 9
+	STATUS_HISTORY = 10
+	STATUS_RUN     = 1
 )
 
 type UnSignData struct {
@@ -39,8 +40,8 @@ func (d *DrawingModel) Remove(id int64) error {
 	return err
 }
 
-func (d *DrawingModel) Items(status int) (db.DataSet, error) {
-	ds, err := d.QueryBuilder().UnSelect("js_unsign_json", "sw_unsign_json", "zt_unsign_json", "xmgl_unsign_json", "xmjl_unsign_json").Order("created desc").Where("status=?", status).Query()
+func (d *DrawingModel) Items() (db.DataSet, error) {
+	ds, err := d.QueryBuilder().UnSelect("js_unsign_json", "sw_unsign_json", "zt_unsign_json", "xmgl_unsign_json", "xmjl_unsign_json").Order("created desc").Where("status in (1, 9)").Query()
 	count := len(ds)
 	for i := 0; i < count; i++ {
 		ds[i]["user"] = auth.QueryAndBuildById(ds[i].GetInt64("user_id")).Bytes2String()
@@ -51,6 +52,25 @@ func (d *DrawingModel) Items(status int) (db.DataSet, error) {
 
 	ds.Bytes2String()
 	return ds, nil
+}
+
+func (d *DrawingModel) MoveToHistory() error {
+	data := db.DataRow{}
+	data["status"] = STATUS_HISTORY
+
+	due := time.Now().AddDate(0, 0, -10)
+
+	_, err := db.NewUpdateBuilder("drawing").Where("status=? and finish_at<?", STATUS_FINISH, due).Update(data)
+	return err
+}
+
+func (d *DrawingModel) Finish() error {
+	data := db.DataRow{}
+	data["status"] = STATUS_FINISH
+	data["finish_at"] = time.Now()
+
+	_, err := db.NewUpdateBuilder("drawing").Where("status=1 and xmgl_sign_by>0 and xmjl_sign_by>0 and sw_sign_by>0 and zt_sign_by>0 and js_sign_by>0").Update(data)
+	return err
 }
 
 func (d *DrawingModel) QueryByDateRange(b, e time.Time, projectId, subjectId int64) (db.DataSet, error) {
@@ -103,7 +123,7 @@ func (d *DrawingModel) DoSign(id, signUserId int64, typ string, sign bool, day i
 		v = append(v, unsignData)
 
 		data[typ+"_unsign_json"] = v
-
+		data["finish_at"] = nil
 	}
 
 	if typ == "zt" {
@@ -123,6 +143,7 @@ func (d *DrawingModel) DoSign(id, signUserId int64, typ string, sign bool, day i
 		if r.GetInt64("xmjl_sign_by") > 0 && r.GetInt64("js_sign_by") > 0 && r.GetInt64("sw_sign_by") > 0 && r.GetInt64("xmgl_sign_by") > 0 && r.GetInt64("zt_sign_by") > 0 {
 			data = db.DataRow{}
 			data["status"] = STATUS_FINISH
+			data["finish_at"] = time.Now()
 			_, err = db.NewUpdateBuilder(d.Table()).Where("id=?", id).Update(data)
 			if err != nil {
 				return err

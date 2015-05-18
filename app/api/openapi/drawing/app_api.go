@@ -128,7 +128,7 @@ func (a *AppApi) DrawItems(args util.MapData) (db.DataSet, error) {
 	}
 
 	if args.IsSet("subject_id") {
-		pid = args.GetInt64("subject_id")
+		sid = args.GetInt64("subject_id")
 	}
 
 	md := drawing.NewDrawingModel()
@@ -137,7 +137,12 @@ func (a *AppApi) DrawItems(args util.MapData) (db.DataSet, error) {
 		return md.QueryByDateRange(args.GetTime("begin"), args.GetTime("end"), pid, sid)
 	}
 
-	return md.Items(args.GetInt("status"))
+	if pid == 0 && sid == 0 {
+		md.Finish()
+		md.MoveToHistory()
+	}
+
+	return md.Items()
 }
 
 func (a *AppApi) DoSign(args util.MapData) (bool, error) {
