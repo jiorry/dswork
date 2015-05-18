@@ -120,8 +120,16 @@ func (a *AppApi) Save(args util.MapData) (int, error) {
 func (a *AppApi) DrawItems(args util.MapData) (db.DataSet, error) {
 	// page := args.GetInt("page")
 	// pageSize := 30
-	pid := args.GetInt64("project_id")
-	sid := args.GetInt64("subject_id")
+	var pid int64 = 0
+	var sid int64 = 0
+
+	if args.IsSet("project_id") {
+		pid = args.GetInt64("project_id")
+	}
+
+	if args.IsSet("subject_id") {
+		pid = args.GetInt64("subject_id")
+	}
 
 	md := drawing.NewDrawingModel()
 
