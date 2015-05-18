@@ -15,13 +15,13 @@
 		</div>
 	</div>
 	<div class="gos-form-inline form-inline mgb-20">
-		<div class="form-group">
+		<div class="form-group" style="width:300px;">
 			<label>项目名称</label>
-			<select ng-model="project_id" ng-options="m.id as m.name for m in projects" class="form-control" ng-required="true">
+			<select ng-model="project_id" ng-options="m.id as m.name for m in projects" class="form-control" ng-required="true" style="width:220px;">
 			    <option value="">---- 不做约束 ----</option>
 			</select>
 		</div>
-		<div class="form-group mgl-10">
+		<div class="form-group mgl-10" style="width:200px;">
 			<label>专业</label>
 			<select ng-model="subject_id" ng-options="m.id as m.name for m in subjects" class="form-control" ng-required="true">
 			    <option value="">---- 不做约束 ----</option>
@@ -38,7 +38,8 @@
 			<th>项目名称</th>
 			<th>主项名称</th>
 			<th>主项号</th>
-			<th>图号</th>
+			<th>专业</th>
+			<th class="hidden-xs">图号</th>
 			<th class="hidden-xs">自然张</th>
 			<th class="hidden-xs">折合A1</th>
 			<th class="hidden-xs">份数</th>
@@ -54,7 +55,8 @@
 			<td>{{item.project_name}}</td>
 			<td>{{item.name}}</td>
 			<td>{{item.no}}</td>
-			<td>{{item.drawing_no}}</td>
+			<td>{{item.subject_name}}</td>
+			<td class="hidden-xs">{{item.drawing_no}}</td>
 			<td class="hidden-xs">{{item.zrz}}</td>
 			<td class="hidden-xs">{{item.a1}}</td>
 			<td class="hidden-xs">{{item.quantity}}</td>
