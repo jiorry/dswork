@@ -1,10 +1,11 @@
 package drawing
 
 import (
-	"../../lib/auth"
 	"fmt"
-	"github.com/kere/gos/db"
 	"time"
+
+	"github.com/jiorry/dswork/app/lib/auth"
+	"github.com/kere/gos/db"
 )
 
 const (

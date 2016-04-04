@@ -1,8 +1,8 @@
 package main
 
 import (
-	"./api"
-	"./page"
+	"github.com/jiorry/dswork/app/api"
+	"github.com/jiorry/dswork/app/page"
 	"github.com/kere/gos"
 	_ "github.com/lib/pq"
 )

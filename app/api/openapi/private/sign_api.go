@@ -1,8 +1,9 @@
 package private
 
 import (
-	"../../../lib/auth"
 	"fmt"
+
+	"github.com/jiorry/dswork/app/lib/auth"
 	"github.com/kere/gos"
 	"github.com/kere/gos/lib/util"
 )

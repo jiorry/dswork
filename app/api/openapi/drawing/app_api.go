@@ -1,15 +1,16 @@
 package drawing
 
 import (
-	"../../../lib/auth"
-	"../../../model/appdata"
-	"../../../model/drawing"
-	"../../../model/project"
 	"fmt"
+	"strings"
+
+	"github.com/jiorry/dswork/app/lib/auth"
+	"github.com/jiorry/dswork/app/model/appdata"
+	"github.com/jiorry/dswork/app/model/drawing"
+	"github.com/jiorry/dswork/app/model/project"
 	"github.com/kere/gos"
 	"github.com/kere/gos/db"
 	"github.com/kere/gos/lib/util"
-	"strings"
 )
 
 type AppApi struct {

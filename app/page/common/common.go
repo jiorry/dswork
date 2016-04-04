@@ -1,12 +1,13 @@
 package common
 
 import (
-	"../../lib/auth"
 	"bytes"
 	"fmt"
+	"io"
+
+	"github.com/jiorry/dswork/app/lib/auth"
 	"github.com/kere/gos"
 	"github.com/kere/gos/lib/util"
-	"io"
 )
 
 var (

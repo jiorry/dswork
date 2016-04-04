@@ -1,13 +1,15 @@
 package api
 
 import (
-	"../lib/auth"
-	"./openapi/drawing"
-	"./openapi/private"
-	"./openapi/public"
+	"github.com/jiorry/dswork/app/api/openapi/drawing"
+	"github.com/jiorry/dswork/app/api/openapi/private"
+	"github.com/jiorry/dswork/app/api/openapi/public"
+	"github.com/jiorry/dswork/app/lib/auth"
+
 	"fmt"
-	"github.com/kere/gos"
 	"reflect"
+
+	"github.com/kere/gos"
 )
 
 var apiMap = make(map[string]reflect.Type)

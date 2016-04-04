@@ -1,12 +1,13 @@
 package public
 
 import (
-	"../../../lib/auth"
 	"fmt"
+	"time"
+
+	"github.com/jiorry/dswork/app/lib/auth"
 	"github.com/kere/gos"
 	"github.com/kere/gos/db"
 	"github.com/kere/gos/lib/util"
-	"time"
 )
 
 type PublicApi struct {
@@ -23,10 +24,7 @@ func (a *PublicApi) IsExists(args util.MapData) (int, error) {
 	val := args.GetString("value")
 
 	exists := db.NewExistsBuilder(table).Where(field+"=?", val)
-	isEx, err := exists.Exists()
-	if err != nil {
-		return -1, err
-	}
+	isEx := exists.Exists()
 	if isEx {
 		return 1, nil
 	} else {

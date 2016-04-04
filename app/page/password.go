@@ -1,8 +1,9 @@
 package page
 
 import (
-	"../lib/auth"
-	"./common"
+	"github.com/jiorry/dswork/app/page/common"
+
+	"github.com/jiorry/dswork/app/lib/auth"
 	"github.com/kere/gos"
 )
 

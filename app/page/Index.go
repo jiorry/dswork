@@ -1,7 +1,8 @@
 package page
 
 import (
-	"./common"
+	"github.com/jiorry/dswork/app/page/common"
+
 	"github.com/kere/gos"
 )
 
